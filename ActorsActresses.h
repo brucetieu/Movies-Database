@@ -4,10 +4,20 @@
 
 #ifndef MOVIES_DATABASE_ACTORSACTRESSES_H
 #define MOVIES_DATABASE_ACTORSACTRESSES_H
+#include "Database.h"
 
+class ActorsActresses : public Database {
+private:
+    std::string award;
+    std::string winner;
+    std::string film;
 
-class ActorsActresses {
+public:
+    std::string getAward();
+    std::string getWinner();
+    std::string getFilm();
 
+    void readInFile();
 };
 
 
