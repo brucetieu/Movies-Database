@@ -13,9 +13,15 @@ private:
     std::string film;
 
 public:
+
+    void setAward(std::string award);
+    void setWinner(std::string winner);
+    void setFilm(std::string film);
+
     std::string getAward();
     std::string getWinner();
     std::string getFilm();
+
 
     void readInFile();
 };

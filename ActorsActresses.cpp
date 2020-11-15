@@ -9,6 +9,18 @@
 
 using namespace std;
 
+void ActorsActresses::setAward(string award) {
+    this->award = award;
+}
+
+void ActorsActresses::setWinner(string winner) {
+    this->winner = winner;
+}
+
+void ActorsActresses::setFilm(string film) {
+    this->film = film;
+}
+
 string ActorsActresses::getAward() {return award;}
 string ActorsActresses::getWinner() {return winner;}
 string ActorsActresses::getFilm() {return film;}
