@@ -6,17 +6,26 @@
 #define MOVIES_DATABASE_ACTORSBST_H
 #include "ActorsActresses.h"
 
-struct BstNode {
-    ActorsActresses actorsActresses;
-    BstNode *left;
-    BstNode *right;
-};
 
 class ActorsBST {
 private:
+//    struct BstNode {
+//        ActorsActresses* actorsActresses;
+//        BstNode *left;
+//        BstNode *right;
+//    };
+
 public:
+
+    struct BstNode {
+        ActorsActresses actorsActresses;
+        BstNode *left;
+        BstNode *right;
+    };
+
     BstNode* getNewNode(ActorsActresses &actorsActresses);
     BstNode* insert(BstNode *root, ActorsActresses &actorsActresses);
+    void inorderTraversal(BstNode *root);
 
 };
 

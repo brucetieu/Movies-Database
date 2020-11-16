@@ -5,25 +5,28 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Database.h"
-#include "Pictures.h"
-#include "ActorsActresses.h"
+//#include "Database.h"
+//#include "ActorsActresses.h"
+#include "ActorsBST.h"
 
 using namespace std;
 
 int main()
 {
     Database *database1;
-    Database *database2;
-
-    Pictures pictures;
+//    Database *database2;
+//
+//    Pictures pictures;
     ActorsActresses actorsActresses;
-
-    database1 = &pictures;
+//
+    database1 = &actorsActresses;
     database1->readInFile();
-
-    database2 = &actorsActresses;
-    database2->readInFile();
+//
+//    database1 = &pictures;
+//    database1->readInFile();
+//
+//    database2 = &actorsActresses;
+//    database2->readInFile();
 //    ifstream infile("actor-actress.csv");
 //    string header,year,award, winner, name, film;
 //    int records = 0;

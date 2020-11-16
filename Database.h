@@ -17,6 +17,7 @@ public:
     std::string getYear();
 
     virtual void readInFile() = 0;
+    virtual ~Database() {}
 };
 
 
