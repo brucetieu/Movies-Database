@@ -7,6 +7,9 @@
 
 using namespace std;
 
+void Database::setName(string name) {this->name = name; }
+void Database::setYear(string year) {this->year = year; }
+
 string Database::getName() {
     return name;
 }

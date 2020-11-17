@@ -11,30 +11,26 @@
  * @param actorsActresses The ActorsActresses object.
  * @return A the newNode.
  */
-ActorsBST::BstNode* ActorsBST::getNewNode(ActorsActresses &actorsActresses) {
+ActorsBST::BstNode* ActorsBST::getNewNode(ActorsActresses actorsActresses) {
     BstNode* newNode = new BstNode();
 
-    newNode->actorsActresses.name = actorsActresses.name;
-    newNode->actorsActresses.year = actorsActresses.year;
-    newNode->actorsActresses.award = actorsActresses.award;
-    newNode->actorsActresses.winner = actorsActresses.winner;
-    newNode->actorsActresses.film =  actorsActresses.film;
+    newNode->actorsActresses.setYear(actorsActresses.getYear());
+    newNode->actorsActresses.setAward(actorsActresses.getAward());
+    newNode->actorsActresses.setWinner(actorsActresses.getWinner());
+    newNode->actorsActresses.setName(actorsActresses.getName());
+    newNode->actorsActresses.setFilm(actorsActresses.getFilm());
 
     newNode->left = newNode->right = nullptr;
 
     return newNode;
 }
 
-ActorsBST::BstNode* ActorsBST::insert(BstNode *root, ActorsActresses &actorsActresses) {
+ActorsBST::BstNode* ActorsBST::insert(BstNode *root, ActorsActresses actorsActresses) {
     if(root == NULL) { // empty tree
         root = getNewNode(actorsActresses);
     }
     // if data to be inserted is lesser, insert in left subtree.
-    else if(actorsActresses.name <= root->actorsActresses.name ||
-            actorsActresses.year <= root->actorsActresses.year ||
-            actorsActresses.award <= root->actorsActresses.award ||
-            actorsActresses.winner <= root->actorsActresses.winner ||
-            actorsActresses.film <= root->actorsActresses.film) {
+    else if(actorsActresses.getName() <= root->actorsActresses.getName()) {
 
         root->left = insert(root->left, actorsActresses);
     }
@@ -54,11 +50,11 @@ void ActorsBST::inorderTraversal(BstNode *root) {
         return;
     } else {
         inorderTraversal(root->left);
-        std::cout << root->actorsActresses.year << std::endl;
-        std::cout << root->actorsActresses.award << std::endl;
-        std::cout << root->actorsActresses.name << std::endl;
-        std::cout << root->actorsActresses.winner << std::endl;
-        std::cout << root->actorsActresses.film << std::endl;
+        std::cout << root->actorsActresses.getYear() << std::endl;
+        std::cout << root->actorsActresses.getAward() << std::endl;
+        std::cout << root->actorsActresses.getName() << std::endl;
+        std::cout << root->actorsActresses.getWinner() << std::endl;
+        std::cout << root->actorsActresses.getFilm() << std::endl;
         std::cout << std::endl;
         inorderTraversal(root->right);
     }

@@ -12,29 +12,30 @@ using namespace std;
 ActorsActresses::ActorsActresses() {
 ////    root = nullptr;
 }
-ActorsActresses::ActorsActresses(string name, string year, string award, string winner,
+ActorsActresses::ActorsActresses(string year, string award, string winner, string name,
                                  string film) {
-    this->name = name;
-    this->year = year;
+    setYear(year);
     this->award = award;
     this->winner = winner;
+    setName(name);
     this->film = film;
 }
 
-//void ActorsActresses::setAward(string award) { this->award = award; }
-//void ActorsActresses::setWinner(string winner) { this->winner = winner; }
-//void ActorsActresses::setFilm(string film) { this->film = film; }
-//
-//string ActorsActresses::getAward() {return award;}
-//string ActorsActresses::getWinner() {return winner;}
-//string ActorsActresses::getFilm() {return film;}
+void ActorsActresses::setAward(string award) { this->award = award; }
+void ActorsActresses::setWinner(string winner) { this->winner = winner; }
+void ActorsActresses::setFilm(string film) { this->film = film; }
+
+string ActorsActresses::getAward() {return award;}
+string ActorsActresses::getWinner() {return winner;}
+string ActorsActresses::getFilm() {return film;}
 
 /**
  * Read in "actor-actresses.csv".
  */
 void ActorsActresses::readInFile() {
 
-    ActorsActresses actorsActresses;
+    string header;
+//    ActorsActresses actorsActresses;
 
     ActorsBST *actorsBst = new ActorsBST();
     ActorsBST::BstNode *root = new ActorsBST::BstNode();
@@ -47,13 +48,16 @@ void ActorsActresses::readInFile() {
 
     while (infile.peek() != EOF) {
 
-        getline(infile, actorsActresses.year, ',');
-        getline(infile, actorsActresses.award, ',');
-        getline(infile, actorsActresses.winner, ',');
-        getline(infile, actorsActresses.name, ',');
-        getline(infile, actorsActresses.film, '\n');
+        string year = getYear();
+        string name = getName();
 
-        root = actorsBst->insert(root, actorsActresses);
+        getline(infile, year, ',');
+        getline(infile, award, ',');
+        getline(infile, winner, ',');
+        getline(infile, name, ',');
+        getline(infile, film, '\n');
+
+        root = actorsBst->insert(root, ActorsActresses(year, award, winner, name, film));
 //        cout << year << endl << award << endl << winner << endl << name << endl << film << endl;
         records++;
 //        cout << "RECORDS: " << records << endl << endl;

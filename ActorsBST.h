@@ -23,8 +23,8 @@ public:
         BstNode *right;
     };
 
-    BstNode* getNewNode(ActorsActresses &actorsActresses);
-    BstNode* insert(BstNode *root, ActorsActresses &actorsActresses);
+    BstNode* getNewNode(ActorsActresses actorsActresses);
+    BstNode* insert(BstNode *root, ActorsActresses actorsActresses);
     void inorderTraversal(BstNode *root);
 
 };
