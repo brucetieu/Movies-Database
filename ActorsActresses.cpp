@@ -7,11 +7,12 @@
 
 //#include "ActorsBST.h"
 #include "ActorsActresses.h"
-//#include "BinaryTree.h"
+#include "BinaryTree.h"
 
 using namespace std;
 
 ActorsActresses::ActorsActresses() {
+    tree = new BinaryTree<ActorsActresses>();
 
 }
 ActorsActresses::ActorsActresses(string year, string award, string winner, string name,
@@ -60,75 +61,47 @@ ostream& operator << (ostream &output, const ActorsActresses &actor) {
     return output;
 }
 
+
+
 /**
- * Create a new node.
- * @param actorsActresses The ActorsActresses object.
- * @return A the newNode.
+ * Read in "actor-actresses.csv".
  */
-//BstNode* ActorsBST::getNewNode(ActorsActresses &actorsActresses) {
-//    BstNode* newNode = new BstNode();
-//
-//    // Set the data.
-//    newNode->actorsActresses->setYear(actorsActresses.getYear());
-//    newNode->actorsActresses->setAward(actorsActresses.getAward());
-//    newNode->actorsActresses->setWinner(actorsActresses.getWinner());
-//    newNode->actorsActresses->setName(actorsActresses.getName());
-//    newNode->actorsActresses->setFilm(actorsActresses.getFilm());
-//
-//    newNode->left = newNode->right = nullptr;
-//
-//    return newNode;
-//}
-//
-//BstNode* ActorsBST::insert(BstNode *root, ActorsActresses actorsActresses) {
-//    if(root == NULL) { // empty tree
-//        root = getNewNode(actorsActresses);
-//    }
-//        // if data to be inserted is lesser, insert in left subtree.
-//    else if(actorsActresses.getName() <= root->actorsActresses->getName()) {
-//
-//        root->left = insert(root->left, actorsActresses);
-//    }
-//        // else, insert in right subtree.
-//    else {
-//        root->right = insert(root->right, actorsActresses);
-//    }
-//    return root;
-//}
-//
-///**
-// * Read in "actor-actresses.csv".
-// */
-//BstNode* ActorsActresses::readInFile() {
-//
-//    string header;
-////    ActorsActresses actorsActresses;
-//
-//    ActorsBST *actorsBst = new ActorsBST();
-//    BstNode *root = new BstNode();
-//
-//    ifstream infile("actor-actress.csv");
-//
-//    int records = 0;
-//
-//    getline(infile, header);
-//
-//    while (infile.peek() != EOF) {
-//
-//        string year = getYear();
-//        string name = getName();
-//
-//        getline(infile, year, ',');
-//        getline(infile, award, ',');
-//        getline(infile, winner, ',');
-//        getline(infile, name, ',');
-//        getline(infile, film, '\n');
-//
-//        root = actorsBst->insert(root, ActorsActresses(year, award, winner, name, film));
-//        records++;
-//    }
-//    actorsBst->inorderTraversal(root);
-//    return root;
-//}
+void ActorsActresses::readInFile() {
+
+    string header;
+
+    ifstream infile("actor-actress.csv");
+
+    if (infile.fail()) {
+        cerr << "Error reading file" << endl;
+    }
+
+    else {
+        int records = 0;
+
+        getline(infile, header);
+
+        while (infile.peek() != EOF) {
+
+            getline(infile, year, ',');
+            getline(infile, award, ',');
+            getline(infile, winner, ',');
+            getline(infile, name, ',');
+            getline(infile, film, '\n');
+
+            tree->insert(ActorsActresses(year, award, winner, name, film));
+            records++;
+        }
+    }
+    tree->inorderPrint();
+    cout << "File successfully read" << endl;
+}
+
+void ActorsActresses::addARecord(string year, string award, string winner, string name, string film) {
+
+    tree->insert(ActorsActresses(year, award, winner, name, film));
+    cout << "Record successfully inserted!" << endl;
+    tree->inorderPrint();
+}
 
 
