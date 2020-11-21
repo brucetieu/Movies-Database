@@ -4,28 +4,59 @@
 
 #ifndef MOVIES_DATABASE_ACTORSBST_H
 #define MOVIES_DATABASE_ACTORSBST_H
+
 #include "ActorsActresses.h"
+//class ActorsActresses;
 
+//struct BstNode {
+//    ActorsActresses *actorsActresses;
+//    BstNode *left;
+//    BstNode *right;
+//};
 
+template<class T>
 class ActorsBST {
+
 private:
-//    struct BstNode {
-//        ActorsActresses* actorsActresses;
-//        BstNode *left;
-//        BstNode *right;
-//    };
-
+    ActorsActresses *root;
 public:
+    ActorsBST() {
+        root = nullptr;
+    }
 
-    struct BstNode {
-        ActorsActresses actorsActresses;
-        BstNode *left;
-        BstNode *right;
-    };
+    T* getNewNode(T data) {
+        ActorsActresses *newNode = new ActorsActresses();
+        newNode->setYear(data.getYear());
+        newNode->setAward(data.getAward());
+        newNode->setWinner(data.getWinner());
+        newNode->setName(data.getName());
+        newNode->setFilm(data.getFilm());
 
-    BstNode* getNewNode(ActorsActresses actorsActresses);
-    BstNode* insert(BstNode *root, ActorsActresses actorsActresses);
-    void inorderTraversal(BstNode *root);
+        newNode->left = newNode->right = nullptr;
+
+        return newNode;
+    }
+
+    T* insert(T *root, T data) {
+        if (root == NULL) { // empty tree
+            root = getNewNode(data);
+        }
+            // if data to be inserted is lesser, insert in left subtree.
+        else if (data.getName() <= root->getName()) {
+
+            root->left = insert(root->left, data);
+        }
+            // else, insert in right subtree.
+        else {
+            root->right = insert(root->right, data);
+        }
+        return root;
+    }
+
+//    BstNode* getNewNode(ActorsActresses &actorsActresses);
+//    BstNode* insert(BstNode *root, ActorsActresses actorsActresses);
+//    void inorderTraversal(BstNode *root);
+//    bool search(BstNode* root, ActorsActresses &actorsActresses);
 
 };
 
