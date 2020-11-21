@@ -20,13 +20,17 @@ public:
     };
 
     BinaryTree();
-    void insert(T data, TreeNode* leaf);
     void insert(T data);
     void inorderPrint();
-    void inorderPrint(TreeNode* leaf);
+
+    TreeNode* getRoot();
+
 
 private:
     TreeNode *root;
+
+    void _insert(T data, TreeNode* leaf);
+    void _inorderPrint(TreeNode* leaf);
 };
 
 template <class T>
@@ -35,20 +39,36 @@ BinaryTree<T>::BinaryTree() {
 }
 
 template <class T>
-void BinaryTree<T>::insert(T data, TreeNode *leaf) {
+typename BinaryTree<T>::TreeNode* BinaryTree<T>::getRoot() {
+    return root;
+}
+
+/**
+ * Helper function which Recursively inserts new nodes by comparing the data of each node.
+ * @tparam T Type T.
+ * @param data The data / value.
+ * @param leaf The leaf node.
+ */
+template <class T>
+void BinaryTree<T>::_insert(T data, TreeNode *leaf) {
 
     if (data < leaf->data){
-        if (leaf->left != NULL){
-            insert(data, leaf->left);
-        } else{
+
+        // Traversing the BST until we can insert a leaf node in the proper location.
+        if (leaf->left != nullptr){
+            _insert(data, leaf->left);
+        }
+
+        // Inserting a leaf node. The base case.
+        else {
             leaf->left = new TreeNode;
             leaf->left->data = data;
             leaf->left->left = NULL;
             leaf->left->right = NULL;
         }
     } else if (data >= leaf->data) {
-        if (leaf->right != NULL) {
-            insert(data, leaf->right);
+        if (leaf->right != nullptr) {
+            _insert(data, leaf->right);
         } else{
             leaf->right = new TreeNode;
             leaf->right->data = data;
@@ -58,11 +78,21 @@ void BinaryTree<T>::insert(T data, TreeNode *leaf) {
     }
 }
 
+/**
+ * Building the BST - we are keeping track of the root node and insert nodes from there.
+ * @tparam T
+ * @param data
+ */
 template <class T>
 void BinaryTree<T>::insert(T data) {
+
+    // Insert successful nodes after the first node (the root node) is inserted.
     if (root != nullptr) {
-        insert(data, root);
-    } else {
+        _insert(data, root);
+    }
+
+    // If root is null, create a new tree node. This inserts the first node.
+    else {
         root = new TreeNode;
         root->data = data;
         root->left = nullptr;
@@ -70,47 +100,31 @@ void BinaryTree<T>::insert(T data) {
     }
 }
 
+/**
+ * Print the BS tree in-order: left - visit - right.
+ * @tparam T The Type.
+ */
 template <class T>
 void BinaryTree<T>::inorderPrint() {
-    inorderPrint(root);
+    _inorderPrint(root);
     std::cout << "\n";
 }
 
+/**
+ * Helper method which recursively traverses through the BST to insert nodes in-order.
+ * @tparam T The type.
+ * @param leaf The leaf node.
+ */
 template <class T>
-void BinaryTree<T>::inorderPrint(TreeNode* leaf) {
+void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
+
     if (leaf != nullptr) {
-        inorderPrint(leaf->left);
+        _inorderPrint(leaf->left);
         std::cout << leaf->data << std::endl;
-        inorderPrint(leaf->right);
+        _inorderPrint(leaf->right);
     }
 }
 
-//template <class T>
-//T* BinaryTree<T>::insertNode(T *root, T data) {
-//    if (root == nullptr) {
-//        root = getNewNode(data);
-//    } else if (data <= root->) {
-//        root->left = insertNode(root->left, data);
-//    } else if (data >= root->data) {
-//        root->right = insertNode(root->right, data);
-//    }
-//    return root;
-//}
-
-//template<class T>
-//typename BinaryTree<T>::TreeNode *BinaryTree<T>::insert(TreeNode *root, T data) {
-//
-////    TreeNode *temp = new TreeNode();
-//
-//    if (root == nullptr) {
-//        root = getNewNode();
-//    }
-//    else if (data <= temp->data) {
-//        insert(root->left);
-//    } else
-//        insert(root->right);
-//
-//}
 
 
 
