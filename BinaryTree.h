@@ -22,7 +22,8 @@ public:
     BinaryTree();
     void insert(T data);
     void inorderPrint();
-
+//    std::vector<TreeNode*> search(T data);
+    bool search(T data);
     TreeNode* getRoot();
 
 
@@ -31,6 +32,9 @@ private:
 
     void _insert(T data, TreeNode* leaf);
     void _inorderPrint(TreeNode* leaf);
+    bool _search(T data, TreeNode* leaf);
+//    std::vector<TreeNode*> _search(T data, TreeNode* leaf);
+
 };
 
 template <class T>
@@ -123,6 +127,61 @@ void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
         std::cout << leaf->data << std::endl;
         _inorderPrint(leaf->right);
     }
+}
+
+template <class T>
+bool BinaryTree<T>::_search(T data, TreeNode* leaf) {
+
+    // Create temporary node to keep track of the root.
+//    TreeNode* tempNode = root;
+//
+//    // Create a vector of treenodes.
+//    std::vector<BinaryTree<T>::TreeNode*> vecOfNodes;
+//
+//    // Traverse the BST. If a value in the bst corresponds to a keyword, then add it to the vector.
+//    while (tempNode != nullptr) {
+//        if (tempNode->data.find(data) != std::string::npos) {
+//            vecOfNodes.push_back(*tempNode);
+//        } else if (data < tempNode->data) {
+//            tempNode = tempNode->left;
+//        } else
+//            tempNode = tempNode->right;
+//    }
+//    return vecOfNodes;
+    if (leaf != nullptr) {
+        std::cout << "Not null" << std::endl;
+        if (data == leaf->data) {
+            std::cout << "Found" << std::endl;
+            return true;
+        } else if (data < leaf->data) {
+//            std::cout << leaf->data << std::endl;
+            return _search(data, leaf->left);
+        } else if (data >= leaf->data) {
+//            std::cout << leaf->data << std::endl;
+            return _search(data, leaf->right);
+        }
+    }
+//    std::cout << "Not found" << std::endl;
+    return false;
+//       return false;
+//    TreeNode *nodePtr = root;
+
+//    while (nodePtr) {
+//        if (nodePtr->data == data) {
+//            cout << nodePtr->data << endl;
+//            return true;
+//        }
+//        else if (data < nodePtr->data)
+//            nodePtr = nodePtr->left;
+//        else
+//            nodePtr = nodePtr->right;
+//    }
+//    return false;
+}
+
+template <class T>
+bool BinaryTree<T>::search(T data) {
+    return _search(data, root);
 }
 
 
