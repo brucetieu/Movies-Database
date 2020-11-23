@@ -22,7 +22,8 @@ private:
     std::string winner;
     std::string film;
 
-    BinaryTree<ActorsActresses> *tree;
+    BinaryTree<ActorsActresses> *actorsTree;
+//    ActorsActresses *actorsActresses;
 
 public:
 
@@ -43,9 +44,10 @@ public:
     std::string getName() const;
     std::string getFilm() const;
 
+    // Methods for the database.
     void readInFile();
     void addARecord(std::string year, std::string award, std::string winner, std::string name, std::string film);
-
+    void partialSearchAField(std::string &field, std::string &keyword);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);

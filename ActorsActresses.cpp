@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 //#include "ActorsBST.h"
 #include "ActorsActresses.h"
@@ -12,7 +13,8 @@
 using namespace std;
 
 ActorsActresses::ActorsActresses() {
-    tree = new BinaryTree<ActorsActresses>();
+    actorsTree = new BinaryTree<ActorsActresses>();
+//    actorsActresses = new ActorsActresses();
 
 }
 ActorsActresses::ActorsActresses(string year, string award, string winner, string name,
@@ -45,7 +47,8 @@ bool ActorsActresses::operator>(const ActorsActresses &right) {
 }
 
 bool ActorsActresses::operator==(const ActorsActresses &right) {
-    return name == right.getName();
+    cout << right.getName() << endl;
+    return name.find(right.getName()) != std::string::npos;
 }
 
 bool ActorsActresses::operator>=(const ActorsActresses &right) {
@@ -89,19 +92,56 @@ void ActorsActresses::readInFile() {
             getline(infile, name, ',');
             getline(infile, film, '\n');
 
-            tree->insert(ActorsActresses(year, award, winner, name, film));
+            actorsTree->insert(ActorsActresses(year, award, winner, name, film));
             records++;
         }
     }
-    tree->inorderPrint();
+    actorsTree->inorderPrint();
     cout << "File successfully read" << endl;
 }
 
+/**
+ * Add a record to the ActorsActresses database.
+ * @param year The year to be inserted.
+ * @param award The award.
+ * @param winner The winner.
+ * @param name The name.
+ * @param film The film.
+ */
 void ActorsActresses::addARecord(string year, string award, string winner, string name, string film) {
 
-    tree->insert(ActorsActresses(year, award, winner, name, film));
+    actorsTree->insert(ActorsActresses(year, award, winner, name, film));
     cout << "Record successfully inserted!" << endl;
-    tree->inorderPrint();
+    actorsTree->inorderPrint();
 }
+
+void ActorsActresses::partialSearchAField(string &field, string &keyword) {
+    if (field == "award") {
+        cout << "Keyword: " << keyword << endl;
+        ActorsActresses actorsActresses;
+        actorsActresses.setName(keyword);
+
+        actorsTree->search(actorsActresses);
+//        BinaryTree<ActorsActresses>::TreeNode* result = actorsTree->search(actorsActresses);
+//        actorsTree->search(actorsActresses);
+//        for (int i = 0; i < actorsTree->search(keyword).size(); i++) {
+//            cout <<"Test";
+//        }
+//        BinaryTree<ActorsActresses>::TreeNode* node = new BinaryTree<ActorsActresses>::TreeNode();
+
+//        vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfNodes;
+
+
+//        BinaryTree<ActorsActresses>::TreeNode* treeNode = new BinaryTree<ActorsActresses>::TreeNode();
+//        vector<treeNode> vec = actorsTree->search(keyword);
+//        for (int i = 0; i < vec.size(); i++) {
+//            cout << vec[i].data << endl;
+//        }
+    }
+}
+
+
+
+
 
 
