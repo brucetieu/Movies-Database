@@ -14,7 +14,17 @@ public:
     void mainMenu();
     void subMenuForA();
     void subMenuForB();
+    void subMenuForC();
+
     void subMenuAddRecordInActors();
+    void subMenuSearchRecordInActors();
+
+    void partialSearchActors();
+//    void exactSearchActors();
+
+    void partialSearchAwardActors();
+//    void partialSearchNameActors();
+//    void partialSearchFilmActors();
 
 private:
     ActorsActresses *actorsActresses;
