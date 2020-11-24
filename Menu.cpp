@@ -195,9 +195,10 @@ void Menu::partialSearchActors() {
                 exit(1);
                 break;
             case 'b':
-
+                partialSearchNameActors();
                 break;
             case 'c':
+                partialSearchFilmActors();
                 break;
             case 'd':
                 good = false;
@@ -210,11 +211,31 @@ void Menu::partialSearchActors() {
 }
 
 void Menu::partialSearchAwardActors() {
-    cout << "Enter a keyword to partially search for in the awards field: " << endl;
+    cout << "Enter a keyword to partially search for in the Awards field: " << endl;
 
     string field = "award";
     string awardKeyword;
     getline(cin, awardKeyword);
 
-    actorsActresses->partialSearchAField(field, awardKeyword);
+    actorsActresses->partialFindByAward(field, awardKeyword);
+}
+
+void Menu::partialSearchNameActors() {
+    cout << "Enter a keyword to partially search for in the Name field: " << endl;
+
+    string field = "name";
+    string nameKeyword;
+    getline(cin, nameKeyword);
+
+    actorsActresses->partialFindByName(field, nameKeyword);
+}
+
+void Menu::partialSearchFilmActors() {
+    cout << "Enter a keyword to partially search for in the Film field: " << endl;
+
+    string field = "film";
+    string filmKeyword;
+    getline(cin, filmKeyword);
+
+    actorsActresses->partialFindByFilm(field, filmKeyword);
 }
