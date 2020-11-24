@@ -26,7 +26,8 @@ private:
 
     BinaryTree<ActorsActresses>::TreeNode* root;
 
-    void _inOrderTraversal(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+    void _inOrderTraversalPS(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+    void _inOrderTraversalES(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
 
 //    ActorsActresses *actorsActresses;
 
@@ -52,11 +53,16 @@ public:
     // Methods for the database.
     void readInFile();
     void addARecord(std::string year, std::string award, std::string winner, std::string name, std::string film);
-    void partialSearchAField(std::string &field, std::string &keyword);
 
-    void partialFindByAward(std::string &field, std::string &genreKeyword);
+    // Partial search on a field.
+    void partialFindByAward(std::string &field, std::string &awardKeyword);
     void partialFindByName(std::string &field, std::string &nameKeyword);
     void partialFindByFilm(std::string &field, std::string &filmKeyword);
+
+    // Exact search on a field.
+    void exactFindByAward(std::string &field, std::string &awardKeyword);
+    void exactFindByName(std::string &field, std::string &nameKeyword);
+    void exactFindByFilm(std::string &field, std::string &filmKeyword);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);
