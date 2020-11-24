@@ -23,6 +23,11 @@ private:
     std::string film;
 
     BinaryTree<ActorsActresses> *actorsTree;
+
+    BinaryTree<ActorsActresses>::TreeNode* root;
+
+    void _inOrderTraversal(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+
 //    ActorsActresses *actorsActresses;
 
 public:
@@ -48,6 +53,10 @@ public:
     void readInFile();
     void addARecord(std::string year, std::string award, std::string winner, std::string name, std::string film);
     void partialSearchAField(std::string &field, std::string &keyword);
+
+    void partialFindByAward(std::string &field, std::string &genreKeyword);
+    void partialFindByName(std::string &field, std::string &nameKeyword);
+    void partialFindByFilm(std::string &field, std::string &filmKeyword);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);

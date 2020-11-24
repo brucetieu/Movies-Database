@@ -14,6 +14,7 @@ using namespace std;
 
 ActorsActresses::ActorsActresses() {
     actorsTree = new BinaryTree<ActorsActresses>();
+
 //    actorsActresses = new ActorsActresses();
 
 }
@@ -47,7 +48,8 @@ bool ActorsActresses::operator>(const ActorsActresses &right) {
 }
 
 bool ActorsActresses::operator==(const ActorsActresses &right) {
-    cout << right.getName() << endl;
+//    cout << right.getName() << endl;
+
     return name.find(right.getName()) != std::string::npos;
 }
 
@@ -119,9 +121,11 @@ void ActorsActresses::partialSearchAField(string &field, string &keyword) {
     if (field == "award") {
         cout << "Keyword: " << keyword << endl;
         ActorsActresses actorsActresses;
-        actorsActresses.setName(keyword);
+        actorsActresses.setAward(keyword);
 
         actorsTree->search(actorsActresses);
+
+
 //        BinaryTree<ActorsActresses>::TreeNode* result = actorsTree->search(actorsActresses);
 //        actorsTree->search(actorsActresses);
 //        for (int i = 0; i < actorsTree->search(keyword).size(); i++) {
@@ -138,6 +142,68 @@ void ActorsActresses::partialSearchAField(string &field, string &keyword) {
 //            cout << vec[i].data << endl;
 //        }
     }
+}
+
+void ActorsActresses::partialFindByAward(string &field, string &genreKeyword) {
+    root = actorsTree->getRoot();
+
+    if (field == "award") {
+        _inOrderTraversal(field, genreKeyword, root);
+    }
+}
+
+void ActorsActresses::partialFindByName(std::string &field, std::string &nameKeyword) {
+    root = actorsTree->getRoot();
+
+    if (field == "name") {
+        _inOrderTraversal(field, nameKeyword, root);
+    }
+}
+
+void ActorsActresses::partialFindByFilm(std::string &field, std::string &filmKeyword) {
+    root = actorsTree->getRoot();
+
+    if (field == "film") {
+        _inOrderTraversal(field, filmKeyword, root);
+    }
+}
+
+
+void ActorsActresses::_inOrderTraversal(string field, string data, BinaryTree<ActorsActresses>::TreeNode *root) {
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+
+    if (field == "award") {
+        if (root != nullptr) {
+            _inOrderTraversal(field, data, root->left);
+            if (root->data.getAward().find(data) != std::string::npos) {
+                vecOfTreeNodes.push_back(root);
+            }
+            _inOrderTraversal(field, data, root->right);
+        }
+    }
+    else if (field == "name") {
+        if (root != nullptr) {
+            _inOrderTraversal(field, data, root->left);
+            if (root->data.getName().find(data) != std::string::npos) {
+                vecOfTreeNodes.push_back(root);
+            }
+            _inOrderTraversal(field, data, root->right);
+        }
+    }
+    else if (field == "film") {
+        if (root != nullptr) {
+            _inOrderTraversal(field, data, root->left);
+            if (root->data.getFilm().find(data) != std::string::npos) {
+                vecOfTreeNodes.push_back(root);
+            }
+            _inOrderTraversal(field, data, root->right);
+        }
+    }
+
+    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+        cout << vecOfTreeNodes[i]->data << endl;
+    }
+
 }
 
 
