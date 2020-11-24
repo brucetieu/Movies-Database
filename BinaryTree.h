@@ -131,7 +131,6 @@ void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
 
 template <class T>
 bool BinaryTree<T>::_search(T data, TreeNode* leaf) {
-
     // Create temporary node to keep track of the root.
 //    TreeNode* tempNode = root;
 //
