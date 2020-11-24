@@ -117,7 +117,6 @@ void Menu::subMenuAddRecordInActors() {
     cin >> film;
     cout << "\n";
 
-
     actorsActresses->addARecord(year, award, winner, name, film);
 }
 
@@ -150,9 +149,9 @@ void Menu::subMenuForC() {
 
 void Menu::subMenuSearchRecordInActors() {
     cout << "Choose a search option." << endl;
-    cout << "a. Partial search" << endl;
-    cout << "b. Exact search" << endl;
-    cout << "c. Quit" << endl;
+    cout << "a. Partial search on a field." << endl;
+    cout << "b. Exact search on a field." << endl;
+    cout << "d. Quit" << endl;
 
     bool good = true;
     char choice;
@@ -164,7 +163,7 @@ void Menu::subMenuSearchRecordInActors() {
                 partialSearchActors();
                 break;
             case 'b':
-//                exactSearchActors();
+                exactSearchActors();
                 break;
             case 'c':
                 good = false;
@@ -210,6 +209,40 @@ void Menu::partialSearchActors() {
     }
 }
 
+void Menu::exactSearchActors() {
+    cout << "Choose a field you'd like to exactly search for." << endl;
+    cout << "a. Award" << endl;
+    cout << "b. Name" << endl;
+    cout << "c. Film" << endl;
+    cout << "d. Quit" << endl;
+
+    char choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 'a':
+                exactSearchAwardActors();
+                exit(1);
+                break;
+            case 'b':
+                exactSearchNameActors();
+                break;
+            case 'c':
+                exactSearchFilmActors();
+                break;
+            case 'd':
+                good = false;
+                break;
+            default:
+                good = false;
+                break;
+        }
+    }
+}
+
 void Menu::partialSearchAwardActors() {
     cout << "Enter a keyword to partially search for in the Awards field: " << endl;
 
@@ -238,4 +271,34 @@ void Menu::partialSearchFilmActors() {
     getline(cin, filmKeyword);
 
     actorsActresses->partialFindByFilm(field, filmKeyword);
+}
+
+void Menu::exactSearchAwardActors() {
+    cout << "Enter a keyword to exactly search for in the Award field: " << endl;
+
+    string field = "award";
+    string awardMatch;
+    getline(cin, awardMatch);
+
+    actorsActresses->exactFindByAward(field, awardMatch);
+}
+
+void Menu::exactSearchNameActors() {
+    cout << "Enter a keyword to exactly search for in the Name field: " << endl;
+
+    string field = "name";
+    string nameMatch;
+    getline(cin, nameMatch);
+
+    actorsActresses->exactFindByName(field, nameMatch);
+}
+
+void Menu::exactSearchFilmActors() {
+    cout << "Enter a keyword to exactly search for in the Film field: " << endl;
+
+    string field = "film";
+    string filmMatch;
+    getline(cin, filmMatch);
+
+    actorsActresses->exactFindByFilm(field, filmMatch);
 }

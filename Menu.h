@@ -20,10 +20,15 @@ public:
     void subMenuSearchRecordInActors();
 
     void partialSearchActors();
+    void exactSearchActors();
 
     void partialSearchAwardActors();
     void partialSearchNameActors();
     void partialSearchFilmActors();
+
+    void exactSearchAwardActors();
+    void exactSearchNameActors();
+    void exactSearchFilmActors();
 
 private:
     ActorsActresses *actorsActresses;
