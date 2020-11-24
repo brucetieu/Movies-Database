@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include "BinaryTree.h"
+#include "Menu.h"
 //
 //class ActorsBST;
 //#include "ActorsBST.h"
@@ -17,11 +18,15 @@ using namespace std;
 
 int main()
 {
-    BinaryTree<ActorsActresses> tree;
-
-
-    tree.insert(ActorsActresses("1999", "Award", "Winner", "Name", "Fim"));
-    tree.inorderPrint();
+    Menu menu;
+    menu.mainMenu();
+//    ActorsActresses actorsActresses;
+//    actorsActresses.readInFile();
+//    BinaryTree<ActorsActresses> tree;
+//
+//
+//    tree.insert(ActorsActresses("1999", "Award", "Winner", "Name", "Fim"));
+//    tree.inorderPrint();
 //    tree.insertNode(actorsActresses);
 //    ActorsActresses actorsActresses("1999", "Award", "Winner", "Name", "Fim");
 //    actorsActresses.setYear("1999");
