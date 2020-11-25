@@ -211,10 +211,12 @@ void Menu::partialSearchActors() {
 
 void Menu::exactSearchActors() {
     cout << "Choose a field you'd like to exactly search for." << endl;
-    cout << "a. Award" << endl;
-    cout << "b. Name" << endl;
-    cout << "c. Film" << endl;
-    cout << "d. Quit" << endl;
+    cout << "a. Year" << endl;
+    cout << "b. Award" << endl;
+    cout << "c. Winner" << endl;
+    cout << "d. Name" << endl;
+    cout << "e. Film" << endl;
+    cout << "f. Quit" << endl;
 
     char choice;
     bool good = true;
@@ -224,18 +226,22 @@ void Menu::exactSearchActors() {
     while (good) {
         switch (choice) {
             case 'a':
-                exactSearchActorsField(ActorsActresses::AWARD);
-                exit(1);
+                exactSearchActorsField(ActorsActresses::YEAR);
                 break;
             case 'b':
-                exactSearchActorsField(ActorsActresses::NAME);
+                exactSearchActorsField(ActorsActresses::AWARD);
                 break;
             case 'c':
-                exactSearchActorsField(ActorsActresses::FILM);
+                exactSearchActorsField(ActorsActresses::WINNER);
                 break;
             case 'd':
-                good = false;
+                exactSearchActorsField(ActorsActresses::NAME);
                 break;
+            case 'e':
+                exactSearchActorsField(ActorsActresses::FILM);
+                break;
+            case 'f':
+                exit(1);
             default:
                 good = false;
                 break;

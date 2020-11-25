@@ -23,13 +23,15 @@ public:
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
 
-    void searchActors();
+
+    void partialSearchActors();
+    void exactSearchActors();
 
     void partialSearchActorsField(std::string &field);
-    void partialSearchActors();
+
 
     void exactSearchActorsField(std::string &field);
-    void exactSearchActors();
+
 
 
 private:
