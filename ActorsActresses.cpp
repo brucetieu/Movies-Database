@@ -199,9 +199,44 @@ void ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKe
 }
 
 void ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword) {
+    root = actorsTree->getRoot();
 
+    if (field == ActorsActresses::AWARD) {
+        _inOrderTraversalES(field, fieldKeyword, root);
+    } else if (field == ActorsActresses::NAME) {
+        _inOrderTraversalES(field, fieldKeyword, root);
+    } else if (field == ActorsActresses::FILM) {
+        _inOrderTraversalES(field, fieldKeyword, root);
+    }
 }
 
+void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKeyword,
+                                          BinaryTree<ActorsActresses>::TreeNode *root) {
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+
+    if (root != nullptr) {
+        if (field == ActorsActresses::AWARD) {
+            _inOrderTraversalES(field, fieldKeyword, root->right);
+            if (root->data.getAward() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            _inOrderTraversalES(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::NAME) {
+            _inOrderTraversalES(field, fieldKeyword, root->right);
+            if (root->data.getName() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            _inOrderTraversalES(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::FILM) {
+            _inOrderTraversalPS(field, fieldKeyword, root->right);
+            if (root->data.getFilm() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            _inOrderTraversalPS(field, fieldKeyword, root->left);
+        }
+    }
+
+    // Print out the records which contain a specific keyword from a field.
+    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+        cout << vecOfTreeNodes[i]->data << endl;
+    }
+}
 
 
 

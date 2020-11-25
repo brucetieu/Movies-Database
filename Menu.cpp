@@ -190,14 +190,14 @@ void Menu::partialSearchActors() {
     while (good) {
         switch (choice) {
             case 'a':
-                partialSearchAwardActors();
+                partialSearchActorsField(ActorsActresses::AWARD);
                 exit(1);
                 break;
             case 'b':
-                partialSearchNameActors();
+                partialSearchActorsField(ActorsActresses::NAME);
                 break;
             case 'c':
-                partialSearchFilmActors();
+                partialSearchActorsField(ActorsActresses::FILM);
                 break;
             case 'd':
                 good = false;
@@ -224,14 +224,14 @@ void Menu::exactSearchActors() {
     while (good) {
         switch (choice) {
             case 'a':
-                exactSearchAwardActors();
+                exactSearchActorsField(ActorsActresses::AWARD);
                 exit(1);
                 break;
             case 'b':
-                exactSearchNameActors();
+                exactSearchActorsField(ActorsActresses::NAME);
                 break;
             case 'c':
-                exactSearchFilmActors();
+                exactSearchActorsField(ActorsActresses::FILM);
                 break;
             case 'd':
                 good = false;
@@ -243,62 +243,18 @@ void Menu::exactSearchActors() {
     }
 }
 
-void Menu::partialSearchAwardActors() {
-    cout << "Enter a keyword to partially search for in the Awards field: " << endl;
+void Menu::partialSearchActorsField(std::string &field) {
+    cout << "Enter a keyword to partially search for " << field << " field: ";
 
-    string field = "award";
-    string awardKeyword;
-    getline(cin, awardKeyword);
-
-    actorsActresses->partialFindByAward(field, awardKeyword);
+    string fieldKeyword;
+    getline(cin, fieldKeyword);
+    actorsActresses->partialFindByField(field, fieldKeyword);
 }
 
-void Menu::partialSearchNameActors() {
-    cout << "Enter a keyword to partially search for in the Name field: " << endl;
+void Menu::exactSearchActorsField(std::string &field) {
+    cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
-    string field = "name";
-    string nameKeyword;
-    getline(cin, nameKeyword);
-
-    actorsActresses->partialFindByName(field, nameKeyword);
-}
-
-void Menu::partialSearchFilmActors() {
-    cout << "Enter a keyword to partially search for in the Film field: " << endl;
-
-    string field = "film";
-    string filmKeyword;
-    getline(cin, filmKeyword);
-
-    actorsActresses->partialFindByFilm(field, filmKeyword);
-}
-
-void Menu::exactSearchAwardActors() {
-    cout << "Enter a keyword to exactly search for in the Award field: " << endl;
-
-    string field = "award";
-    string awardMatch;
-    getline(cin, awardMatch);
-
-    actorsActresses->exactFindByAward(field, awardMatch);
-}
-
-void Menu::exactSearchNameActors() {
-    cout << "Enter a keyword to exactly search for in the Name field: " << endl;
-
-    string field = "name";
-    string nameMatch;
-    getline(cin, nameMatch);
-
-    actorsActresses->exactFindByName(field, nameMatch);
-}
-
-void Menu::exactSearchFilmActors() {
-    cout << "Enter a keyword to exactly search for in the Film field: " << endl;
-
-    string field = "film";
-    string filmMatch;
-    getline(cin, filmMatch);
-
-    actorsActresses->exactFindByFilm(field, filmMatch);
+    string fieldKeyword;
+    getline(cin, fieldKeyword);
+    actorsActresses->exactFindByField(field, fieldKeyword);
 }

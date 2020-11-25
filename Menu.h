@@ -8,8 +8,12 @@
 #include "ActorsActresses.h"
 
 
+
 class Menu {
+private:
+
 public:
+//    enum class SearchCriteria {PARTIAL, EXACT};
     Menu();
     void mainMenu();
     void subMenuForA();
@@ -19,16 +23,14 @@ public:
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
 
+    void searchActors();
+
+    void partialSearchActorsField(std::string &field);
     void partialSearchActors();
+
+    void exactSearchActorsField(std::string &field);
     void exactSearchActors();
 
-    void partialSearchAwardActors();
-    void partialSearchNameActors();
-    void partialSearchFilmActors();
-
-    void exactSearchAwardActors();
-    void exactSearchNameActors();
-    void exactSearchFilmActors();
 
 private:
     ActorsActresses *actorsActresses;
