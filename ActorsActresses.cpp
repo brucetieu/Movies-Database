@@ -12,12 +12,16 @@
 
 using namespace std;
 
+string ActorsActresses::AWARD = "award";
+string ActorsActresses::NAME = "name";
+string ActorsActresses::FILM = "film";
+
 /**
  * Default constructor which initializes an Binary Tree of type ActorsActresses.
  */
 ActorsActresses::ActorsActresses() {
-    record = 0;
     actorsTree = new BinaryTree<ActorsActresses>();
+    record = 0;
 }
 
 /**
@@ -155,178 +159,239 @@ void ActorsActresses::addARecord(string year, string award, string winner, strin
     actorsTree->inorderPrint();
 }
 
-/**
- * Partially search for records which contain a keyword in the award field.
- * @param field The specific field to partially search for.
- * @param awardKeyword The award keyword we want to find.
- */
-void ActorsActresses::partialFindByAward(string &field, string &awardKeyword) {
-
-    // Use the same instance from the tree with all the ActorsActresses database.
+void ActorsActresses::partialFindByField(std::string &field, std::string &fieldKeyword) {
     root = actorsTree->getRoot();
 
-    if (field == "award") {
-
-        // Traverse through each node in the BST and add any node which contains the keyword for the field.
-        _inOrderTraversalPS(field, awardKeyword, root);
+    if (field == ActorsActresses::AWARD) {
+//        bool hasAwardKeyword = root->data.getAward().find(fieldKeyword) != string::npos;
+        _inOrderTraversal(field, fieldKeyword, root);
     }
+//    else if (field == ActorsActresses::NAME) {
+//        bool hasNameKeyword = root->data.getName().find(fieldKeyword) != string::npos;
+//        _inOrderTraversal(field, fieldKeyword, root, hasNameKeyword);
+//    } else if (field == ActorsActresses::FILM) {
+//        bool hasFilmKeyword = root->data.getFilm().find(fieldKeyword) != string::npos;
+//        _inOrderTraversal(field, fieldKeyword, root, hasFilmKeyword);
+//    }
 }
 
-/**
- * Partially search for records which contain a keyword in the Name field.
- * @param field The specific field to partially search for.
- * @param nameKeyword The name keyword we want to find.
- */
-void ActorsActresses::partialFindByName(std::string &field, std::string &nameKeyword) {
-    root = actorsTree->getRoot();
-
-    if (field == "name") {
-        _inOrderTraversalPS(field, nameKeyword, root);
-    }
-}
-
-/**
- * Partially search for records which contain a keyword in the Film field.
- * @param field The specific field to partially search for.
- * @param filmKeyword The film keyword we want to find.
- */
-void ActorsActresses::partialFindByFilm(std::string &field, std::string &filmKeyword) {
-    root = actorsTree->getRoot();
-
-    if (field == "film") {
-        _inOrderTraversalPS(field, filmKeyword, root);
-    }
-}
-
-/**
- * Exactly search for records which contain a keyword in the Award field.
- * @param field The specific field to exactly search for.
- * @param awardKeyword The award keyword we want to find.
- */
-void ActorsActresses::exactFindByAward(std::string &field, std::string &awardKeyword) {
-    root = actorsTree->getRoot();
-
-    if (field == "award") {
-        _inOrderTraversalES(field, awardKeyword, root);
-    }
-}
-
-/**
- * Exactly search for records which contain a keyword in the Name field.
- * @param field The specific field to exactly search for.
- * @param nameKeyword The name keyword we want to find.
- */
-void ActorsActresses::exactFindByName(std::string &field, std::string &nameKeyword) {
-
-    root = actorsTree->getRoot();
-
-    if (field == "name") {
-        _inOrderTraversalES(field, nameKeyword, root);
-    }
-}
-
-/**
- * Exactly search for records which contain a keyword in the Award field.
- * @param field The specific field to exactly search for.
- * @param filmKeyword The film keyword we want to find.
- */
-void ActorsActresses::exactFindByFilm(std::string &field, std::string &filmKeyword) {
-    root = actorsTree->getRoot();
-
-    if (field == "film") {
-        _inOrderTraversalES(field, filmKeyword, root);
-    }
-}
-
-/**
- * Traverse through the BST and add any records which contain a keyword we are looking for in a field (PS = Partial search).
- * @param field The specific field (award, name, film).
- * @param data The keyword.
- * @param root The root of the BST.
- */
-void ActorsActresses::_inOrderTraversalPS(string field, string data, BinaryTree<ActorsActresses>::TreeNode *root) {
-
+void ActorsActresses::_inOrderTraversal(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
     vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+    
+    if (root != nullptr) {
+        if (field == ActorsActresses::AWARD) {
+//        if (root != nullptr) {
+            _inOrderTraversal(field, fieldKeyword, root->right);
+            if (root->data.getAward().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            _inOrderTraversal(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::NAME) {
+            _inOrderTraversal(field, fieldKeyword, root->right);
+            if (root->data.getName().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            _inOrderTraversal(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::FILM) {
+            _inOrderTraversal(field, fieldKeyword, root->right);
+            if (root->data.getFilm().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            _inOrderTraversal(field, fieldKeyword, root->left);
+        }
+    }
+//    if (root != nullptr) {
+//        if (field == ActorsActresses::AWARD) {
+//            _inOrderTraversal(field, fieldKeyword, root->right, comparable);
+//            if (comparable) vecOfTreeNodes.push_back(root);
+//            _inOrderTraversal(field, fieldKeyword, root->left, comparable);
+//        } else if (field == ActorsActresses::NAME) {
+//            _inOrderTraversal(field, fieldKeyword, root->right, comparable);
+//            if (comparable) vecOfTreeNodes.push_back(root);
+//            _inOrderTraversal(field, fieldKeyword, root->left, comparable);
+//        } else if (field == ActorsActresses::FILM) {
+//            _inOrderTraversal(field, fieldKeyword, root->right, comparable);
+//            if (comparable) vecOfTreeNodes.push_back(root);
+//            _inOrderTraversal(field, fieldKeyword, root->left, comparable);
+//        }
+//    }
 
-    if (field == "award") {
-        if (root != nullptr) {
-            _inOrderTraversalPS(field, data, root->left);
-            if (root->data.getAward().find(data) != std::string::npos) {
-                vecOfTreeNodes.push_back(root);  // Push any nodes which contain the keyword into the vector.
-            }
-            _inOrderTraversalPS(field, data, root->right);
-        }
-    }
-    else if (field == "name") {
-        if (root != nullptr) {
-            _inOrderTraversalPS(field, data, root->left);
-            if (root->data.getName().find(data) != std::string::npos) {
-                vecOfTreeNodes.push_back(root);
-            }
-            _inOrderTraversalPS(field, data, root->right);
-        }
-    }
-    else if (field == "film") {
-        if (root != nullptr) {
-            _inOrderTraversalPS(field, data, root->left);
-            if (root->data.getFilm().find(data) != std::string::npos) {
-                vecOfTreeNodes.push_back(root);
-            }
-            _inOrderTraversalPS(field, data, root->right);
-        }
-    }
-
-    // Print out the records which contain a specific keyword from a field.
+        // Print out the records which contain a specific keyword from a field.
     for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+        record++;
         cout << vecOfTreeNodes[i]->data << endl;
     }
-
+    cout << record << endl;
 }
 
-/**
- * Traverse through the BST and add any records which contain a keyword we are looking for in a field (ES = Exact search).
- * @param field The specific field (award, name, film).
- * @param data The keyword.
- * @param root The root of the BST.
- */
-void ActorsActresses::_inOrderTraversalES(string field, string data, BinaryTree<ActorsActresses>::TreeNode *root) {
-
-    // Create an empty vector of Binary Tree nodes of type ActorsActresses.
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
-
-    if (field == "award") {
-        if (root != nullptr) {
-            _inOrderTraversalES(field, data, root->left);
-            if (root->data.getAward() == data) {
-                vecOfTreeNodes.push_back(root);  // Push any nodes which contain the keyword into the vector.
-            }
-            _inOrderTraversalES(field, data, root->right);
-        }
-    }
-    else if (field == "name") {
-        if (root != nullptr) {
-            _inOrderTraversalES(field, data, root->left);
-            if (root->data.getName() == data) {
-                vecOfTreeNodes.push_back(root);
-            }
-            _inOrderTraversalES(field, data, root->right);
-        }
-    }
-    else if (field == "film") {
-        if (root != nullptr) {
-            _inOrderTraversalES(field, data, root->left);
-            if (root->data.getFilm() == data) {
-                vecOfTreeNodes.push_back(root);
-            }
-            _inOrderTraversalES(field, data, root->right);
-        }
-    }
-
-    // Print out the records which contain a specific keyword from a field.
-    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
-        cout << vecOfTreeNodes[i]->data << endl;
-    }
-}
+///**
+// * Partially search for records which contain a keyword in the award field.
+// * @param field The specific field to partially search for.
+// * @param awardKeyword The award keyword we want to find.
+// */
+//void ActorsActresses::partialFindByAward(string &field, string &awardKeyword) {
+//
+//    // Use the same instance from the tree with all the ActorsActresses database.
+//    root = actorsTree->getRoot();
+//
+//    if (field == "award") {
+//
+//        // Traverse through each node in the BST and add any node which contains the keyword for the field.
+//        _inOrderTraversalPS(field, awardKeyword, root);
+//    }
+//}
+//
+///**
+// * Partially search for records which contain a keyword in the Name field.
+// * @param field The specific field to partially search for.
+// * @param nameKeyword The name keyword we want to find.
+// */
+//void ActorsActresses::partialFindByName(std::string &field, std::string &nameKeyword) {
+//    root = actorsTree->getRoot();
+//
+//    if (field == "name") {
+//        _inOrderTraversalPS(field, nameKeyword, root);
+//    }
+//}
+//
+///**
+// * Partially search for records which contain a keyword in the Film field.
+// * @param field The specific field to partially search for.
+// * @param filmKeyword The film keyword we want to find.
+// */
+//void ActorsActresses::partialFindByFilm(std::string &field, std::string &filmKeyword) {
+//    root = actorsTree->getRoot();
+//
+//    if (field == "film") {
+//        _inOrderTraversalPS(field, filmKeyword, root);
+//    }
+//}
+//
+///**
+// * Exactly search for records which contain a keyword in the Award field.
+// * @param field The specific field to exactly search for.
+// * @param awardKeyword The award keyword we want to find.
+// */
+//void ActorsActresses::exactFindByAward(std::string &field, std::string &awardKeyword) {
+//    root = actorsTree->getRoot();
+//
+//    if (field == "award") {
+//        _inOrderTraversalES(field, awardKeyword, root);
+//    }
+//}
+//
+///**
+// * Exactly search for records which contain a keyword in the Name field.
+// * @param field The specific field to exactly search for.
+// * @param nameKeyword The name keyword we want to find.
+// */
+//void ActorsActresses::exactFindByName(std::string &field, std::string &nameKeyword) {
+//
+//    root = actorsTree->getRoot();
+//
+//    if (field == "name") {
+//        _inOrderTraversalES(field, nameKeyword, root);
+//    }
+//}
+//
+///**
+// * Exactly search for records which contain a keyword in the Award field.
+// * @param field The specific field to exactly search for.
+// * @param filmKeyword The film keyword we want to find.
+// */
+//void ActorsActresses::exactFindByFilm(std::string &field, std::string &filmKeyword) {
+//    root = actorsTree->getRoot();
+//
+//    if (field == "film") {
+//        _inOrderTraversalES(field, filmKeyword, root);
+//    }
+//}
+//
+///**
+// * Traverse through the BST and add any records which contain a keyword we are looking for in a field (PS = Partial search).
+// * @param field The specific field (award, name, film).
+// * @param data The keyword.
+// * @param root The root of the BST.
+// */
+//void ActorsActresses::_inOrderTraversalPS(string field, string data, BinaryTree<ActorsActresses>::TreeNode *root) {
+//
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+//
+//    if (field == "award") {
+//        if (root != nullptr) {
+//            _inOrderTraversalPS(field, data, root->left);
+//            if (root->data.getAward().find(data) != std::string::npos) {
+//                vecOfTreeNodes.push_back(root);  // Push any nodes which contain the keyword into the vector.
+//            }
+//            _inOrderTraversalPS(field, data, root->right);
+//        }
+//    }
+//    else if (field == "name") {
+//        if (root != nullptr) {
+//            _inOrderTraversalPS(field, data, root->left);
+//            if (root->data.getName().find(data) != std::string::npos) {
+//                vecOfTreeNodes.push_back(root);
+//            }
+//            _inOrderTraversalPS(field, data, root->right);
+//        }
+//    }
+//    else if (field == "film") {
+//        if (root != nullptr) {
+//            _inOrderTraversalPS(field, data, root->left);
+//            if (root->data.getFilm().find(data) != std::string::npos) {
+//                vecOfTreeNodes.push_back(root);
+//            }
+//            _inOrderTraversalPS(field, data, root->right);
+//        }
+//    }
+//
+//    // Print out the records which contain a specific keyword from a field.
+//    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+//        cout << vecOfTreeNodes[i]->data << endl;
+//    }
+//
+//}
+//
+///**
+// * Traverse through the BST and add any records which contain a keyword we are looking for in a field (ES = Exact search).
+// * @param field The specific field (award, name, film).
+// * @param data The keyword.
+// * @param root The root of the BST.
+// */
+//void ActorsActresses::_inOrderTraversalES(string field, string data, BinaryTree<ActorsActresses>::TreeNode *root) {
+//
+//    // Create an empty vector of Binary Tree nodes of type ActorsActresses.
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+//
+//    if (field == "award") {
+//        if (root != nullptr) {
+//            _inOrderTraversalES(field, data, root->left);
+//            if (root->data.getAward() == data) {
+//                vecOfTreeNodes.push_back(root);  // Push any nodes which contain the keyword into the vector.
+//            }
+//            _inOrderTraversalES(field, data, root->right);
+//        }
+//    }
+//    else if (field == "name") {
+//        if (root != nullptr) {
+//            _inOrderTraversalES(field, data, root->left);
+//            if (root->data.getName() == data) {
+//                vecOfTreeNodes.push_back(root);
+//            }
+//            _inOrderTraversalES(field, data, root->right);
+//        }
+//    }
+//    else if (field == "film") {
+//        if (root != nullptr) {
+//            _inOrderTraversalES(field, data, root->left);
+//            if (root->data.getFilm() == data) {
+//                vecOfTreeNodes.push_back(root);
+//            }
+//            _inOrderTraversalES(field, data, root->right);
+//        }
+//    }
+//
+//    // Print out the records which contain a specific keyword from a field.
+//    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+//        cout << vecOfTreeNodes[i]->data << endl;
+//    }
+//}
 
 
 

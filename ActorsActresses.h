@@ -22,16 +22,22 @@ private:
     std::string winner;
     std::string film;
 
+    int record;
+
     BinaryTree<ActorsActresses> *actorsTree;
 
     BinaryTree<ActorsActresses>::TreeNode* root;
 
-    void _inOrderTraversalPS(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
-    void _inOrderTraversalES(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+    void _inOrderTraversal(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
+//    void _inOrderTraversalPS(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+//    void _inOrderTraversalES(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
 
 //    ActorsActresses *actorsActresses;
 
 public:
+    static std::string AWARD;
+    static std::string NAME;
+    static std::string FILM;
 
     ActorsActresses();
     ActorsActresses(std::string year, std::string award, std::string winner, std::string name, std::string film);
@@ -55,14 +61,15 @@ public:
     void addARecord(std::string year, std::string award, std::string winner, std::string name, std::string film);
 
     // Partial search on a field.
-    void partialFindByAward(std::string &field, std::string &awardKeyword);
-    void partialFindByName(std::string &field, std::string &nameKeyword);
-    void partialFindByFilm(std::string &field, std::string &filmKeyword);
-
-    // Exact search on a field.
-    void exactFindByAward(std::string &field, std::string &awardKeyword);
-    void exactFindByName(std::string &field, std::string &nameKeyword);
-    void exactFindByFilm(std::string &field, std::string &filmKeyword);
+    void partialFindByField(std::string &field, std::string &fieldKeyword);
+//    void partialFindByAward(std::string &field, std::string &awardKeyword);
+//    void partialFindByName(std::string &field, std::string &nameKeyword);
+//    void partialFindByFilm(std::string &field, std::string &filmKeyword);
+//
+//    // Exact search on a field.
+//    void exactFindByAward(std::string &field, std::string &awardKeyword);
+//    void exactFindByName(std::string &field, std::string &nameKeyword);
+//    void exactFindByFilm(std::string &field, std::string &filmKeyword);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);
