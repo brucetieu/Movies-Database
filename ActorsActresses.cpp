@@ -12,7 +12,9 @@
 
 using namespace std;
 
+string ActorsActresses::YEAR = "year";
 string ActorsActresses::AWARD = "award";
+string ActorsActresses::WINNER = "winner";
 string ActorsActresses::NAME = "name";
 string ActorsActresses::FILM = "film";
 
@@ -201,7 +203,11 @@ void ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKe
 void ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword) {
     root = actorsTree->getRoot();
 
-    if (field == ActorsActresses::AWARD) {
+    if (field == ActorsActresses::YEAR) {
+        _inOrderTraversalES(field, fieldKeyword, root);
+    } else if (field == ActorsActresses::AWARD) {
+        _inOrderTraversalES(field, fieldKeyword, root);
+    } else if (field == ActorsActresses::WINNER){
         _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::NAME) {
         _inOrderTraversalES(field, fieldKeyword, root);
@@ -215,7 +221,12 @@ void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKe
     vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
     if (root != nullptr) {
-        if (field == ActorsActresses::AWARD) {
+        if (field == ActorsActresses::YEAR) {
+            _inOrderTraversalES(field, fieldKeyword, root->right);
+            if (root->data.getYear() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            _inOrderTraversalES(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::AWARD) {
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (root->data.getAward() == fieldKeyword) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
@@ -223,6 +234,11 @@ void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKe
         else if (field == ActorsActresses::NAME) {
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (root->data.getName() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            _inOrderTraversalES(field, fieldKeyword, root->left);
+        }
+        else if (field == ActorsActresses::WINNER) {
+            _inOrderTraversalES(field, fieldKeyword, root->right);
+            if (root->data.getWinner() == fieldKeyword) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::FILM) {

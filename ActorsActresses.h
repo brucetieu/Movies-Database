@@ -34,7 +34,9 @@ private:
 //    ActorsActresses *actorsActresses;
 
 public:
+    static std::string YEAR;
     static std::string AWARD;
+    static std::string WINNER;
     static std::string NAME;
     static std::string FILM;
 
