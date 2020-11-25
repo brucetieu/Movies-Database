@@ -28,9 +28,8 @@ private:
 
     BinaryTree<ActorsActresses>::TreeNode* root;
 
-    void _inOrderTraversal(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
-//    void _inOrderTraversalPS(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
-//    void _inOrderTraversalES(std::string field, std::string data, BinaryTree<ActorsActresses>::TreeNode* root);
+    void _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
+    void _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
 //    ActorsActresses *actorsActresses;
 
@@ -62,14 +61,8 @@ public:
 
     // Partial search on a field.
     void partialFindByField(std::string &field, std::string &fieldKeyword);
-//    void partialFindByAward(std::string &field, std::string &awardKeyword);
-//    void partialFindByName(std::string &field, std::string &nameKeyword);
-//    void partialFindByFilm(std::string &field, std::string &filmKeyword);
-//
-//    // Exact search on a field.
-//    void exactFindByAward(std::string &field, std::string &awardKeyword);
-//    void exactFindByName(std::string &field, std::string &nameKeyword);
-//    void exactFindByFilm(std::string &field, std::string &filmKeyword);
+    void exactFindByField(std::string &field, std::string &fieldKeyword);
+
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);
