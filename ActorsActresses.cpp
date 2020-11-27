@@ -6,12 +6,12 @@
 #include <string>
 #include <vector>
 
-//#include "ActorsBST.h"
 #include "ActorsActresses.h"
 #include "BinaryTree.h"
 
 using namespace std;
 
+// TODO: Probably should use an enum type.
 string ActorsActresses::YEAR = "year";
 string ActorsActresses::AWARD = "award";
 string ActorsActresses::WINNER = "winner";
@@ -22,6 +22,8 @@ string ActorsActresses::FILM = "film";
  * Default constructor which initializes an Binary Tree of type ActorsActresses.
  */
 ActorsActresses::ActorsActresses() {
+
+    // Initialize a new BinaryTree holding ActorsActresses objects as nodes.
     actorsTree = new BinaryTree<ActorsActresses>();
     record = 0;
 }
@@ -112,7 +114,7 @@ ostream& operator << (ostream &output, const ActorsActresses &actor) {
 /**
  * Read in "actor-actresses.csv" into a BST.
  */
-void ActorsActresses::readInFile() {
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
 
     string header;
 
@@ -143,7 +145,14 @@ void ActorsActresses::readInFile() {
 
     // Print out the contents in order by Name field.
     actorsTree->inorderPrint();
+
+    // TODO: Return a root when the file is read. Then, pass in that root as needed.
+    // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
+    root = actorsTree->getRoot();
+
     cout << "File successfully read" << endl;
+
+    return root;
 }
 
 /**
@@ -154,29 +163,67 @@ void ActorsActresses::readInFile() {
  * @param name The name of the actor / actress.
  * @param film The name of the film.
  */
-void ActorsActresses::addARecord(string year, string award, string winner, string name, string film) {
+void ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film) {
 
     actorsTree->insert(ActorsActresses(year, award, winner, name, film));
     cout << "Record successfully inserted!" << endl;
     actorsTree->inorderPrint();
 }
 
-void ActorsActresses::partialFindByField(std::string &field, std::string &fieldKeyword) {
-    root = actorsTree->getRoot();
+// TODO: Pass in a root here. Here, the root is still the root which was read into from the file.
+/**
+ * Find a record by a partially searched fields.
+ * @param field The specific field.
+ * @param fieldKeyword The keyword a user uses.
+ * @param root Here, The root is the BST which contains all the results returned from the partial search.
+ * @return A new root pointing to the node which contains all the results from the partial search.
+ */
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
+
+    // We have the clear this vector because we are recursively adding new TreeNodes of partial matches to it.
+    vecOfTreeNodes.clear();
+
+    // Temporary vector of nodes to hold all the partial search records.
+    vector<BinaryTree<ActorsActresses>::TreeNode*> tempRootVec;
 
     if (field == ActorsActresses::AWARD) {
-        _inOrderTraversalPS(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
+        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     } else if (field == ActorsActresses::NAME) {
-        _inOrderTraversalPS(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
+        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     } else if (field == ActorsActresses::FILM) {
-        _inOrderTraversalPS(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
+        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     }
+
+    // Print out the records which contain a specific keyword from a field.
+    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+        cout << vecOfTreeNodes[i]->data << endl;
+    }
+
+    return searchWithinASearch(tempRootVec); // Should contain all nodes from the partial search. The new root.
 }
 
-void ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
+/**
+ * Recursively traverse through the BST and add nodes to vecOfTreeNodes if a node has a field which matches the keyword.
+ * @param field The specific field.
+ * @param fieldKeyword The keyword specified by the user.
+ * @param root Here, the root points to the node with all the partially searched results.
+ * @return The vector of TreeNode pointers which hold all of the records partially searched for based on field.
+ */
+vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
 
-    if (root != nullptr) {
+    // TODO: Using the vecOfTreeNodes, assemble a new BST with a new root.
+
+    // Base case: If the root is null, just return an empty vector.
+    if (root == nullptr) {
+        return vecOfTreeNodes; // Contains all the nodes from the partial search.
+    }
+
+    // Recursive case: Root is not empty.
+    // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
+    else if (root != nullptr) {
         if (field == ActorsActresses::AWARD) {
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (root->data.getAward().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
@@ -194,14 +241,11 @@ void ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKe
         }
     }
 
-    // Print out the records which contain a specific keyword from a field.
-    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
-        cout << vecOfTreeNodes[i]->data << endl;
-    }
+    return vecOfTreeNodes;
 }
 
 void ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword) {
-    root = actorsTree->getRoot();
+//    root = actorsTree->getRoot();
 
     if (field == ActorsActresses::YEAR) {
         _inOrderTraversalES(field, fieldKeyword, root);
@@ -253,6 +297,27 @@ void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKe
         cout << vecOfTreeNodes[i]->data << endl;
     }
 }
+
+/**
+ * For each partial search, create a new binary tree out of it to update the root.
+ * @param tempVec The vector of TreeNodes of partial searches.
+ * @return A new root to hold nodes partially searched for.
+ */
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec) {
+
+    // Create a new instance of BinaryTree object.
+    BinaryTree<ActorsActresses> *tempTree = new BinaryTree<ActorsActresses>();
+
+    // For each node in the vector, insert it into the new BST.
+    for (int i = 0; i < tempVec.size(); i++) {
+        tempTree->insert(tempVec[i]->data);
+    }
+
+    // Return the root of this new BST to recurse on. 
+    return tempTree->getRoot();
+}
+
+
 
 
 

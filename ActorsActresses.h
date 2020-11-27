@@ -7,6 +7,7 @@
 #include <string>
 #include "BinaryTree.h"
 #include <fstream>
+#include <vector>
 //#include "Database.h"
 //#include "ActorsBST.h"
 
@@ -25,13 +26,13 @@ private:
     int record;
 
     BinaryTree<ActorsActresses> *actorsTree;
-
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
     BinaryTree<ActorsActresses>::TreeNode* root;
 
-    void _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
+    std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     void _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
-//    ActorsActresses *actorsActresses;
+    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
 public:
     static std::string YEAR;
@@ -58,13 +59,15 @@ public:
     std::string getFilm() const;
 
     // Methods for the database.
-    void readInFile();
-    void addARecord(std::string year, std::string award, std::string winner, std::string name, std::string film);
+    BinaryTree<ActorsActresses>::TreeNode* readInFile();
+//    void readInFile();
+    void addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
 
     // Partial search on a field.
-    void partialFindByField(std::string &field, std::string &fieldKeyword);
+    BinaryTree<ActorsActresses>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     void exactFindByField(std::string &field, std::string &fieldKeyword);
 
+    BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);
