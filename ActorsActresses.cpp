@@ -202,7 +202,7 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
         cout << vecOfTreeNodes[i]->data << endl;
     }
 
-    return searchWithinASearch(tempRootVec); // Should contain all nodes from the partial search. The new root.
+    return searchWithinASearch(tempRootVec); // Should contain all nodes from the partial search. The new root from the new BST.
 }
 
 /**
@@ -313,7 +313,7 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
         tempTree->insert(tempVec[i]->data);
     }
 
-    // Return the root of this new BST to recurse on. 
+    // Return the root of this new BST to recurse on.
     return tempTree->getRoot();
 }
 
