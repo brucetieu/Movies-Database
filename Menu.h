@@ -7,8 +7,9 @@
 
 #include "ActorsActresses.h"
 
-
-
+/**
+ * Create menu driven system to navigate through the database.
+ */
 class Menu {
 private:
 
@@ -23,19 +24,22 @@ public:
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
 
-
     void partialSearchActors();
     void exactSearchActors();
 
-    void partialSearchActorsField(std::string &field);
-
-
+    BinaryTree<ActorsActresses>::TreeNode* partialSearchActorsField(std::string &field);
     void exactSearchActorsField(std::string &field);
+
+    void afterSearchActors();
+    void searchAgainActors();
+
 
 
 
 private:
-    ActorsActresses *actorsActresses;
+    ActorsActresses *actorsActresses;  // Declare pointer to ActorsActresses object.
+
+    BinaryTree<ActorsActresses>::TreeNode* root; // Create the root for the BST.
 };
 
 

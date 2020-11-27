@@ -4,19 +4,30 @@
 
 #include "Menu.h"
 #include "ActorsActresses.h"
+#include "BinaryTree.h"
+#include <vector>
 #include <iostream>
 
 using namespace std;
 
+/**
+ * Initialize ActorsActresses object within the default constructor.
+ */
 Menu::Menu() {
+    // Dynamically create a new ActorsActresses object.
     actorsActresses = new ActorsActresses();
 }
+
+/**
+ * Display the main menu.
+ */
 void Menu::mainMenu() {
-    cout << "--------------------Main Menu-------------------------" << endl;
+    cout << "=====================Main Menu=========================" << endl;
     cout << "a. Read in a file" << endl;
     cout << "b. Add a record" << endl;
     cout << "c. Search a record" << endl;
     cout << "q. Quit" << endl;
+    cout << "=======================================================" << endl;
 
     bool good = true;
 
@@ -26,15 +37,15 @@ void Menu::mainMenu() {
     while (good) {
         switch (choice) {
             case 'a':
-                subMenuForA();
+                subMenuForA(); // Submenu for a. Read in File.
                 break;
 
             case 'b':
-                subMenuForB();
+                subMenuForB(); // Submenu for b. Add a record.
                 break;
 
             case 'c':
-                subMenuForC();
+                subMenuForC(); // Submenu for c. Search a record.
                 break;
 
             case 'q':
@@ -47,6 +58,9 @@ void Menu::mainMenu() {
     }
 }
 
+/**
+ * Create submenu for reading in file.
+ */
 void Menu::subMenuForA() {
     cout << "Choose the database to read the file into." << endl;
     cout << "1. Actors Actresses Database" << endl;
@@ -60,7 +74,8 @@ void Menu::subMenuForA() {
     while (good) {
         switch(choice) {
             case 1: {
-                actorsActresses->readInFile();
+                // Store each record in the BST, each represents a node. We start at the root.
+                root = actorsActresses->readInFile();
                 mainMenu();
                 break;
             }
@@ -75,6 +90,9 @@ void Menu::subMenuForA() {
     }
 }
 
+/**
+ * Create submenu for choosing which database to add a record to.
+ */
 void Menu::subMenuForB() {
     cout << "Choose which database you want to add a record in." << endl;
     cout << "1. Actors Actresses Database" << endl;
@@ -88,7 +106,7 @@ void Menu::subMenuForB() {
     while (good) {
         switch (choice) {
             case 1:
-                subMenuAddRecordInActors();
+                subMenuAddRecordInActors(); // Display submenu for adding records to a database.
                 mainMenu();
                 break;
 
@@ -102,9 +120,13 @@ void Menu::subMenuForB() {
     }
 }
 
+/**
+ * Create the submenu for adding records into the ActorsActresses db.
+ */
 void Menu::subMenuAddRecordInActors() {
     string year, award, winner, name, film;
 
+    /// Prompt user to enter something for each field to be added as 1 record.
     cout << "Insert Year: ";
     cin >> year;
     cout << "Insert Award: ";
@@ -117,9 +139,13 @@ void Menu::subMenuAddRecordInActors() {
     cin >> film;
     cout << "\n";
 
+    // Add this record to the BST.
     actorsActresses->addARecord(year, award, winner, name, film);
 }
 
+/**
+ * Create the submenu for searching a record.
+ */
 void Menu::subMenuForC() {
     cout << "Choose which database you want to search for a record in." << endl;
     cout << "1. Actors Actresses Database" << endl;
@@ -133,7 +159,7 @@ void Menu::subMenuForC() {
     while (good) {
         switch (choice) {
             case 1:
-                subMenuSearchRecordInActors();
+                subMenuSearchRecordInActors(); // Display the submenu which lets user choose partial or exact search.
                 break;
 
             case 3:
@@ -147,6 +173,9 @@ void Menu::subMenuForC() {
 
 }
 
+/**
+ * Create the submenu for partial / exact searches on a record.
+ */
 void Menu::subMenuSearchRecordInActors() {
     cout << "Choose a search option." << endl;
     cout << "a. Partial search on a field." << endl;
@@ -160,7 +189,7 @@ void Menu::subMenuSearchRecordInActors() {
     while (good) {
         switch (choice) {
             case 'a':
-                partialSearchActors();
+                partialSearchActors(); // Display submenu which lets user select which fields they'd like to partially search for.
                 break;
             case 'b':
                 exactSearchActors();
@@ -175,6 +204,9 @@ void Menu::subMenuSearchRecordInActors() {
     }
 }
 
+/**
+ * Create the menu which allows a user to choose a field in a db they'd like to search for.
+ */
 void Menu::partialSearchActors() {
     cout << "Choose a field you'd like to partially search for." << endl;
     cout << "a. Award" << endl;
@@ -189,15 +221,28 @@ void Menu::partialSearchActors() {
 
     while (good) {
         switch (choice) {
+
+            // Partial search on Award field.
             case 'a':
-                partialSearchActorsField(ActorsActresses::AWARD);
-                exit(1);
+
+                // The new root will be the BST which contains all the results returned from the partial search.
+                root = partialSearchActorsField(ActorsActresses::AWARD);
+
+                // Display the menu which prompts a user to search again within the existing search results, or perform a new search.
+                afterSearchActors();
+                good = false;
                 break;
+
+            // Partial search on Name field.
             case 'b':
-                partialSearchActorsField(ActorsActresses::NAME);
+                root = partialSearchActorsField(ActorsActresses::NAME);
+                afterSearchActors();
                 break;
+
+            // Partial search on Name field.
             case 'c':
-                partialSearchActorsField(ActorsActresses::FILM);
+                root = partialSearchActorsField(ActorsActresses::FILM);
+                afterSearchActors();
                 break;
             case 'd':
                 good = false;
@@ -249,12 +294,21 @@ void Menu::exactSearchActors() {
     }
 }
 
-void Menu::partialSearchActorsField(std::string &field) {
-    cout << "Enter a keyword to partially search for " << field << " field: ";
+/**
+ * Perform a partial search on any given field.
+ * @param field The specific field (Award, Name, or Film).
+ * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
+ */
+BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::string &field) {
+    cout << "Enter a keyword to partially search for in " << field << " field: ";
 
     string fieldKeyword;
     getline(cin, fieldKeyword);
-    actorsActresses->partialFindByField(field, fieldKeyword);
+
+    // tempRoot is the new root which stores all nodes from the partial search.
+    BinaryTree<ActorsActresses>::TreeNode* tempRoot = actorsActresses->partialFindByField(field, fieldKeyword, root);
+
+    return tempRoot; // Contains all the results from our partial search.
 }
 
 void Menu::exactSearchActorsField(std::string &field) {
@@ -264,3 +318,34 @@ void Menu::exactSearchActorsField(std::string &field) {
     getline(cin, fieldKeyword);
     actorsActresses->exactFindByField(field, fieldKeyword);
 }
+
+/**
+ * Create the menu to prompt user to perform a secondary search, or start over.
+ */
+void Menu::afterSearchActors() {
+    cout << "a. Search within these results?" << endl;
+    cout << "b. Start a new search?" << endl;
+    cout << "c. Quit" << endl;
+
+    char choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 'a':
+                subMenuSearchRecordInActors(); // Bring the user back to the menu to choose a partial search or exact search.
+                break;
+            case 'b':
+
+                break;
+            case 'c':
+                exit(1);
+            default:
+                good = false;
+                break;
+        }
+    }
+}
+
