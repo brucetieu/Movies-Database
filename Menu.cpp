@@ -271,19 +271,24 @@ void Menu::exactSearchActors() {
     while (good) {
         switch (choice) {
             case 'a':
-                exactSearchActorsField(ActorsActresses::YEAR);
+                root = exactSearchActorsField(ActorsActresses::YEAR);
+                afterSearchActors();
                 break;
             case 'b':
-                exactSearchActorsField(ActorsActresses::AWARD);
+                root = exactSearchActorsField(ActorsActresses::AWARD);
+                afterSearchActors();
                 break;
             case 'c':
-                exactSearchActorsField(ActorsActresses::WINNER);
+                root = exactSearchActorsField(ActorsActresses::WINNER);
+                afterSearchActors();
                 break;
             case 'd':
-                exactSearchActorsField(ActorsActresses::NAME);
+                root = exactSearchActorsField(ActorsActresses::NAME);
+                afterSearchActors();
                 break;
             case 'e':
-                exactSearchActorsField(ActorsActresses::FILM);
+                root = exactSearchActorsField(ActorsActresses::FILM);
+                afterSearchActors();
                 break;
             case 'f':
                 exit(1);
@@ -311,12 +316,16 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::strin
     return tempRoot; // Contains all the results from our partial search.
 }
 
-void Menu::exactSearchActorsField(std::string &field) {
+BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string &field) {
     cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
     string fieldKeyword;
     getline(cin, fieldKeyword);
-    actorsActresses->exactFindByField(field, fieldKeyword);
+
+    // tempRoot is the new root which stores all nodes from the exact search, if any.
+    BinaryTree<ActorsActresses>::TreeNode* tempRoot = actorsActresses->exactFindByField(field, fieldKeyword, root);
+
+    return tempRoot;
 }
 
 /**

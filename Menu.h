@@ -28,7 +28,7 @@ public:
     void exactSearchActors();
 
     BinaryTree<ActorsActresses>::TreeNode* partialSearchActorsField(std::string &field);
-    void exactSearchActorsField(std::string &field);
+    BinaryTree<ActorsActresses>::TreeNode* exactSearchActorsField(std::string &field);
 
     void afterSearchActors();
     void searchAgainActors();

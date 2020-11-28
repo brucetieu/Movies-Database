@@ -188,14 +188,13 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
 
     if (field == ActorsActresses::AWARD) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
-        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     } else if (field == ActorsActresses::NAME) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
-        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     } else if (field == ActorsActresses::FILM) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
-        cout << "Size of vector with partial searches: " << tempRootVec.size() << endl;
     }
+
+    cout << "Number of partial searches returned: " << tempRootVec.size() << endl;
 
     // Print out the records which contain a specific keyword from a field.
     for (int i = 0; i < vecOfTreeNodes.size(); i++) {
@@ -244,27 +243,41 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     return vecOfTreeNodes;
 }
 
-void ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword) {
-//    root = actorsTree->getRoot();
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
+    vecOfTreeNodes.clear();
+
+    vector<BinaryTree<ActorsActresses>::TreeNode*> tempRootVec;
 
     if (field == ActorsActresses::YEAR) {
-        _inOrderTraversalES(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::AWARD) {
-        _inOrderTraversalES(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::WINNER){
-        _inOrderTraversalES(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::NAME) {
-        _inOrderTraversalES(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::FILM) {
-        _inOrderTraversalES(field, fieldKeyword, root);
+        tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     }
+
+    cout << "Number of exact searches returned: " << tempRootVec.size() << endl;
+
+    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+        cout << vecOfTreeNodes[i]->data << endl;
+    }
+
+    return searchWithinASearch(tempRootVec);
 }
 
-void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKeyword,
+vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKeyword,
                                           BinaryTree<ActorsActresses>::TreeNode *root) {
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
-    if (root != nullptr) {
+    // Base case: If the root is null, just return an empty vector.
+    if (root == nullptr) {
+        return vecOfTreeNodes; // Contains all the nodes from the partial search.
+    }
+
+    else if (root != nullptr) {
         if (field == ActorsActresses::YEAR) {
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (root->data.getYear() == fieldKeyword) vecOfTreeNodes.push_back(root);
@@ -292,10 +305,7 @@ void ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKe
         }
     }
 
-    // Print out the records which contain a specific keyword from a field.
-    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
-        cout << vecOfTreeNodes[i]->data << endl;
-    }
+    return vecOfTreeNodes;
 }
 
 /**
