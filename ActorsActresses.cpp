@@ -144,7 +144,7 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
     }
 
     // Print out the contents in order by Name field.
-    actorsTree->inorderPrint();
+//    actorsTree->inorderPrint();
 
     // TODO: Return a root when the file is read. Then, pass in that root as needed.
     // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.

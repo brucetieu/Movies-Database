@@ -347,7 +347,9 @@ void Menu::afterSearchActors() {
                 subMenuSearchRecordInActors(); // Bring the user back to the menu to choose a partial search or exact search.
                 break;
             case 'b':
-
+                // Reset the root to the BST with original data.
+                root = actorsActresses->readInFile();
+                subMenuSearchRecordInActors();
                 break;
             case 'c':
                 exit(1);
