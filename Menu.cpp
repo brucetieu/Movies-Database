@@ -334,7 +334,10 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
 void Menu::afterSearchActors() {
     cout << "a. Search within these results?" << endl;
     cout << "b. Start a new search?" << endl;
-    cout << "c. Quit" << endl;
+    if (root->left == nullptr && root->right == nullptr) {
+        cout << "c. Modify this record's fields?" << endl;
+    }
+    cout << "d. Quit" << endl;
 
     char choice;
     bool good = true;
@@ -352,6 +355,8 @@ void Menu::afterSearchActors() {
                 subMenuSearchRecordInActors();
                 break;
             case 'c':
+                break;
+            case 'd':
                 exit(1);
             default:
                 good = false;
