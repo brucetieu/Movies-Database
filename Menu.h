@@ -33,6 +33,8 @@ public:
     void afterSearchActors();
     void searchAgainActors();
 
+    void modifyARecordInActors();
+
 
 
 

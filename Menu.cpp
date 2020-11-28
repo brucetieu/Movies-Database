@@ -334,6 +334,8 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
 void Menu::afterSearchActors() {
     cout << "a. Search within these results?" << endl;
     cout << "b. Start a new search?" << endl;
+
+    // If the search returns only one record, allow the user to modify the record.
     if (root->left == nullptr && root->right == nullptr) {
         cout << "c. Modify this record's fields?" << endl;
     }
@@ -355,6 +357,7 @@ void Menu::afterSearchActors() {
                 subMenuSearchRecordInActors();
                 break;
             case 'c':
+                modifyARecordInActors();
                 break;
             case 'd':
                 exit(1);
@@ -363,5 +366,36 @@ void Menu::afterSearchActors() {
                 break;
         }
     }
+}
+
+void Menu::modifyARecordInActors() {
+    BinaryTree<ActorsActresses> bst;
+    string year, award, winner, name, film;
+
+    cout << "Change each of the following fields to modify this record: " << endl;
+    cout << "New year: ";
+    getline(cin, year);
+    cout << "New award: ";
+    getline(cin, award);
+    cout << "New winner: ";
+    getline(cin, winner);
+    cout << "New name: ";
+    getline(cin, name);
+    cout << "New film: ";
+    getline(cin, film);
+
+    root->data.setYear(year);
+    root->data.setAward(award);
+    root->data.setName(name);
+    root->data.setWinner(winner);
+    root->data.setFilm(film);
+
+    cout << endl;
+    cout << "Your modified record: " << endl;
+    cout << root->data << endl;
+
+    subMenuSearchRecordInActors();
+
+
 }
 
