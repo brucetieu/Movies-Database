@@ -23,7 +23,7 @@ private:
     std::string winner;
     std::string film;
 
-    int record;
+    int records;
 
     BinaryTree<ActorsActresses> *actorsTree;
 //    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
@@ -34,12 +34,38 @@ private:
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
+//    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodesForSorting;
+
 public:
+
+    static std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodesForSorting;
+
     static std::string YEAR;
     static std::string AWARD;
     static std::string WINNER;
     static std::string NAME;
     static std::string FILM;
+
+    struct SortByFieldComparator {
+        SortByFieldComparator(std::string &field) {this->field = field;}
+        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+            if (field == ActorsActresses::YEAR) {
+                return left->data.getYear() < right->data.getYear();
+            } else if (field == ActorsActresses::AWARD) {
+                return left->data.getAward() < right->data.getAward();
+            } else if (field == ActorsActresses::WINNER) {
+                return left->data.getWinner() < right->data.getWinner();
+            } else if (field == ActorsActresses::NAME) {
+                return left->data.getName() < right->data.getName();
+            }
+            return left->data.getFilm() < right->data.getFilm();
+        }
+        std::string field;
+    };
+//    struct sortByFieldComparator {
+//        bool operator(ActorsActresses &left, ActorsActresses &right);
+//    };
+
 
     ActorsActresses();
     ActorsActresses(std::string year, std::string award, std::string winner, std::string name, std::string film);
@@ -57,6 +83,11 @@ public:
     std::string getWinner() const;
     std::string getName() const;
     std::string getFilm() const;
+    int getRecords() const;
+
+    std::vector<BinaryTree<ActorsActresses>::TreeNode*> getVecOfTreeNodesForSorting();
+
+
 
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();
@@ -69,6 +100,13 @@ public:
 
     BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec);
 
+//    void sortByField(std::string &field, BinaryTree<ActorsActresses>::TreeNode* root);
+
+    std::vector<BinaryTree<ActorsActresses>::TreeNode*> traverseBST(BinaryTree<ActorsActresses>::TreeNode*& root);
+
+//    bool operator()(ActorsActresses left, ActorsActresses right);
+    static bool compareByFilm(ActorsActresses left, ActorsActresses right);
+
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);
     bool operator > (const ActorsActresses &right);
@@ -79,106 +117,5 @@ public:
     friend std::ostream &operator<<( std::ostream &output, const ActorsActresses &actor );
 
 };
-
-//template <class T>
-//ActorsActresses<T>::ActorsActresses() {
-//
-//}
-//
-//template <class T>
-//ActorsActresses<T>::ActorsActresses(std::string year, std::string award, std::string winner, std::string name,
-//                                 std::string film) {
-//    this->year = year;
-//    this->award = award;
-//    this->winner = winner;
-//    this->name = name;
-//    this->film = film;
-//}
-//
-//template <class T>
-//void ActorsActresses<T>::setYear(std::string year) { this->year = year; }
-//
-//template <class T>
-//void ActorsActresses<T>::setAward(std::string award) { this->award = award; }
-//
-//template <class T>
-//void ActorsActresses<T>::setWinner(std::string winner) { this->winner = winner; }
-//
-//template <class T>
-//void ActorsActresses<T>::setName(std::string name) { this->name = name; }
-//
-//template <class T>
-//void ActorsActresses<T>::setFilm(std::string film) { this->film = film; }
-//
-//template <class T>
-//std::string ActorsActresses<T>::getYear() const { return year; }
-//
-//template <class T>
-//std::string ActorsActresses<T>::getAward() const {return award;}
-//
-//template <class T>
-//std::string ActorsActresses<T>::getWinner() const {return winner;}
-//
-//template <class T>
-//std::string ActorsActresses<T>::getName() const {return name; }
-//
-//template <class T>
-//std::string ActorsActresses<T>::getFilm() const {return film;}
-//
-//template <class T>
-//bool ActorsActresses<T>::operator<(const ActorsActresses<T> &right) {
-//    return name < right.getName();
-//}
-//
-//template <class T>
-//bool ActorsActresses<T>::operator>(const ActorsActresses<T> &right) {
-//    return name > right.getName();
-//}
-//
-//template <class T>
-//bool ActorsActresses<T>::operator==(const ActorsActresses<T> &right) {
-//    return name == right.getName();
-//}
-//
-//template <class T>
-//bool ActorsActresses<T>::operator>=(const ActorsActresses<T> &right) {
-//    return name >= right.getName();
-//}
-//
-//template <class T>
-//std::ostream& operator << (std::ostream &output, const ActorsActresses<T> &actor) {
-//    output << actor.getYear() << std::endl;
-//    output << actor.getAward() << std::endl;
-//    output << actor.getWinner() << std::endl;
-//    output << actor.getName() << std::endl;
-//    output << actor.getFilm() << std::endl;
-//    return output;
-//}
-//
-//BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
-//    BinaryTree<ActorsActresses> tree;
-//
-//    ifstream infile("actor-actress.csv");
-//
-//    int records = 0;
-//
-//    getline(infile, header);
-//
-//    while (infile.peek() != EOF) {
-//
-//        getline(infile, year, ',');
-//        getline(infile, award, ',');
-//        getline(infile, winner, ',');
-//        getline(infile, name, ',');
-//        getline(infile, film, '\n');
-//
-//        tree.insert(ActorsActresses<>)
-//                records++;
-//    }
-//    actorsBst->inorderTraversal(root);
-//    return root;
-//}
-
-
 
 #endif //MOVIES_DATABASE_ACTORSACTRESSES_H

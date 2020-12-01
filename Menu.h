@@ -20,6 +20,7 @@ public:
     void subMenuForA();
     void subMenuForB();
     void subMenuForC();
+    void subMenuForD();
 
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
@@ -35,6 +36,7 @@ public:
 
     void modifyARecordInActors();
 
+    void sortByField(std::string &field);
 
 
 

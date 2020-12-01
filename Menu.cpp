@@ -7,9 +7,11 @@
 #include "BinaryTree.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
+std::vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::vecOfTreeNodesForSorting;
 /**
  * Initialize ActorsActresses object within the default constructor.
  */
@@ -26,6 +28,7 @@ void Menu::mainMenu() {
     cout << "a. Read in a file" << endl;
     cout << "b. Add a record" << endl;
     cout << "c. Search a record" << endl;
+    cout << "d. Sort database by a field" << endl;
     cout << "q. Quit" << endl;
     cout << "=======================================================" << endl;
 
@@ -47,6 +50,8 @@ void Menu::mainMenu() {
             case 'c':
                 subMenuForC(); // Submenu for c. Search a record.
                 break;
+            case 'd':
+                subMenuForD();
 
             case 'q':
                 good = false;
@@ -170,7 +175,6 @@ void Menu::subMenuForC() {
                 break;
         }
     }
-
 }
 
 /**
@@ -396,6 +400,70 @@ void Menu::modifyARecordInActors() {
 
     subMenuSearchRecordInActors();
 
+}
+
+void Menu::subMenuForD() {
+    cout << "Choose a field you'd like to sort (in ascending order): " << endl;
+    cout << "a. Year" << endl;
+    cout << "b. Award" << endl;
+    cout << "c. Winner" << endl;
+    cout << "d. Name" << endl;
+    cout << "e. Film" << endl;
+
+    char choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 'a':
+
+                sortByField(ActorsActresses::YEAR);
+                good = false;
+                break;
+            case 'b':
+                sortByField(ActorsActresses::AWARD);
+                good = false;
+                break;
+            case 'c':
+                sortByField(ActorsActresses::WINNER);
+                good = false;
+                break;
+            case 'd':
+                sortByField(ActorsActresses::NAME);
+                good = false;
+                break;
+            case 'e':
+                sortByField(ActorsActresses::FILM);
+                good = false;
+                break;
+            default:
+                good = false;
+                break;
+        }
+    }
+}
+
+void Menu::sortByField(std::string &field) {
+    cout << "Sorting by " << field << endl;
+//    root = actorsActresses->readInFile();
+
+
+
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes = actorsActresses->traverseBST(root);
+
+//    int records = actorsActresses->getRecords();
+    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
+
+
+    for (int i = 0; i < vectorOfNodes.size(); i++) {
+        cout << vectorOfNodes[i]->data << endl;
+    }
+
+    vectorOfNodes.clear();
+//    ActorsActresses::vecOfTreeNodesForSorting.clear();
 
 }
+
 

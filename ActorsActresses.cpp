@@ -18,6 +18,14 @@ string ActorsActresses::WINNER = "winner";
 string ActorsActresses::NAME = "name";
 string ActorsActresses::FILM = "film";
 
+
+
+//bool ActorsActresses::sortByFieldComparator::operator(ActorsActresses &left, ActorsActresses &right) {
+//    return left.getYear() < right.getYear();
+//}
+
+
+
 /**
  * Default constructor which initializes an Binary Tree of type ActorsActresses.
  */
@@ -25,7 +33,7 @@ ActorsActresses::ActorsActresses() {
 
     // Initialize a new BinaryTree holding ActorsActresses objects as nodes.
     actorsTree = new BinaryTree<ActorsActresses>();
-    record = 0;
+    records = 0;
 }
 
 /**
@@ -59,6 +67,11 @@ string ActorsActresses::getWinner() const {return winner;}
 string ActorsActresses::getName() const {return name; }
 string ActorsActresses::getFilm() const {return film;}
 
+int ActorsActresses::getRecords() const {return records;}
+
+std::vector<BinaryTree<ActorsActresses>::TreeNode *> ActorsActresses::getVecOfTreeNodesForSorting() {
+    return vecOfTreeNodesForSorting;
+}
 /**
  * Overload the '<' operator to compare objects by the Name field.
  * @param right The ActorsActresses object.
@@ -125,7 +138,6 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
     }
 
     else {
-        int records = 0;
 
         getline(infile, header);
 
@@ -150,7 +162,7 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
     // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
     root = actorsTree->getRoot();
 
-    cout << "File successfully read" << endl;
+    cout << "Success!" << endl;
 
     return root;
 }
@@ -327,9 +339,37 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
     return tempTree->getRoot();
 }
 
+/**
+ * Traverse BST and add nodes to a vector.
+ * @param root
+ * @return
+ */
+vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
+        BinaryTree<ActorsActresses>::TreeNode*& root) {
 
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
+    if (root == nullptr) {
+        return vecOfTreeNodesForSorting;
+    }
+    else {
+        traverseBST(root->left);
+        if (find(vecOfTreeNodesForSorting.begin(), vecOfTreeNodesForSorting.end(), root) == vecOfTreeNodesForSorting.end())
+            vecOfTreeNodesForSorting.push_back(root);
+        traverseBST(root->right);
+    }
+//     if (root != nullptr){
+//        traverseBST(root->left);
+//        vectorOfNodes.push_back(root);
+//        traverseBST(root->right);
+//    }
 
+//     for (int i = 0; i < vectorOfNodes.size(); i++) {
+//         cout << vectorOfNodes[i]->data << endl;
+//     }
+     return vecOfTreeNodesForSorting;
+
+}
 
 
 
