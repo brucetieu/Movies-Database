@@ -37,6 +37,11 @@ public:
     void modifyARecordInActors();
 
     void sortByField(std::string &field);
+//    void sortByYear();
+//    void sortByAward();
+//    void sortByWinner();
+//    void sortByName();
+//    void sortByFilm();
 
 
 
@@ -44,6 +49,8 @@ private:
     ActorsActresses *actorsActresses;  // Declare pointer to ActorsActresses object.
 
     BinaryTree<ActorsActresses>::TreeNode* root; // Create the root for the BST.
+
+//    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 };
 
 

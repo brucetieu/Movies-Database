@@ -62,9 +62,54 @@ public:
         }
         std::string field;
     };
-//    struct sortByFieldComparator {
-//        bool operator(ActorsActresses &left, ActorsActresses &right);
+//    struct SortByYearComparator {
+//        SortByYearComparator() {}
+//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+//            return left->data.getYear() < right->data.getYear();
+//        }
+//            if (field == ActorsActresses::YEAR) {
+//                return left->data.getYear() < right->data.getYear();
+//            } else if (field == ActorsActresses::AWARD) {
+//                return left->data.getAward() < right->data.getAward();
+//            } else if (field == ActorsActresses::WINNER) {
+//                return left->data.getWinner() < right->data.getWinner();
+//            } else if (field == ActorsActresses::NAME) {
+//                return left->data.getName() < right->data.getName();
+//            }
+//            return left->data.getFilm() < right->data.getFilm();
+//        }
+//        std::string field;
 //    };
+
+//    struct SortByAwardComparator {
+//        SortByAwardComparator() {}
+//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+//            return left->data.getAward() < right->data.getAward();
+//        }
+//
+//    };
+//
+//    struct SortByWinnerComparator {
+//        SortByWinnerComparator() {}
+//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+//            return left->data.getWinner() < right->data.getWinner();
+//        }
+//    };
+//
+//    struct SortByNameComparator {
+//        SortByNameComparator() {}
+//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+//            return left->data.getName() < right->data.getName();
+//        }
+//    };
+//
+//    struct SortByFilmComparator {
+//        SortByFilmComparator() {}
+//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
+//            return left->data.getFilm() < right->data.getFilm();
+//        }
+//    };
+
 
 
     ActorsActresses();
@@ -102,7 +147,7 @@ public:
 
 //    void sortByField(std::string &field, BinaryTree<ActorsActresses>::TreeNode* root);
 
-    std::vector<BinaryTree<ActorsActresses>::TreeNode*> traverseBST(BinaryTree<ActorsActresses>::TreeNode*& root);
+    std::vector<BinaryTree<ActorsActresses>::TreeNode*> traverseBST(BinaryTree<ActorsActresses>::TreeNode*& root, std::vector<BinaryTree<ActorsActresses>::TreeNode*> &vec);
 
 //    bool operator()(ActorsActresses left, ActorsActresses right);
     static bool compareByFilm(ActorsActresses left, ActorsActresses right);

@@ -345,29 +345,39 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
  * @return
  */
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
-        BinaryTree<ActorsActresses>::TreeNode*& root) {
+        BinaryTree<ActorsActresses>::TreeNode*& root, vector<BinaryTree<ActorsActresses>::TreeNode*> &vec) {
 
+//    vecOfTreeNodesForSorting.clear();
 //    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
-    if (root == nullptr) {
-        return vecOfTreeNodesForSorting;
-    }
-    else {
-        traverseBST(root->left);
-        if (find(vecOfTreeNodesForSorting.begin(), vecOfTreeNodesForSorting.end(), root) == vecOfTreeNodesForSorting.end())
-            vecOfTreeNodesForSorting.push_back(root);
-        traverseBST(root->right);
-    }
-//     if (root != nullptr){
+//    if (root == nullptr) {
+//        return vecOfTreeNodesForSorting;
+//    }
+//    else if (root != nullptr) {
 //        traverseBST(root->left);
-//        vectorOfNodes.push_back(root);
+
+//        for (int i = 0; i < vecOfTreeNodesForSorting.size(); i++) {
+//            if (vecOfTreeNodesForSorting[i]->data.getName() != root->data.getName() &&
+//                vecOfTreeNodesForSorting[i]->data.getAward() != root->data.getAward() &&
+//                vecOfTreeNodesForSorting[i]->data.getWinner() != root->data.getAward() &&
+//                vecOfTreeNodesForSorting[i]->data.getYear() != root->data.getYear() &&
+//                vecOfTreeNodesForSorting[i]->data.getFilm() != root->data.getFilm()) {
+//                vecOfTreeNodesForSorting.push_back(root);
+//            }
+//        }
+//        if (find(vecOfTreeNodesForSorting.begin(), vecOfTreeNodesForSorting.end(), root) == vecOfTreeNodesForSorting.end())
+//            vecOfTreeNodesForSorting.push_back(root);
 //        traverseBST(root->right);
 //    }
-
+     if (root != nullptr){
+        traverseBST(root->left, vec);
+         vec.push_back(root);
+        traverseBST(root->right, vec);
+    }
 //     for (int i = 0; i < vectorOfNodes.size(); i++) {
 //         cout << vectorOfNodes[i]->data << endl;
 //     }
-     return vecOfTreeNodesForSorting;
+     return vec;
 
 }
 

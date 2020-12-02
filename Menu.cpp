@@ -51,8 +51,8 @@ void Menu::mainMenu() {
                 subMenuForC(); // Submenu for c. Search a record.
                 break;
             case 'd':
-                subMenuForD();
-
+                subMenuForD(); // Submenu for d. Sort by a field.
+                break;
             case 'q':
                 good = false;
                 break;
@@ -82,6 +82,7 @@ void Menu::subMenuForA() {
                 // Store each record in the BST, each represents a node. We start at the root.
                 root = actorsActresses->readInFile();
                 mainMenu();
+                good = false;
                 break;
             }
 
@@ -172,6 +173,57 @@ void Menu::subMenuForC() {
                 break;
 
             default:
+                break;
+        }
+    }
+}
+
+void Menu::subMenuForD() {
+    cout << "Choose a field you'd like to sort (in ascending order): " << endl;
+    cout << "a. Year" << endl;
+    cout << "b. Award" << endl;
+    cout << "c. Winner" << endl;
+    cout << "d. Name" << endl;
+    cout << "e. Film" << endl;
+
+    char choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 'a':
+                sortByField(ActorsActresses::YEAR);
+                mainMenu();
+                good = false;
+                break;
+            case 'b':
+                sortByField(ActorsActresses::AWARD);
+//                sortByAward();
+                mainMenu();
+                good = false;
+                break;
+            case 'c':
+                sortByField(ActorsActresses::WINNER);
+//                sortByWinner();
+                mainMenu();
+                good = false;
+                break;
+            case 'd':
+                sortByField(ActorsActresses::NAME);
+//                sortByName();
+                mainMenu();
+                good = false;
+                break;
+            case 'e':
+                sortByField(ActorsActresses::FILM);
+//                sortByFilm();
+                mainMenu();
+                good = false;
+                break;
+            default:
+                good = false;
                 break;
         }
     }
@@ -402,56 +454,16 @@ void Menu::modifyARecordInActors() {
 
 }
 
-void Menu::subMenuForD() {
-    cout << "Choose a field you'd like to sort (in ascending order): " << endl;
-    cout << "a. Year" << endl;
-    cout << "b. Award" << endl;
-    cout << "c. Winner" << endl;
-    cout << "d. Name" << endl;
-    cout << "e. Film" << endl;
-
-    char choice;
-    bool good = true;
-    cin >> choice;
-    cin.ignore();
-
-    while (good) {
-        switch (choice) {
-            case 'a':
-
-                sortByField(ActorsActresses::YEAR);
-                good = false;
-                break;
-            case 'b':
-                sortByField(ActorsActresses::AWARD);
-                good = false;
-                break;
-            case 'c':
-                sortByField(ActorsActresses::WINNER);
-                good = false;
-                break;
-            case 'd':
-                sortByField(ActorsActresses::NAME);
-                good = false;
-                break;
-            case 'e':
-                sortByField(ActorsActresses::FILM);
-                good = false;
-                break;
-            default:
-                good = false;
-                break;
-        }
-    }
-}
-
 void Menu::sortByField(std::string &field) {
     cout << "Sorting by " << field << endl;
 //    root = actorsActresses->readInFile();
 
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
 
+    vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes = actorsActresses->traverseBST(root);
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes = actorsActresses->traverseBST(root);
 
 //    int records = actorsActresses->getRecords();
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
@@ -461,9 +473,130 @@ void Menu::sortByField(std::string &field) {
         cout << vectorOfNodes[i]->data << endl;
     }
 
-    vectorOfNodes.clear();
+//    vectorOfNodes.clear();
 //    ActorsActresses::vecOfTreeNodesForSorting.clear();
 
 }
+
+//void Menu::sortByYear() {
+//
+////    ActorsActresses::vecOfTreeNodesForSorting.clear();
+////    ActorsActresses *actorsActresses = new ActorsActresses();
+//
+//    cout << "Sorting by " << ActorsActresses::YEAR << endl;
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+//
+//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
+//
+//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByYearComparator());
+//
+//    for (int i = 0; i < vectorOfNodes.size(); i++) {
+//        cout << vectorOfNodes[i]->data << endl;
+//    }
+//
+////    ActorsActresses::vecOfTreeNodesForSorting.clear();
+////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//}
+//
+//void Menu::sortByAward() {
+//
+////    root = actorsActresses->readInFile();
+////    ActorsActresses::vecOfTreeNodesForSorting.clear();
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//    cout << "Sorting by " << ActorsActresses::AWARD << endl;
+//
+////    ActorsActresses *actorsActresses = new ActorsActresses();
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+//
+//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
+//
+//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByAwardComparator());
+////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
+//
+//
+//    for (int i = 0; i < vectorOfNodes.size(); i++) {
+//        cout << vectorOfNodes[i]->data << endl;
+//    }
+//
+//    cout << vectorOfNodes.size() << endl;
+//
+//}
+//
+//void Menu::sortByWinner() {
+//
+//
+//    ActorsActresses::vecOfTreeNodesForSorting.clear();
+//    cout << "Sorting by " << ActorsActresses::WINNER << endl;
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//    ActorsActresses *actorsActresses = new ActorsActresses();
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+//
+//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
+//
+//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByWinnerComparator());
+////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
+//
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+////    for (int i = 0; i < vectorOfNodes.size(); i++) {
+////        cout << vectorOfNodes[i]->data << endl;
+////    }
+//
+//}
+//
+//void Menu::sortByName() {
+//
+//    ActorsActresses::vecOfTreeNodesForSorting.clear();
+//    cout << "Sorting by " << ActorsActresses::NAME << endl;
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//    ActorsActresses *actorsActresses = new ActorsActresses();
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+//
+//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
+//
+//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByNameComparator());
+////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
+//
+//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+////    for (int i = 0; i < vectorOfNodes.size(); i++) {
+////        cout << vectorOfNodes[i]->data << endl;
+////    }
+//
+//}
+//
+//void Menu::sortByFilm() {
+//
+////    ActorsActresses::vecOfTreeNodesForSorting.clear();
+//    cout << "Sorting by " << ActorsActresses::FILM << endl;
+////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//    ActorsActresses *actorsActresses = new ActorsActresses();
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+//
+//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
+//
+//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFilmComparator());
+////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
+//
+//
+//
+////    for (int i = 0; i < vectorOfNodes.size(); i++) {
+////        cout << vectorOfNodes[i]->data << endl;
+////    }
+//
+//    ActorsActresses::vecOfTreeNodesForSorting.clear();
+////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
+//
+//}
 
 
