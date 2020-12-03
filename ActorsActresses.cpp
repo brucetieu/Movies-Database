@@ -44,8 +44,8 @@ ActorsActresses::ActorsActresses() {
  * @param name The name of the actor / actress.
  * @param film The name of the film.
  */
-ActorsActresses::ActorsActresses(string year, string award, string winner, string name,
-                                 string film) {
+ActorsActresses::ActorsActresses(string &year, string &award, string &winner, string &name,
+                                 string &film) {
     this->year = year;
     this->award = award;
     this->winner = winner;
@@ -54,11 +54,11 @@ ActorsActresses::ActorsActresses(string year, string award, string winner, strin
 }
 
 // Setters - Encapsulation.
-void ActorsActresses::setYear(std::string year) { this->year = year; }
-void ActorsActresses::setAward(string award) { this->award = award; }
-void ActorsActresses::setWinner(string winner) { this->winner = winner; }
-void ActorsActresses::setName(std::string name) { this->name = name; }
-void ActorsActresses::setFilm(string film) { this->film = film; }
+void ActorsActresses::setYear(string &year) { this->year = year; }
+void ActorsActresses::setAward(string &award) { this->award = award; }
+void ActorsActresses::setWinner(string &winner) { this->winner = winner; }
+void ActorsActresses::setName(string &name) { this->name = name; }
+void ActorsActresses::setFilm(string &film) { this->film = film; }
 
 // Getters - Encapsulation.
 string ActorsActresses::getYear() const { return year; }

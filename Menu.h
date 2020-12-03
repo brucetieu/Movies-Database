@@ -21,9 +21,11 @@ public:
     void subMenuForB();
     void subMenuForC();
     void subMenuForD();
+    void subMenuForE();
 
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
+    void subMenuForSortingInActors();
 
     void partialSearchActors();
     void exactSearchActors();
@@ -37,11 +39,8 @@ public:
     void modifyARecordInActors();
 
     void sortByField(std::string &field);
-//    void sortByYear();
-//    void sortByAward();
-//    void sortByWinner();
-//    void sortByName();
-//    void sortByFilm();
+
+    void exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode* root);
 
 
 

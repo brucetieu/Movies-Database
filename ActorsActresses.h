@@ -1,5 +1,6 @@
 //
 // Created by Bruce Tieu on 11/10/20.
+// Function declarations for ActorsActresses database.
 //
 
 #ifndef MOVIES_DATABASE_ACTORSACTRESSES_H
@@ -8,12 +9,7 @@
 #include "BinaryTree.h"
 #include <fstream>
 #include <vector>
-//#include "Database.h"
-//#include "ActorsBST.h"
 
-//class ActorsBST;
-//class ActorsActresses;
-//template <class T>
 class ActorsActresses {
 
 private:
@@ -26,7 +22,6 @@ private:
     int records;
 
     BinaryTree<ActorsActresses> *actorsTree;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
     BinaryTree<ActorsActresses>::TreeNode* root;
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
@@ -34,7 +29,6 @@ private:
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
-//    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodesForSorting;
 
 public:
 
@@ -46,6 +40,9 @@ public:
     static std::string NAME;
     static std::string FILM;
 
+    /**
+     * Functor object for sorting the ActorsActresses database by Year, Award, Winner, Name, and Film.
+     */
     struct SortByFieldComparator {
         SortByFieldComparator(std::string &field) {this->field = field;}
         bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
@@ -62,65 +59,17 @@ public:
         }
         std::string field;
     };
-//    struct SortByYearComparator {
-//        SortByYearComparator() {}
-//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
-//            return left->data.getYear() < right->data.getYear();
-//        }
-//            if (field == ActorsActresses::YEAR) {
-//                return left->data.getYear() < right->data.getYear();
-//            } else if (field == ActorsActresses::AWARD) {
-//                return left->data.getAward() < right->data.getAward();
-//            } else if (field == ActorsActresses::WINNER) {
-//                return left->data.getWinner() < right->data.getWinner();
-//            } else if (field == ActorsActresses::NAME) {
-//                return left->data.getName() < right->data.getName();
-//            }
-//            return left->data.getFilm() < right->data.getFilm();
-//        }
-//        std::string field;
-//    };
-
-//    struct SortByAwardComparator {
-//        SortByAwardComparator() {}
-//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
-//            return left->data.getAward() < right->data.getAward();
-//        }
-//
-//    };
-//
-//    struct SortByWinnerComparator {
-//        SortByWinnerComparator() {}
-//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
-//            return left->data.getWinner() < right->data.getWinner();
-//        }
-//    };
-//
-//    struct SortByNameComparator {
-//        SortByNameComparator() {}
-//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
-//            return left->data.getName() < right->data.getName();
-//        }
-//    };
-//
-//    struct SortByFilmComparator {
-//        SortByFilmComparator() {}
-//        bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
-//            return left->data.getFilm() < right->data.getFilm();
-//        }
-//    };
-
 
 
     ActorsActresses();
-    ActorsActresses(std::string year, std::string award, std::string winner, std::string name, std::string film);
+    ActorsActresses(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
 
     // Setters.
-    void setYear(std::string year);
-    void setAward(std::string award);
-    void setWinner(std::string winner);
-    void setName(std::string name);
-    void setFilm(std::string film);
+    void setYear(std::string &year);
+    void setAward(std::string &award);
+    void setWinner(std::string &winner);
+    void setName(std::string &name);
+    void setFilm(std::string &film);
 
     // Getters.
     std::string getYear() const;

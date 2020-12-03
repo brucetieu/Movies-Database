@@ -6,6 +6,7 @@
 #include "ActorsActresses.h"
 #include "BinaryTree.h"
 #include <vector>
+#include <string>
 #include <iostream>
 #include <algorithm>
 
@@ -29,6 +30,7 @@ void Menu::mainMenu() {
     cout << "b. Add a record" << endl;
     cout << "c. Search a record" << endl;
     cout << "d. Sort database by a field" << endl;
+    cout << "e. Export latest database (after adds or modifies)." << endl;
     cout << "q. Quit" << endl;
     cout << "=======================================================" << endl;
 
@@ -52,6 +54,9 @@ void Menu::mainMenu() {
                 break;
             case 'd':
                 subMenuForD(); // Submenu for d. Sort by a field.
+                break;
+            case 'e':
+                subMenuForE();
                 break;
             case 'q':
                 good = false;
@@ -108,6 +113,7 @@ void Menu::subMenuForB() {
     bool good = true;
     int choice;
     cin >> choice;
+    cin.ignore();
 
     while (good) {
         switch (choice) {
@@ -132,18 +138,16 @@ void Menu::subMenuForB() {
 void Menu::subMenuAddRecordInActors() {
     string year, award, winner, name, film;
 
-    /// Prompt user to enter something for each field to be added as 1 record.
-    cout << "Insert Year: ";
-    cin >> year;
-    cout << "Insert Award: ";
-    cin >> award;
-    cout << "Insert Winner: ";
-    cin >> winner;
-    cout << "Insert Name: ";
-    cin >> name;
-    cout << "Insert Film: ";
-    cin >> film;
-    cout << "\n";
+    cout << "Insert year: ";
+    getline(cin, year);
+    cout << "Insert award: ";
+    getline(cin, award);
+    cout << "Insert winner: ";
+    getline(cin, winner);
+    cout << "Insert name: ";
+    getline(cin, name);
+    cout << "Insert film: ";
+    getline(cin, film);
 
     // Add this record to the BST.
     actorsActresses->addARecord(year, award, winner, name, film);
@@ -178,7 +182,39 @@ void Menu::subMenuForC() {
     }
 }
 
+/**
+ * Create a sub menu for sorting a database by a specific field.
+ */
 void Menu::subMenuForD() {
+    cout << "Choose which database you want to sort a field in." << endl;
+    cout << "1. Actors Actresses Database" << endl;
+    cout << "2. Pictures Database" << endl;
+    cout << "3. Quit" << endl;
+
+    int choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 1:
+                subMenuForSortingInActors();
+                good = false;
+                break;
+            case 2:
+                break;
+            default:
+                good = false;
+                break;
+        }
+    }
+}
+
+/**
+ * Create the menu for sorting actors.
+ */
+void Menu::subMenuForSortingInActors() {
     cout << "Choose a field you'd like to sort (in ascending order): " << endl;
     cout << "a. Year" << endl;
     cout << "b. Award" << endl;
@@ -191,7 +227,7 @@ void Menu::subMenuForD() {
     cin >> choice;
     cin.ignore();
 
-    while (good) {
+    while(good) {
         switch (choice) {
             case 'a':
                 sortByField(ActorsActresses::YEAR);
@@ -200,33 +236,56 @@ void Menu::subMenuForD() {
                 break;
             case 'b':
                 sortByField(ActorsActresses::AWARD);
-//                sortByAward();
                 mainMenu();
                 good = false;
                 break;
             case 'c':
                 sortByField(ActorsActresses::WINNER);
-//                sortByWinner();
                 mainMenu();
                 good = false;
                 break;
             case 'd':
                 sortByField(ActorsActresses::NAME);
-//                sortByName();
                 mainMenu();
                 good = false;
                 break;
             case 'e':
                 sortByField(ActorsActresses::FILM);
-//                sortByFilm();
                 mainMenu();
                 good = false;
                 break;
             default:
                 good = false;
                 break;
+            }
+        }
+}
+
+void Menu::subMenuForE() {
+    cout << "Choose which database you want to export the results to." << endl;
+    cout << "1. Actors Actresses Database" << endl;
+    cout << "2. Pictures Database" << endl;
+    cout << "3. Quit" << endl;
+
+    int choice;
+    bool good = true;
+    cin >> choice;
+    cin.ignore();
+
+    while (good) {
+        switch (choice) {
+            case 1:
+                exportToCSVActors(root);
+                mainMenu();
+                good = false;
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
     }
+
 }
 
 /**
@@ -310,6 +369,10 @@ void Menu::partialSearchActors() {
     }
 }
 
+
+/**
+ * Create the sub menu which allows a user to perform an exact search on a field.
+ */
 void Menu::exactSearchActors() {
     cout << "Choose a field you'd like to exactly search for." << endl;
     cout << "a. Year" << endl;
@@ -390,12 +453,13 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
 void Menu::afterSearchActors() {
     cout << "a. Search within these results?" << endl;
     cout << "b. Start a new search?" << endl;
+    cout << "d. Save your search results to a file." << endl;
 
     // If the search returns only one record, allow the user to modify the record.
     if (root->left == nullptr && root->right == nullptr) {
         cout << "c. Modify this record's fields?" << endl;
     }
-    cout << "d. Quit" << endl;
+    cout << "e. Quit" << endl;
 
     char choice;
     bool good = true;
@@ -416,6 +480,9 @@ void Menu::afterSearchActors() {
                 modifyARecordInActors();
                 break;
             case 'd':
+                exportToCSVActors(root);
+                subMenuSearchRecordInActors();
+            case 'e':
                 exit(1);
             default:
                 good = false;
@@ -424,8 +491,11 @@ void Menu::afterSearchActors() {
     }
 }
 
+/**
+ * Allow the user to modify a single record with a menu driven prompt.
+ */
 void Menu::modifyARecordInActors() {
-    BinaryTree<ActorsActresses> bst;
+
     string year, award, winner, name, film;
 
     cout << "Change each of the following fields to modify this record: " << endl;
@@ -440,6 +510,7 @@ void Menu::modifyARecordInActors() {
     cout << "New film: ";
     getline(cin, film);
 
+    // Setting the fields according to what the user inputs.
     root->data.setYear(year);
     root->data.setAward(award);
     root->data.setName(name);
@@ -450,153 +521,53 @@ void Menu::modifyARecordInActors() {
     cout << "Your modified record: " << endl;
     cout << root->data << endl;
 
-    subMenuSearchRecordInActors();
+    // Prompt user to search for their modified record to show that it is in fact modified.
+//    subMenuSearchRecordInActors();
+    afterSearchActors();
 
 }
 
+/**
+ * Sort the data base by a specific field.
+ * @param field The field - e.g Name, Film, Year, etc.
+ */
 void Menu::sortByField(std::string &field) {
     cout << "Sorting by " << field << endl;
-//    root = actorsActresses->readInFile();
 
+    // This vector holds the sorted results from the BST.
     vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
+
+    // Initialize an empty vector to be passed into the traverseBST() function recursively.
     vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
 
     vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes = actorsActresses->traverseBST(root);
-
-//    int records = actorsActresses->getRecords();
+    // Sort the specific field using the STL sort function.
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
 
 
+    // Print out the results.
     for (int i = 0; i < vectorOfNodes.size(); i++) {
         cout << vectorOfNodes[i]->data << endl;
     }
-
-//    vectorOfNodes.clear();
-//    ActorsActresses::vecOfTreeNodesForSorting.clear();
-
 }
 
-//void Menu::sortByYear() {
-//
-////    ActorsActresses::vecOfTreeNodesForSorting.clear();
-////    ActorsActresses *actorsActresses = new ActorsActresses();
-//
-//    cout << "Sorting by " << ActorsActresses::YEAR << endl;
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-//
-//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-//
-//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByYearComparator());
-//
-//    for (int i = 0; i < vectorOfNodes.size(); i++) {
-//        cout << vectorOfNodes[i]->data << endl;
-//    }
-//
-////    ActorsActresses::vecOfTreeNodesForSorting.clear();
-////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//}
-//
-//void Menu::sortByAward() {
-//
-////    root = actorsActresses->readInFile();
-////    ActorsActresses::vecOfTreeNodesForSorting.clear();
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//    cout << "Sorting by " << ActorsActresses::AWARD << endl;
-//
-////    ActorsActresses *actorsActresses = new ActorsActresses();
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-//
-//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-//
-//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByAwardComparator());
-////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
-//
-//
-//    for (int i = 0; i < vectorOfNodes.size(); i++) {
-//        cout << vectorOfNodes[i]->data << endl;
-//    }
-//
-//    cout << vectorOfNodes.size() << endl;
-//
-//}
-//
-//void Menu::sortByWinner() {
-//
-//
-//    ActorsActresses::vecOfTreeNodesForSorting.clear();
-//    cout << "Sorting by " << ActorsActresses::WINNER << endl;
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//    ActorsActresses *actorsActresses = new ActorsActresses();
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-//
-//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-//
-//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByWinnerComparator());
-////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
-//
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-////    for (int i = 0; i < vectorOfNodes.size(); i++) {
-////        cout << vectorOfNodes[i]->data << endl;
-////    }
-//
-//}
-//
-//void Menu::sortByName() {
-//
-//    ActorsActresses::vecOfTreeNodesForSorting.clear();
-//    cout << "Sorting by " << ActorsActresses::NAME << endl;
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//    ActorsActresses *actorsActresses = new ActorsActresses();
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-//
-//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-//
-//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByNameComparator());
-////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
-//
-//    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-////    for (int i = 0; i < vectorOfNodes.size(); i++) {
-////        cout << vectorOfNodes[i]->data << endl;
-////    }
-//
-//}
-//
-//void Menu::sortByFilm() {
-//
-////    ActorsActresses::vecOfTreeNodesForSorting.clear();
-//    cout << "Sorting by " << ActorsActresses::FILM << endl;
-////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//    ActorsActresses *actorsActresses = new ActorsActresses();
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-//
-//    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-//
-//    sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFilmComparator());
-////    vectorOfNodes.erase( unique( vectorOfNodes.begin(), vectorOfNodes.end() ), vectorOfNodes.end() );
-//
-//
-//
-////    for (int i = 0; i < vectorOfNodes.size(); i++) {
-////        cout << vectorOfNodes[i]->data << endl;
-////    }
-//
-//    ActorsActresses::vecOfTreeNodesForSorting.clear();
-////    cout << ActorsActresses::vecOfTreeNodesForSorting.size() << endl;
-//
-//}
+void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
+    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
+    vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
+    ofstream myfile;
+    myfile.open("output.csv");
+
+    myfile << "Year,Award,Winner,Name,Film\n";
+    for (int i = 0; i < vectorOfNodes.size(); i++) {
+        myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
+               << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","
+               << vectorOfNodes[i]->data.getFilm() << "\n";
+    }
+
+    myfile.close();
+
+}
