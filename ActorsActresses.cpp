@@ -203,7 +203,10 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
 
     cout << "Number of partial searches returned: " << tempRootVec.size() << endl;
 
-    // Print out the records which contain a specific keyword from a field.
+    if (tempRootVec.size() == 0) {
+        cout << "No records found with that search keyword. Try again." << endl;
+
+    }
     for (int i = 0; i < vecOfTreeNodes.size(); i++) {
         cout << vecOfTreeNodes[i]->data << endl;
     }
@@ -222,6 +225,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
 
     // Base case: If the root is null, just return an empty vector.
     if (root == nullptr) {
+        cout << "root is null" << endl;
         return vecOfTreeNodes; // Contains all the nodes from the partial search.
     }
 
@@ -277,8 +281,13 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::exactFindByField(std::st
 
     cout << "Number of exact searches returned: " << tempRootVec.size() << endl;
 
-    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
-        cout << vecOfTreeNodes[i]->data << endl;
+    if (tempRootVec.size() == 0) {
+        cout << "No records found with that search keyword. Try again." << endl;
+    }
+    else {
+        for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+            cout << vecOfTreeNodes[i]->data << endl;
+        }
     }
 
     return searchWithinASearch(tempRootVec);
@@ -376,6 +385,11 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
 
 }
 
+/**
+ * Convert the string to be lower case.
+ * @param input The string to be converted to lowercase.
+ * @return The lower cased string.
+ */
 string ActorsActresses::_convertToLowerCase(const std::string &input) {
 
     string tempStr = input;

@@ -25,21 +25,35 @@ Menu::Menu() {
  * Display the main menu.
  */
 void Menu::mainMenu() {
-    cout << "=====================Main Menu=========================" << endl;
-    cout << "a. Read in a file" << endl;
-    cout << "b. Add a record" << endl;
-    cout << "c. Search a record" << endl;
-    cout << "d. Sort database by a field" << endl;
-    cout << "e. Export latest database (after adds or modifies)." << endl;
-    cout << "q. Quit" << endl;
-    cout << "=======================================================" << endl;
+//    cout << "=====================Main Menu=========================" << endl;
+//    cout << "a. Read in a file" << endl;
+//    cout << "b. Add a record" << endl;
+//    cout << "c. Search a record" << endl;
+//    cout << "d. Sort database by a field" << endl;
+//    cout << "e. Export latest database (after adds or modifies)." << endl;
+//    cout << "q. Quit" << endl;
+//    cout << "=======================================================" << endl;
 
     bool good = true;
 
-    char choice;
-    cin >> choice;
+//    char choice;
+//    cin >> choice;
+//    cin.ignore();
 
     while (good) {
+        cout << "=====================Main Menu=========================" << endl;
+        cout << "a. Read in a file" << endl;
+        cout << "b. Add a record" << endl;
+        cout << "c. Search a record" << endl;
+        cout << "d. Sort database by a field" << endl;
+        cout << "e. Export latest database (after adds or modifies)." << endl;
+        cout << "q. Quit" << endl;
+        cout << "=======================================================" << endl;
+
+        char choice;
+        cin >> choice;
+        cin.ignore();
+
         switch (choice) {
             case 'a':
                 subMenuForA(); // Submenu for a. Read in File.
@@ -62,9 +76,9 @@ void Menu::mainMenu() {
                 good = false;
                 break;
             default:
-                good = false;
                 break;
         }
+        cout << "Invalid choice, select from the displayed options." << endl;
     }
 }
 
@@ -83,13 +97,12 @@ void Menu::subMenuForA() {
 
     while (good) {
         switch(choice) {
-            case 1: {
+            case 1:
                 // Store each record in the BST, each represents a node. We start at the root.
                 root = actorsActresses->readInFile();
                 mainMenu();
                 good = false;
                 break;
-            }
 
             case 3:
                 good = false;
@@ -105,7 +118,7 @@ void Menu::subMenuForA() {
  * Create submenu for choosing which database to add a record to.
  */
 void Menu::subMenuForB() {
-    cout << "Choose which database you want to add a record in." << endl;
+    cout << "Choose which database you want to add a record to." << endl;
     cout << "1. Actors Actresses Database" << endl;
     cout << "2. Pictures Database" << endl;
     cout << "3. Quit" << endl;
@@ -340,8 +353,8 @@ void Menu::partialSearchActors() {
             // Partial search on Award field.
             case 'a':
 
-                // The new root will be the BST which contains all the results returned from the partial search.
-                root = partialSearchActorsField(ActorsActresses::AWARD);
+                    // The new root will be the BST which contains all the results returned from the partial search.
+                    root = partialSearchActorsField(ActorsActresses::AWARD);
 
                 // Display the menu which prompts a user to search again within the existing search results, or perform a new search.
                 afterSearchActors();
@@ -392,6 +405,7 @@ void Menu::exactSearchActors() {
             case 'a':
                 root = exactSearchActorsField(ActorsActresses::YEAR);
                 afterSearchActors();
+                good = false;
                 break;
             case 'b':
                 root = exactSearchActorsField(ActorsActresses::AWARD);
@@ -451,22 +465,41 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
  * Create the menu to prompt user to perform a secondary search, or start over.
  */
 void Menu::afterSearchActors() {
-    cout << "a. Search within these results?" << endl;
-    cout << "b. Start a new search?" << endl;
-    cout << "d. Save your search results to a file." << endl;
-
-    // If the search returns only one record, allow the user to modify the record.
-    if (root->left == nullptr && root->right == nullptr) {
-        cout << "c. Modify this record's fields?" << endl;
-    }
-    cout << "e. Quit" << endl;
-
-    char choice;
+//    cout << "a. Search within these results?" << endl;
+//    cout << "b. Start a new search?" << endl;
+//    cout << "d. Save your search results to a file." << endl;
+//
+//    // If the search returns only one record, allow the user to modify the record.
+//    if (root->left == nullptr && root->right == nullptr) {
+//        cout << "c. Modify this record's fields?" << endl;
+//    }
+//    cout << "e. Quit" << endl;
+//
+//    char choice;
+//    bool good = true;
+//    cin >> choice;
+//    cin.ignore();
     bool good = true;
-    cin >> choice;
-    cin.ignore();
 
     while (good) {
+        cout << "a. Search within these results?" << endl;
+        cout << "b. Start a new search?" << endl;
+        cout << "d. Save your search results to a file." << endl;
+
+        // TODO: THIS IS CAUSING THE SEG FAULT!!
+        // If the search returns only one record, allow the user to modify the record.
+        if (root != nullptr) {
+            if (root->left == nullptr && root->right == nullptr) {
+                cout << "c. Modify this record's fields?" << endl;
+            }
+        }
+        cout << "e. Quit" << endl;
+
+        char choice;
+
+        cin >> choice;
+        cin.ignore();
+
         switch (choice) {
             case 'a':
                 subMenuSearchRecordInActors(); // Bring the user back to the menu to choose a partial search or exact search.
@@ -564,17 +597,25 @@ void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
     vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
     ofstream myfile;
-    myfile.open("output.csv");
+    string filename = "output.csv";
+    myfile.open(filename);
 
-    myfile << "Year,Award,Winner,Name,Film\n";
-
-    // Loop through the vectorOfNodes and add each record to the csv.
-    for (int i = 0; i < vectorOfNodes.size(); i++) {
-        myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
-               << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","
-               << vectorOfNodes[i]->data.getFilm() << "\n";
+    if (!myfile) {
+        cerr << "Could not open file for writing." << endl;
     }
+    else {
 
-    myfile.close();
+        myfile << "Year,Award,Winner,Name,Film\n";
+
+        // Loop through the vectorOfNodes and add each record to the csv.
+        for (int i = 0; i < vectorOfNodes.size(); i++) {
+            myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
+                   << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","
+                   << vectorOfNodes[i]->data.getFilm() << "\n";
+        }
+
+        cout << "File successfully written to " << filename << endl;
+        myfile.close();
+    }
 
 }
