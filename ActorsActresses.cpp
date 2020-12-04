@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include "Utility.h"
 
 #include "ActorsActresses.h"
 #include "BinaryTree.h"
@@ -73,7 +74,7 @@ std::vector<BinaryTree<ActorsActresses>::TreeNode *> ActorsActresses::getVecOfTr
  * @return True, if the comparison is true for each record, false otherwise.
  */
 bool ActorsActresses::operator<(const ActorsActresses &right) {
-    return name < right.getName();
+    return Utility::convertToLowerCase(name) < Utility::convertToLowerCase(right.getName());
 }
 
 /**
@@ -82,7 +83,7 @@ bool ActorsActresses::operator<(const ActorsActresses &right) {
  * @return True, if the comparison is true, false otherwise.
  */
 bool ActorsActresses::operator>(const ActorsActresses &right) {
-    return name > right.getName();
+    return Utility::convertToLowerCase(name) > Utility::convertToLowerCase(right.getName());
 }
 
 /**
@@ -100,7 +101,7 @@ bool ActorsActresses::operator==(const ActorsActresses &right) {
  * @return True, if the comparison is true.
  */
 bool ActorsActresses::operator>=(const ActorsActresses &right) {
-    return name >= right.getName();
+    return Utility::convertToLowerCase(name) >= Utility::convertToLowerCase(right.getName());
 }
 
 /**
@@ -232,10 +233,10 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     // Recursive case: Root is not empty.
     // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
     else if (root != nullptr) {
-        string lowercaseFieldKey = _convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
+        string lowercaseFieldKey = Utility::convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
         if (field == ActorsActresses::AWARD) {
 
-            string lowercaseAward = _convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
+            string lowercaseAward = Utility::convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (lowercaseAward.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
@@ -243,7 +244,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::NAME) {
 
-            string lowercaseName = _convertToLowerCase(root->data.getName());  // Convert name to lowercase.
+            string lowercaseName = Utility::convertToLowerCase(root->data.getName());  // Convert name to lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (lowercaseName.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
@@ -251,7 +252,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::FILM) {
 
-            string lowercaseFilm = _convertToLowerCase(root->data.getFilm());  // Convert film to lowercase.
+            string lowercaseFilm = Utility::convertToLowerCase(root->data.getFilm());  // Convert film to lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (lowercaseFilm.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
@@ -302,10 +303,10 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     }
 
     else if (root != nullptr) {
-        string lowercaseFieldKey = _convertToLowerCase(fieldKeyword);
+        string lowercaseFieldKey = Utility::convertToLowerCase(fieldKeyword);
         if (field == ActorsActresses::YEAR) {
 
-            string lowercaseYear = _convertToLowerCase(root->data.getYear());
+            string lowercaseYear = Utility::convertToLowerCase(root->data.getYear());
 
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (lowercaseYear == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
@@ -313,7 +314,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::AWARD) {
 
-            string lowercaseAward = _convertToLowerCase(root->data.getAward());
+            string lowercaseAward = Utility::convertToLowerCase(root->data.getAward());
 
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (lowercaseAward == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
@@ -321,7 +322,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::NAME) {
 
-            string lowercaseName = _convertToLowerCase(root->data.getName());
+            string lowercaseName = Utility::convertToLowerCase(root->data.getName());
 
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (lowercaseName == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
@@ -329,7 +330,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::WINNER) {
 
-            string lowercaseWinner = _convertToLowerCase(root->data.getWinner());
+            string lowercaseWinner = Utility::convertToLowerCase(root->data.getWinner());
 
             _inOrderTraversalES(field, fieldKeyword, root->right);
             if (lowercaseWinner == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
@@ -337,7 +338,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
         else if (field == ActorsActresses::FILM) {
 
-            string lowercaseFilm = _convertToLowerCase(root->data.getFilm());
+            string lowercaseFilm = Utility::convertToLowerCase(root->data.getFilm());
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (lowercaseFilm == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
@@ -385,18 +386,18 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
 
 }
 
-/**
- * Convert the string to be lower case.
- * @param input The string to be converted to lowercase.
- * @return The lower cased string.
- */
-string ActorsActresses::_convertToLowerCase(const std::string &input) {
-
-    string tempStr = input;
-    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::tolower);
-
-    return tempStr;
-}
+///**
+// * Convert the string to be lower case.
+// * @param input The string to be converted to lowercase.
+// * @return The lower cased string.
+// */
+//string ActorsActresses::_convertToLowerCase(const std::string &input) {
+//
+//    string tempStr = input;
+//    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::tolower);
+//
+//    return tempStr;
+//}
 
 
 

@@ -6,6 +6,7 @@
 #define MOVIES_DATABASE_BINARYTREE_H
 
 #include <iostream>
+#include "Utility.h"
 
 
 template<class T>

@@ -29,7 +29,7 @@ private:
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
-    std::string _convertToLowerCase(const std::string &input);
+//    std::string _convertToLowerCase(const std::string &input);
 
 
 public:
