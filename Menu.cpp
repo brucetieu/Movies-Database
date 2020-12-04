@@ -552,16 +552,23 @@ void Menu::sortByField(std::string &field) {
     }
 }
 
+/**
+ * Export the data to a csv file (after modifying or adding a record).
+ * @param root The root of the BST.
+ */
 void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
     vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
     vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
+    // Create a vector of nodes by traversing through the BST.
     vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
     ofstream myfile;
     myfile.open("output.csv");
 
     myfile << "Year,Award,Winner,Name,Film\n";
+
+    // Loop through the vectorOfNodes and add each record to the csv.
     for (int i = 0; i < vectorOfNodes.size(); i++) {
         myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
                << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "ActorsActresses.h"
 #include "BinaryTree.h"
@@ -17,12 +18,6 @@ string ActorsActresses::AWARD = "award";
 string ActorsActresses::WINNER = "winner";
 string ActorsActresses::NAME = "name";
 string ActorsActresses::FILM = "film";
-
-
-
-//bool ActorsActresses::sortByFieldComparator::operator(ActorsActresses &left, ActorsActresses &right) {
-//    return left.getYear() < right.getYear();
-//}
 
 
 
@@ -226,6 +221,11 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
 
     // TODO: Using the vecOfTreeNodes, assemble a new BST with a new root.
+//    string tempAward = root->data.getAward();
+//    string tempFieldKeyword = fieldKeyword;
+//
+//    transform(tempAward.begin(), tempAward.end(), tempAward.begin(), ::tolower);
+//    transform(tempFieldKeyword.begin(), tempFieldKeyword.end(), tempFieldKeyword.begin(), ::tolower);
 
     // Base case: If the root is null, just return an empty vector.
     if (root == nullptr) {
@@ -235,19 +235,29 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     // Recursive case: Root is not empty.
     // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
     else if (root != nullptr) {
+        string tempFieldKeyword = _convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
         if (field == ActorsActresses::AWARD) {
+
+            string tempAward = _convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
+
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (root->data.getAward().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (tempAward.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::NAME) {
+
+            string tempName = _convertToLowerCase(root->data.getName());  // Convert name to lowercase.
+
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (root->data.getName().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (tempName.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::FILM) {
+
+            string tempFilm = _convertToLowerCase(root->data.getName());  // Convert film to lowercase.
+
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (root->data.getFilm().find(fieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (tempFilm.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
     }
@@ -347,40 +357,23 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
         BinaryTree<ActorsActresses>::TreeNode*& root, vector<BinaryTree<ActorsActresses>::TreeNode*> &vec) {
 
-//    vecOfTreeNodesForSorting.clear();
-//    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
-
-//    if (root == nullptr) {
-//        return vecOfTreeNodesForSorting;
-//    }
-//    else if (root != nullptr) {
-//        traverseBST(root->left);
-
-//        for (int i = 0; i < vecOfTreeNodesForSorting.size(); i++) {
-//            if (vecOfTreeNodesForSorting[i]->data.getName() != root->data.getName() &&
-//                vecOfTreeNodesForSorting[i]->data.getAward() != root->data.getAward() &&
-//                vecOfTreeNodesForSorting[i]->data.getWinner() != root->data.getAward() &&
-//                vecOfTreeNodesForSorting[i]->data.getYear() != root->data.getYear() &&
-//                vecOfTreeNodesForSorting[i]->data.getFilm() != root->data.getFilm()) {
-//                vecOfTreeNodesForSorting.push_back(root);
-//            }
-//        }
-//        if (find(vecOfTreeNodesForSorting.begin(), vecOfTreeNodesForSorting.end(), root) == vecOfTreeNodesForSorting.end())
-//            vecOfTreeNodesForSorting.push_back(root);
-//        traverseBST(root->right);
-//    }
      if (root != nullptr){
         traverseBST(root->left, vec);
          vec.push_back(root);
         traverseBST(root->right, vec);
     }
-//     for (int i = 0; i < vectorOfNodes.size(); i++) {
-//         cout << vectorOfNodes[i]->data << endl;
-//     }
+
      return vec;
 
 }
 
+string ActorsActresses::_convertToLowerCase(const std::string &input) {
+
+    string tempStr = input;
+    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::tolower);
+
+    return tempStr;
+}
 
 
 
