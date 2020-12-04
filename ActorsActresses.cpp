@@ -220,13 +220,6 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
  */
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
 
-    // TODO: Using the vecOfTreeNodes, assemble a new BST with a new root.
-//    string tempAward = root->data.getAward();
-//    string tempFieldKeyword = fieldKeyword;
-//
-//    transform(tempAward.begin(), tempAward.end(), tempAward.begin(), ::tolower);
-//    transform(tempFieldKeyword.begin(), tempFieldKeyword.end(), tempFieldKeyword.begin(), ::tolower);
-
     // Base case: If the root is null, just return an empty vector.
     if (root == nullptr) {
         return vecOfTreeNodes; // Contains all the nodes from the partial search.
@@ -235,29 +228,29 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     // Recursive case: Root is not empty.
     // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
     else if (root != nullptr) {
-        string tempFieldKeyword = _convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
+        string lowercaseFieldKey = _convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
         if (field == ActorsActresses::AWARD) {
 
-            string tempAward = _convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
+            string lowercaseAward = _convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (tempAward.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (lowercaseAward.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::NAME) {
 
-            string tempName = _convertToLowerCase(root->data.getName());  // Convert name to lowercase.
+            string lowercaseName = _convertToLowerCase(root->data.getName());  // Convert name to lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (tempName.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (lowercaseName.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::FILM) {
 
-            string tempFilm = _convertToLowerCase(root->data.getName());  // Convert film to lowercase.
+            string lowercaseFilm = _convertToLowerCase(root->data.getFilm());  // Convert film to lowercase.
 
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (tempFilm.find(tempFieldKeyword) != string::npos) vecOfTreeNodes.push_back(root);
+            if (lowercaseFilm.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
     }
@@ -300,29 +293,45 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     }
 
     else if (root != nullptr) {
+        string lowercaseFieldKey = _convertToLowerCase(fieldKeyword);
         if (field == ActorsActresses::YEAR) {
+
+            string lowercaseYear = _convertToLowerCase(root->data.getYear());
+
             _inOrderTraversalES(field, fieldKeyword, root->right);
-            if (root->data.getYear() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            if (lowercaseYear == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::AWARD) {
+
+            string lowercaseAward = _convertToLowerCase(root->data.getAward());
+
             _inOrderTraversalES(field, fieldKeyword, root->right);
-            if (root->data.getAward() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            if (lowercaseAward == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::NAME) {
+
+            string lowercaseName = _convertToLowerCase(root->data.getName());
+
             _inOrderTraversalES(field, fieldKeyword, root->right);
-            if (root->data.getName() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            if (lowercaseName == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::WINNER) {
+
+            string lowercaseWinner = _convertToLowerCase(root->data.getWinner());
+
             _inOrderTraversalES(field, fieldKeyword, root->right);
-            if (root->data.getWinner() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            if (lowercaseWinner == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::FILM) {
+
+            string lowercaseFilm = _convertToLowerCase(root->data.getFilm());
+
             _inOrderTraversalPS(field, fieldKeyword, root->right);
-            if (root->data.getFilm() == fieldKeyword) vecOfTreeNodes.push_back(root);
+            if (lowercaseFilm == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
         }
     }
