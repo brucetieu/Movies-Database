@@ -226,7 +226,6 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
 
     // Base case: If the root is null, just return an empty vector.
     if (root == nullptr) {
-        cout << "root is null" << endl;
         return vecOfTreeNodes; // Contains all the nodes from the partial search.
     }
 

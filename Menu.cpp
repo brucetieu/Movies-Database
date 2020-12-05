@@ -25,14 +25,6 @@ Menu::Menu() {
  * Display the main menu.
  */
 void Menu::mainMenu() {
-//    cout << "=====================Main Menu=========================" << endl;
-//    cout << "a. Read in a file" << endl;
-//    cout << "b. Add a record" << endl;
-//    cout << "c. Search a record" << endl;
-//    cout << "d. Sort database by a field" << endl;
-//    cout << "e. Export latest database (after adds or modifies)." << endl;
-//    cout << "q. Quit" << endl;
-//    cout << "=======================================================" << endl;
 
     bool good = true;
 
@@ -119,39 +111,32 @@ void Menu::subMenuForA() {
  * Create submenu for choosing which database to add a record to.
  */
 void Menu::subMenuForB() {
-//    cout << "Choose which database you want to add a record to." << endl;
-//    cout << "1. Actors Actresses Database" << endl;
-//    cout << "2. Pictures Database" << endl;
-//    cout << "3. Go back to main menu" << endl;
-//    cout << "4. Quit" << endl;
 
     bool good = true;
-//    int choice;
-//    cin >> choice;
-//    cin.ignore();
 
     while (good) {
         cout << "Choose which database you want to add a record to." << endl;
-        cout << "1. Actors Actresses Database" << endl;
-        cout << "2. Pictures Database" << endl;
-        cout << "3. Go back to main menu" << endl;
-        cout << "4. Quit" << endl;
+        cout << "a. Actors Actresses Database" << endl;
+        cout << "b. Pictures Database" << endl;
+        cout << "c. Go back to main menu" << endl;
+        cout << "d. Quit" << endl;
 
-        int choice;
+        char choice;
         cin >> choice;
         cin.ignore();
 
         switch (choice) {
-            case 1:
+            case 'a':
                 subMenuAddRecordInActors(); // Display submenu for adding records to a database.
-                mainMenu();
-                break;
-
-            case 3:
                 mainMenu();
                 good = false;
                 break;
-            case 4:
+
+            case 'c':
+                mainMenu();
+                good = false;
+                break;
+            case 'd':
                 exit(1);
             default:
                 break;
@@ -185,36 +170,31 @@ void Menu::subMenuAddRecordInActors() {
  * Create the submenu for searching a record.
  */
 void Menu::subMenuForC() {
-//    cout << "Choose which database you want to search for a record in." << endl;
-//    cout << "1. Actors Actresses Database" << endl;
-//    cout << "2. Pictures Database" << endl;
-//    cout << "3. Go back to main menu" << endl;
-//    cout << "4. Quit" << endl;
 
     bool good = true;
-//    int choice;
-//    cin >> choice;
 
     while (good) {
         cout << "Choose which database you want to search for a record in." << endl;
-        cout << "1. Actors Actresses Database" << endl;
-        cout << "2. Pictures Database" << endl;
-        cout << "3. Go back to main menu" << endl;
-        cout << "4. Quit" << endl;
+        cout << "a. Actors Actresses Database" << endl;
+        cout << "b. Pictures Database" << endl;
+        cout << "c. Go back to main menu" << endl;
+        cout << "d. Quit" << endl;
 
-        int choice;
+        char choice;
         cin >> choice;
+        cin.ignore();
 
         switch (choice) {
-            case 1:
+            case 'a':
                 subMenuSearchRecordInActors(); // Display the submenu which lets user choose partial or exact search.
+                good = false;
                 break;
 
-            case 3:
+            case 'c':
                 mainMenu();
                 good = false;
                 break;
-            case 4:
+            case 'd':
                 exit(1);
             default:
                 break;
@@ -227,41 +207,34 @@ void Menu::subMenuForC() {
  * Create a sub menu for sorting a database by a specific field.
  */
 void Menu::subMenuForD() {
-//    cout << "Choose which database you want to sort a field in." << endl;
-//    cout << "1. Actors Actresses Database" << endl;
-//    cout << "2. Pictures Database" << endl;
-//    cout << "3. Go back to main menu" << endl;
-//    cout << "4. Quit" << endl;
 
-//    int choice;
     bool good = true;
-//    cin >> choice;
-//    cin.ignore();
 
     while (good) {
         cout << "Choose which database you want to sort a field in." << endl;
-        cout << "1. Actors Actresses Database" << endl;
-        cout << "2. Pictures Database" << endl;
-        cout << "3. Go back to main menu" << endl;
-        cout << "4. Quit" << endl;
+        cout << "a. Actors Actresses Database" << endl;
+        cout << "b. Pictures Database" << endl;
+        cout << "c. Go back to main menu" << endl;
+        cout << "d. Quit" << endl;
 
-        int choice;
+        char choice;
         cin >> choice;
         cin.ignore();
 
         switch (choice) {
-            case 1:
+            case 'a':
                 subMenuForSortingInActors();
                 good = false;
                 break;
-            case 2:
+            case 'b':
                 break;
-            case 3:
+            case 'c':
                 mainMenu();
                 good = false;
                 break;
+            case 'd':
+                exit(1);
             default:
-                good = false;
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
@@ -272,19 +245,8 @@ void Menu::subMenuForD() {
  * Create the menu for sorting actors.
  */
 void Menu::subMenuForSortingInActors() {
-//    cout << "Choose a field you'd like to sort (in ascending order): " << endl;
-//    cout << "a. Year" << endl;
-//    cout << "b. Award" << endl;
-//    cout << "c. Winner" << endl;
-//    cout << "d. Name" << endl;
-//    cout << "e. Film" << endl;
-//    cout << "f. Go back to main menu" << endl;
-//    cout << "g. Quit" << endl;
 
-//    char choice;
     bool good = true;
-//    cin >> choice;
-//    cin.ignore();
 
     while(good) {
 
@@ -334,7 +296,6 @@ void Menu::subMenuForSortingInActors() {
             case 'g':
                 exit(1);
             default:
-                good = false;
                 break;
             }
         cout << "Invalid choice, select from the displayed options." << endl;
@@ -342,40 +303,34 @@ void Menu::subMenuForSortingInActors() {
 }
 
 void Menu::subMenuForE() {
-//    cout << "Choose which database you want to export the results to." << endl;
-//    cout << "1. Actors Actresses Database" << endl;
-//    cout << "2. Pictures Database" << endl;
-//    cout << "3. Go back to main menu" << endl;
-//    cout << "4. Quit" << endl;
-//
-//    int choice;
+
     bool good = true;
-//    cin >> choice;
-//    cin.ignore();
 
     while (good) {
         cout << "Choose which database you want to export the results to." << endl;
-        cout << "1. Actors Actresses Database" << endl;
-        cout << "2. Pictures Database" << endl;
-        cout << "3. Go back to main menu" << endl;
-        cout << "4. Quit" << endl;
+        cout << "a. Actors Actresses Database" << endl;
+        cout << "b. Pictures Database" << endl;
+        cout << "c. Go back to main menu" << endl;
+        cout << "d. Quit" << endl;
 
-        int choice;
+        char choice;
         cin >> choice;
         cin.ignore();
 
         switch (choice) {
-            case 1:
+            case 'a':
                 exportToCSVActors(root);
                 mainMenu();
                 good = false;
                 break;
-            case 2:
+            case 'b':
                 break;
-            case 3:
+            case 'c':
                 mainMenu();
                 good = false;
                 break;
+            case 'd':
+                exit(1);
             default:
                 break;
         }
@@ -388,15 +343,8 @@ void Menu::subMenuForE() {
  * Create the submenu for partial / exact searches on a record.
  */
 void Menu::subMenuSearchRecordInActors() {
-//    cout << "Choose a search option." << endl;
-//    cout << "a. Partial search on a field." << endl;
-//    cout << "b. Exact search on a field." << endl;
-//    cout << "c. Go back to main menu" << endl;
-//    cout << "d. Quit" << endl;
 
     bool good = true;
-//    char choice;
-//    cin >> choice;
 
     while (good) {
         cout << "Choose a search option." << endl;
@@ -411,17 +359,19 @@ void Menu::subMenuSearchRecordInActors() {
         switch (choice) {
             case 'a':
                 partialSearchActors(); // Display submenu which lets user select which fields they'd like to partially search for.
+                good = false;
                 break;
             case 'b':
                 exactSearchActors();
+                good = false;
                 break;
             case 'c':
                 mainMenu();
                 good = false;
+                break;
             case 'd':
                 exit(1);
             default:
-                good = false;
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
@@ -432,17 +382,8 @@ void Menu::subMenuSearchRecordInActors() {
  * Create the menu which allows a user to choose a field in a db they'd like to search for.
  */
 void Menu::partialSearchActors() {
-//    cout << "Choose a field you'd like to partially search for." << endl;
-//    cout << "a. Award" << endl;
-//    cout << "b. Name" << endl;
-//    cout << "c. Film" << endl;
-//    cout << "d. Go back to main menu" << endl;
-//    cout << "e. Quit" << endl;
 
-//    char choice;
     bool good = true;
-//    cin >> choice;
-//    cin.ignore();
 
     while (good) {
 
@@ -474,12 +415,14 @@ void Menu::partialSearchActors() {
             case 'b':
                 root = partialSearchActorsField(ActorsActresses::NAME);
                 afterSearchActors();
+                good = false;
                 break;
 
             // Partial search on Name field.
             case 'c':
                 root = partialSearchActorsField(ActorsActresses::FILM);
                 afterSearchActors();
+                good = false;
                 break;
             case 'd':
                 mainMenu();
@@ -488,7 +431,6 @@ void Menu::partialSearchActors() {
             case 'e':
                 exit(1);
             default:
-                good = false;
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
@@ -500,19 +442,8 @@ void Menu::partialSearchActors() {
  * Create the sub menu which allows a user to perform an exact search on a field.
  */
 void Menu::exactSearchActors() {
-//    cout << "Choose a field you'd like to exactly search for." << endl;
-//    cout << "a. Year" << endl;
-//    cout << "b. Award" << endl;
-//    cout << "c. Winner" << endl;
-//    cout << "d. Name" << endl;
-//    cout << "e. Film" << endl;
-//    cout << "f. Go back to main menu" << endl;
-//    cout << "g. Quit" << endl;
 
-//    char choice;
     bool good = true;
-//    cin >> choice;
-//    cin.ignore();
 
     while (good) {
         cout << "Choose a field you'd like to exactly search for." << endl;
@@ -537,26 +468,30 @@ void Menu::exactSearchActors() {
             case 'b':
                 root = exactSearchActorsField(ActorsActresses::AWARD);
                 afterSearchActors();
+                good = false;
                 break;
             case 'c':
                 root = exactSearchActorsField(ActorsActresses::WINNER);
                 afterSearchActors();
+                good = false;
                 break;
             case 'd':
                 root = exactSearchActorsField(ActorsActresses::NAME);
                 afterSearchActors();
+                good = false;
                 break;
             case 'e':
                 root = exactSearchActorsField(ActorsActresses::FILM);
                 afterSearchActors();
+                good = false;
                 break;
             case 'f':
                 mainMenu();
+                good = false;
                 break;
             case 'g':
                 exit(1);
             default:
-                good = false;
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
@@ -596,20 +531,7 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
  * Create the menu to prompt user to perform a secondary search, or start over.
  */
 void Menu::afterSearchActors() {
-//    cout << "a. Search within these results?" << endl;
-//    cout << "b. Start a new search?" << endl;
-//    cout << "d. Save your search results to a file." << endl;
-//
-//    // If the search returns only one record, allow the user to modify the record.
-//    if (root->left == nullptr && root->right == nullptr) {
-//        cout << "c. Modify this record's fields?" << endl;
-//    }
-//    cout << "e. Quit" << endl;
-//
-//    char choice;
-//    bool good = true;
-//    cin >> choice;
-//    cin.ignore();
+
     bool good = true;
 
     while (good) {
@@ -635,22 +557,30 @@ void Menu::afterSearchActors() {
         switch (choice) {
             case 'a':
                 subMenuSearchRecordInActors(); // Bring the user back to the menu to choose a partial search or exact search.
+                good = false;
                 break;
             case 'b':
                 // Reset the root to the BST with original data.
                 root = actorsActresses->readInFile();
                 subMenuSearchRecordInActors();
+                good = false;
                 break;
             case 'c':
                 modifyARecordInActors();
+                good = false;
                 break;
             case 'd':
                 exportToCSVActors(root);
                 subMenuSearchRecordInActors();
+                good = false;
+                break;
             case 'e':
+                mainMenu();
+                good = false;
+                break;
+            case 'f':
                 exit(1);
             default:
-                good = false;
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
