@@ -22,7 +22,7 @@ private:
     int records;
 
     BinaryTree<ActorsActresses> *actorsTree;
-    BinaryTree<ActorsActresses>::TreeNode* root;
+//    BinaryTree<ActorsActresses>::TreeNode* root;
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
@@ -88,13 +88,13 @@ public:
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();
 //    void readInFile();
-    void addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
+    BinaryTree<ActorsActresses>::TreeNode* addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film, BinaryTree<ActorsActresses>::TreeNode* root);
 
     // Partial search on a field.
     BinaryTree<ActorsActresses>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     BinaryTree<ActorsActresses>::TreeNode* exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
-    BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec);
+    BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec, BinaryTree<ActorsActresses>::TreeNode* root);
 
 //    void sortByField(std::string &field, BinaryTree<ActorsActresses>::TreeNode* root);
 

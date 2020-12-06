@@ -46,18 +46,23 @@ void Menu::mainMenu() {
         switch (choice) {
             case 'a':
                 subMenuForA(); // Submenu for a. Read in File.
+                good = false;
                 break;
             case 'b':
                 subMenuForB(); // Submenu for b. Add a record.
+                good = false;
                 break;
             case 'c':
                 subMenuForC(); // Submenu for c. Search a record.
+                good = false;
                 break;
             case 'd':
                 subMenuForD(); // Submenu for d. Sort by a field.
+                good = false;
                 break;
             case 'e':
                 subMenuForE(); // Export latest database (after adds or modifies).
+                good = false;
                 break;
             case 'q':
                 exit(1);
@@ -163,7 +168,7 @@ void Menu::subMenuAddRecordInActors() {
     getline(cin, film);
 
     // Add this record to the BST.
-    actorsActresses->addARecord(year, award, winner, name, film);
+    root = actorsActresses->addARecord(year, award, winner, name, film, root);
 }
 
 /**
@@ -403,8 +408,8 @@ void Menu::partialSearchActors() {
             // Partial search on Award field.
             case 'a':
 
-                    // The new root will be the BST which contains all the results returned from the partial search.
-                    root = partialSearchActorsField(ActorsActresses::AWARD);
+                // The new root will be the BST which contains all the results returned from the partial search.
+                root = partialSearchActorsField(ActorsActresses::AWARD);
 
                 // Display the menu which prompts a user to search again within the existing search results, or perform a new search.
                 afterSearchActors();
@@ -640,7 +645,6 @@ void Menu::sortByField(std::string &field) {
 
     // Sort the specific field using the STL sort function.
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
-
 
     // Print out the results.
     for (int i = 0; i < vectorOfNodes.size(); i++) {
