@@ -46,23 +46,18 @@ void Menu::mainMenu() {
         switch (choice) {
             case 'a':
                 subMenuForA(); // Submenu for a. Read in File.
-                good = false;
                 break;
             case 'b':
                 subMenuForB(); // Submenu for b. Add a record.
-                good = false;
                 break;
             case 'c':
                 subMenuForC(); // Submenu for c. Search a record.
-                good = false;
                 break;
             case 'd':
                 subMenuForD(); // Submenu for d. Sort by a field.
-                good = false;
                 break;
             case 'e':
                 subMenuForE(); // Export latest database (after adds or modifies).
-                good = false;
                 break;
             case 'q':
                 exit(1);
@@ -168,7 +163,7 @@ void Menu::subMenuAddRecordInActors() {
     getline(cin, film);
 
     // Add this record to the BST.
-    root = actorsActresses->addARecord(year, award, winner, name, film, root);
+    actorsActresses->addARecord(year, award, winner, name, film);
 }
 
 /**
@@ -302,9 +297,9 @@ void Menu::subMenuForSortingInActors() {
                 exit(1);
             default:
                 break;
-            }
-        cout << "Invalid choice, select from the displayed options." << endl;
         }
+        cout << "Invalid choice, select from the displayed options." << endl;
+    }
 }
 
 void Menu::subMenuForE() {
@@ -416,14 +411,14 @@ void Menu::partialSearchActors() {
                 good = false;
                 break;
 
-            // Partial search on Name field.
+                // Partial search on Name field.
             case 'b':
                 root = partialSearchActorsField(ActorsActresses::NAME);
                 afterSearchActors();
                 good = false;
                 break;
 
-            // Partial search on Name field.
+                // Partial search on Name field.
             case 'c':
                 root = partialSearchActorsField(ActorsActresses::FILM);
                 afterSearchActors();
@@ -645,6 +640,7 @@ void Menu::sortByField(std::string &field) {
 
     // Sort the specific field using the STL sort function.
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
+
 
     // Print out the results.
     for (int i = 0; i < vectorOfNodes.size(); i++) {
