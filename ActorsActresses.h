@@ -22,7 +22,7 @@ private:
     int records;
 
     BinaryTree<ActorsActresses> *actorsTree;
-//    BinaryTree<ActorsActresses>::TreeNode* root;
+    BinaryTree<ActorsActresses>::TreeNode* root;
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
@@ -49,15 +49,15 @@ public:
         SortByFieldComparator(std::string &field) {this->field = field;}
         bool operator() (BinaryTree<ActorsActresses>::TreeNode* left, BinaryTree<ActorsActresses>::TreeNode* right) {
             if (field == ActorsActresses::YEAR) {
-                return left->data.getYear() < right->data.getYear();
+                return Utility::convertToLowerCase(left->data.getYear()) < Utility::convertToLowerCase(right->data.getYear());
             } else if (field == ActorsActresses::AWARD) {
-                return left->data.getAward() < right->data.getAward();
+                return Utility::convertToLowerCase(left->data.getAward()) < Utility::convertToLowerCase(right->data.getAward());
             } else if (field == ActorsActresses::WINNER) {
-                return left->data.getWinner() < right->data.getWinner();
+                return Utility::convertToLowerCase(left->data.getWinner()) < Utility::convertToLowerCase(right->data.getWinner());
             } else if (field == ActorsActresses::NAME) {
-                return left->data.getName() < right->data.getName();
+                return Utility::convertToLowerCase(left->data.getName()) < Utility::convertToLowerCase(right->data.getName());
             }
-            return left->data.getFilm() < right->data.getFilm();
+            return Utility::convertToLowerCase(left->data.getFilm()) < Utility::convertToLowerCase(right->data.getFilm());
         }
         std::string field;
     };
@@ -88,13 +88,13 @@ public:
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();
 //    void readInFile();
-    BinaryTree<ActorsActresses>::TreeNode* addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film, BinaryTree<ActorsActresses>::TreeNode* root);
+    void addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
 
     // Partial search on a field.
     BinaryTree<ActorsActresses>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     BinaryTree<ActorsActresses>::TreeNode* exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
-    BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec, BinaryTree<ActorsActresses>::TreeNode* root);
+    BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec);
 
 //    void sortByField(std::string &field, BinaryTree<ActorsActresses>::TreeNode* root);
 

@@ -30,7 +30,6 @@ ActorsActresses::ActorsActresses() {
     // Initialize a new BinaryTree holding ActorsActresses objects as nodes.
     actorsTree = new BinaryTree<ActorsActresses>();
     records = 0;
-//    root = nullptr;
 }
 
 /**
@@ -126,8 +125,7 @@ ostream& operator << (ostream &output, const ActorsActresses &actor) {
  */
 BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
 
-    BinaryTree<ActorsActresses>::TreeNode* root = nullptr;
-
+    actorsTree->clearTree(root);
     string header;
 
     ifstream infile("actor-actress.csv");
@@ -141,8 +139,6 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
         getline(infile, header);
 
         while (infile.peek() != EOF) {
-
-//            root = nullptr;
 
             getline(infile, year, ',');
             getline(infile, award, ',');
@@ -162,7 +158,6 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
     // TODO: Return a root when the file is read. Then, pass in that root as needed.
     // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
 //    root = actorsTree->getRoot();
-    actorsTree->inorderPrint(root);
 
     cout << "Success!" << endl;
 
@@ -177,12 +172,12 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
  * @param name The name of the actor / actress.
  * @param film The name of the film.
  */
-BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film, BinaryTree<ActorsActresses>::TreeNode* root) {
+void ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film) {
 
     root = actorsTree->insert(ActorsActresses(year, award, winner, name, film), root);
     cout << "Record successfully inserted!" << endl;
-    actorsTree->inorderPrint(root);
-    return root;
+    cout << actorsTree->getSize(root) << endl;
+//    actorsTree->inorderPrint();
 }
 
 // TODO: Pass in a root here. Here, the root is still the root which was read into from the file.
@@ -219,7 +214,7 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
         cout << vecOfTreeNodes[i]->data << endl;
     }
 
-    return searchWithinASearch(tempRootVec, root); // Should contain all nodes from the partial search. The new root from the new BST.
+    return searchWithinASearch(tempRootVec); // Should contain all nodes from the partial search. The new root from the new BST.
 }
 
 /**
@@ -236,8 +231,8 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         return vecOfTreeNodes; // Contains all the nodes from the partial search.
     }
 
-    // Recursive case: Root is not empty.
-    // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
+        // Recursive case: Root is not empty.
+        // vecOfTreeNodes.push_back() works because it was cleared previously, so we get a vector of new nodes from each partial search.
     else if (root != nullptr) {
         string lowercaseFieldKey = Utility::convertToLowerCase(fieldKeyword);  // Convert the keyword to lowercase?
         if (field == ActorsActresses::AWARD) {
@@ -297,11 +292,11 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::exactFindByField(std::st
         }
     }
 
-    return searchWithinASearch(tempRootVec, root);
+    return searchWithinASearch(tempRootVec);
 }
 
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKeyword,
-                                          BinaryTree<ActorsActresses>::TreeNode *root) {
+                                                                                    BinaryTree<ActorsActresses>::TreeNode *root) {
 
     // Base case: If the root is null, just return an empty vector.
     if (root == nullptr) {
@@ -360,21 +355,21 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
  * @param tempVec The vector of TreeNodes of partial searches.
  * @return A new root to hold nodes partially searched for.
  */
-BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec, BinaryTree<ActorsActresses>::TreeNode* root) {
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec) {
+
+    BinaryTree<ActorsActresses>::TreeNode* newRoot = nullptr;
 
     // Create a new instance of BinaryTree object.
     BinaryTree<ActorsActresses> *tempTree = new BinaryTree<ActorsActresses>();
 
     // For each node in the vector, insert it into the new BST.
     for (int i = 0; i < tempVec.size(); i++) {
-        root = tempTree->insert(tempVec[i]->data, root);
+        newRoot = tempTree->insert(tempVec[i]->data, newRoot);
     }
 
     // Return the root of this new BST to recurse on.
-//    return tempTree->getRoot();
-    return root;
+    return newRoot;
 }
-
 
 /**
  * Traverse BST and add nodes to a vector.
@@ -384,15 +379,28 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
         BinaryTree<ActorsActresses>::TreeNode*& root, vector<BinaryTree<ActorsActresses>::TreeNode*> &vec) {
 
-     if (root != nullptr){
+    if (root != nullptr){
         traverseBST(root->left, vec);
-         vec.push_back(root);
+        vec.push_back(root);
         traverseBST(root->right, vec);
     }
 
-     return vec;
+    return vec;
 
 }
+
+///**
+// * Convert the string to be lower case.
+// * @param input The string to be converted to lowercase.
+// * @return The lower cased string.
+// */
+//string ActorsActresses::_convertToLowerCase(const std::string &input) {
+//
+//    string tempStr = input;
+//    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::tolower);
+//
+//    return tempStr;
+//}
 
 
 
