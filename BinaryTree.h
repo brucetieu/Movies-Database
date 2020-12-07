@@ -22,7 +22,7 @@ public:
 
     BinaryTree();
 //    void insert(T data);
-    void inorderPrint();
+    void inorderPrint(BinaryTree<T>::TreeNode* root);
 //    std::vector<TreeNode*> search(T data);
 //    bool search(T data);
     TreeNode* getRoot();
@@ -40,7 +40,7 @@ private:
     int size;
 
 //    void _insert(T data, TreeNode* leaf);
-    void _inorderPrint(TreeNode* leaf);
+//    void _inorderPrint(TreeNode* leaf);
 //    bool _search(T data, TreeNode* leaf);
 //    std::vector<TreeNode*> _search(T data, TreeNode* leaf);
 
@@ -115,29 +115,44 @@ typename BinaryTree<T>::TreeNode* BinaryTree<T>::getRoot() {
 //}
 
 /**
+ * Inorder traversal: left -> visit -> right
+ * @param root The root
+ */
+template <class T>
+void BinaryTree<T>::inorderPrint(BinaryTree<T>::TreeNode *root) {
+    if (root == nullptr) {
+        return;
+    } else {
+        inorderPrint(root->left);
+        std::cout << root->data << std::endl;
+        inorderPrint(root->right);
+    }
+}
+
+/**
  * Print the BS tree in-order: left - visit - right.
  * @tparam T The Type.
  */
-template <class T>
-void BinaryTree<T>::inorderPrint() {
-    _inorderPrint(root);
-    std::cout << "\n";
-}
+//template <class T>
+//void BinaryTree<T>::inorderPrint() {
+//    _inorderPrint(root);
+//    std::cout << "\n";
+//}
 
 /**
  * Helper method which recursively traverses through the BST to insert nodes in-order.
  * @tparam T The type.
  * @param leaf The leaf node.
  */
-template <class T>
-void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
-
-    if (leaf != nullptr) {
-        _inorderPrint(leaf->left);
-        std::cout << leaf->data << std::endl;
-        _inorderPrint(leaf->right);
-    }
-}
+//template <class T>
+//void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
+//
+//    if (leaf != nullptr) {
+//        _inorderPrint(leaf->left);
+//        std::cout << leaf->data << std::endl;
+//        _inorderPrint(leaf->right);
+//    }
+//}
 
 template <class T>
 typename BinaryTree<T>::TreeNode* BinaryTree<T>::getNewNode(T data) {
