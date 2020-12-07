@@ -6,6 +6,7 @@
 #define MOVIES_DATABASE_MENU_H
 
 #include "ActorsActresses.h"
+#include "Pictures.h"
 
 /**
  * Create menu driven system to navigate through the database.
@@ -26,7 +27,6 @@ public:
     void subMenuAddRecordInActors();
     void subMenuSearchRecordInActors();
     void subMenuForSortingInActors();
-
     void partialSearchActors();
     void exactSearchActors();
 
@@ -34,20 +34,38 @@ public:
     BinaryTree<ActorsActresses>::TreeNode* exactSearchActorsField(std::string &field);
 
     void afterSearchActors();
-    void searchAgainActors();
+//    void searchAgainActors();
 
     void modifyARecordInActors();
-
-    void sortByField(std::string &field);
-
+    void sortByActorsFields(std::string &field);
     void exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode* root);
+
+/***********************************************************/
+
+    void subMenuAddRecordInPictures();
+    void subMenuSearchRecordInPictures();
+    void subMenuForSortingInPictures();
+    void partialSearchPictures();
+    void exactSearchPictures();
+
+    BinaryTree<Pictures>::TreeNode* partialSearchPicturesField(std::string &field);
+    BinaryTree<Pictures>::TreeNode* exactSearchPicturesField(std::string &field);
+
+    void afterSearchPictures();
+//    void searchAgainPictures();
+
+    void modifyARecordInPictures();
+    void sortByPicturesFields(std::string &field);
+    void exportToCSVPictures(BinaryTree<Pictures>::TreeNode* root);
 
 
 
 private:
     ActorsActresses *actorsActresses;  // Declare pointer to ActorsActresses object.
+    Pictures *pictures;
 
-    BinaryTree<ActorsActresses>::TreeNode* root; // Create the root for the BST.
+    BinaryTree<ActorsActresses>::TreeNode* actorsRoot; // Create the root for the BST.
+    BinaryTree<Pictures>::TreeNode* picturesRoot;
 
 //    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 };

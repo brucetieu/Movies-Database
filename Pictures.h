@@ -115,8 +115,8 @@ public:
 
     // Methods for the database.
     BinaryTree<Pictures>::TreeNode* readInFile();
-    void addARecord(std::string name, std::string year, std::string nominations, std::string rating, std::string duration, std::string genre1,
-                    std::string genre2, std::string release, std::string metacritic, std::string synopsis);
+    void addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
+                    std::string &genre2, std::string &release, std::string &metacritic, std::string &synopsis);
 
     // Partial search on a field.
     BinaryTree<Pictures>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<Pictures>::TreeNode* root);
