@@ -1,5 +1,6 @@
 //
 // Created by Bruce Tieu on 11/21/20.
+// Declarations for Menu functions.
 //
 
 #ifndef MOVIES_DATABASE_MENU_H
@@ -15,7 +16,10 @@ class Menu {
 private:
 
 public:
-//    enum class SearchCriteria {PARTIAL, EXACT};
+
+    static std::string actorsFilename;
+    static std::string picturesFilename;
+
     Menu();
     void mainMenu();
     void subMenuForA();
@@ -34,7 +38,6 @@ public:
     BinaryTree<ActorsActresses>::TreeNode* exactSearchActorsField(std::string &field);
 
     void afterSearchActors();
-//    void searchAgainActors();
 
     void modifyARecordInActors();
     void sortByActorsFields(std::string &field);
@@ -52,7 +55,6 @@ public:
     BinaryTree<Pictures>::TreeNode* exactSearchPicturesField(std::string &field);
 
     void afterSearchPictures();
-//    void searchAgainPictures();
 
     void modifyARecordInPictures();
     void sortByPicturesFields(std::string &field);
@@ -67,7 +69,6 @@ private:
     BinaryTree<ActorsActresses>::TreeNode* actorsRoot; // Create the root for the BST.
     BinaryTree<Pictures>::TreeNode* picturesRoot;
 
-//    std::vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 };
 
 

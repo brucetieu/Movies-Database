@@ -35,7 +35,6 @@ private:
     std::vector<BinaryTree<Pictures>::TreeNode*> vecOfTreeNodes;
 
 public:
-//    static std::vector<BinaryTree<Pictures>::TreeNode*> vecOfTreeNodesForSorting;
 
     static std::string NAME;
     static std::string YEAR;
@@ -49,7 +48,7 @@ public:
     static std::string SYNOPSIS;
 
     /**
-     * Functor object for sorting the ActorsActresses database by Year, Award, Winner, Name, and Film.
+     * Functor object for sorting the Pictures database by Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis.
      */
     struct SortByFieldComparator {
         SortByFieldComparator(std::string &field) {this->field = field;}
@@ -77,7 +76,6 @@ public:
         }
         std::string field;
     };
-
 
     Pictures();
     Pictures(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
@@ -109,9 +107,6 @@ public:
 
 
     int getRecords() const;
-
-//    std::vector<BinaryTree<Pictures>::TreeNode*> getVecOfTreeNodesForSorting();
-
 
     // Methods for the database.
     BinaryTree<Pictures>::TreeNode* readInFile();

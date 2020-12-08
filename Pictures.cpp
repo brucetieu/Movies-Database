@@ -1,5 +1,6 @@
 //
 // Created by Bruce Tieu on 12/6/20.
+// Function implementations for Pictures.h.
 //
 
 #include <iostream>
@@ -74,9 +75,6 @@ string Pictures::getSynopsis() const { return synopsis; }
 
 int Pictures::getRecords() const { return records; }
 
-//std::vector<BinaryTree<Pictures>::TreeNode *> Pictures::getVecOfTreeNodesForSorting() {
-//    return vecOfTreeNodesForSorting;
-//}
 
 /**
  * Overload the '<' operator to compare objects by the Name field.
@@ -89,7 +87,7 @@ bool Pictures::operator<(const Pictures &right) {
 
 /**
  * Overload the '>' operator to compare objects by Name field.
- * @param right The ActorsActresses Object passed in.
+ * @param right The Pictures Object passed in.
  * @return True, if the comparison is true, false otherwise.
  */
 bool Pictures::operator>(const Pictures &right) {
@@ -98,7 +96,7 @@ bool Pictures::operator>(const Pictures &right) {
 
 /**
  * Overload the '==' operator to see if objects are equal by the Name.
- * @param right The ActorsActresses object being passed in.
+ * @param right The Pictures object being passed in.
  * @return True, if the comparison is true, false otherwise.
  */
 bool Pictures::operator==(const Pictures &right) {
@@ -107,7 +105,7 @@ bool Pictures::operator==(const Pictures &right) {
 
 /**
  * Overload the '>=' operator to compare objects by Name.
- * @param right The ActorsActresses object being passed in.
+ * @param right The Pictures object being passed in.
  * @return True, if the comparison is true.
  */
 bool Pictures::operator>=(const Pictures &right) {
@@ -117,7 +115,7 @@ bool Pictures::operator>=(const Pictures &right) {
 /**
  * Overload the '<<' operator to print out objects directly.
  * @param output The ostream object.
- * @param actor The ActorsActresses object.
+ * @param actor The Pictures object.
  * @return The output stream.
  */
 ostream& operator << (ostream &output, const Pictures &pictures) {
@@ -171,13 +169,9 @@ BinaryTree<Pictures>::TreeNode* Pictures::readInFile() {
         }
     }
 
-    // Print out the contents in order by Name field.
-//    actorsTree->inorderPrint();
-
-    // TODO: Return a root when the file is read. Then, pass in that root as needed.
     // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
-//    root = actorsTree->getRoot();
     picturesTree->inorderPrint(root);
+
     cout << "Success!" << endl;
 
     return root;

@@ -1,5 +1,6 @@
 //
 // Created by Bruce Tieu on 11/21/20.
+// Implement function declarations in Menu.h.
 //
 
 #include "Menu.h"
@@ -13,7 +14,9 @@
 
 using namespace std;
 
-std::vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::vecOfTreeNodesForSorting;
+string Menu::actorsFilename = "actorsOutput.csv";
+string Menu::picturesFilename = "picturesOutput.csv";
+
 /**
  * Initialize ActorsActresses object within the default constructor.
  */
@@ -29,7 +32,6 @@ Menu::Menu() {
 void Menu::mainMenu() {
 
     bool good = true;
-
 
     while (good) {
         cout << "=====================Main Menu=========================" << endl;
@@ -71,7 +73,7 @@ void Menu::mainMenu() {
 }
 
 /**
- * Create submenu for reading in file.
+ * Create submenu for reading in file. Read in file from each Actors-Actresses.csv or Pictures.csv.
  */
 void Menu::subMenuForA() {
 
@@ -82,7 +84,7 @@ void Menu::subMenuForA() {
         cout << "a. Actors Actresses Database" << endl;
         cout << "b. Pictures Database" << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -90,21 +92,23 @@ void Menu::subMenuForA() {
 
         switch(choice) {
             case 'a':
-                // Store each record in the BST, each represents a node. We start at the root.
+                // Store each record in the BST from the Actors-Actresses.csv, each represents a node. We start at the root.
                 actorsRoot = actorsActresses->readInFile();
-                mainMenu();
+                mainMenu(); // Redirect to main menu.
                 good = false;
                 break;
             case 'b':
+                // Store each record in the BST from Pictures.csv, each represents a node. We start at the root.
                 picturesRoot = pictures->readInFile();
                 mainMenu();
                 good = false;
                 break;
             case 'c':
+                // Go back to the main menuy.
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -126,7 +130,7 @@ void Menu::subMenuForB() {
         cout << "a. Actors Actresses Database" << endl;
         cout << "b. Pictures Database" << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -134,12 +138,12 @@ void Menu::subMenuForB() {
 
         switch (choice) {
             case 'a':
-                subMenuAddRecordInActors(); // Display submenu for adding records to a database.
+                subMenuAddRecordInActors(); // Display submenu for adding records to a database in ActorsActresses database.
                 mainMenu();
                 good = false;
                 break;
             case 'b':
-                subMenuAddRecordInPictures();
+                subMenuAddRecordInPictures(); // Display submenu for adding records to a database in Pictures database.
                 mainMenu();
                 good = false;
                 break;
@@ -147,7 +151,7 @@ void Menu::subMenuForB() {
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -177,6 +181,9 @@ void Menu::subMenuAddRecordInActors() {
     actorsActresses->addARecord(year, award, winner, name, film);
 }
 
+/**
+ * Sub menu for adding a record into the Pictures database.
+ */
 void Menu::subMenuAddRecordInPictures() {
     string name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis;
 
@@ -201,7 +208,7 @@ void Menu::subMenuAddRecordInPictures() {
     cout << "Insert synopsis: ";
     getline(cin, synopsis);
 
-    // Add this record to the BST.
+    // Add this record to the Pictures BST.
     pictures->addARecord(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis);
 }
 
@@ -217,7 +224,7 @@ void Menu::subMenuForC() {
         cout << "a. Actors Actresses Database" << endl;
         cout << "b. Pictures Database" << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -225,18 +232,18 @@ void Menu::subMenuForC() {
 
         switch (choice) {
             case 'a':
-                subMenuSearchRecordInActors(); // Display the submenu which lets user choose partial or exact search.
+                subMenuSearchRecordInActors(); // Display the submenu which lets user choose partial or exact search from ActorsActresses db.
                 good = false;
                 break;
             case 'b':
-                subMenuSearchRecordInPictures();
+                subMenuSearchRecordInPictures(); // Display the submenu which user choose partial or exact search from Pictures db.
                 good = false;
                 break;
             case 'c':
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -257,7 +264,7 @@ void Menu::subMenuForD() {
         cout << "a. Actors Actresses Database" << endl;
         cout << "b. Pictures Database" << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -265,18 +272,18 @@ void Menu::subMenuForD() {
 
         switch (choice) {
             case 'a':
-                subMenuForSortingInActors();
+                subMenuForSortingInActors();  // Display sub menu options for sorting in the ActorsActresses db.
                 good = false;
                 break;
             case 'b':
-                subMenuForSortingInPictures();
+                subMenuForSortingInPictures(); // Display sub menu options for sorting in the Pictures db.
                 good = false;
                 break;
             case 'c':
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -301,7 +308,7 @@ void Menu::subMenuForSortingInActors() {
         cout << "d. Name" << endl;
         cout << "e. Film" << endl;
         cout << "f. Go back to main menu" << endl;
-        cout << "g. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -309,27 +316,27 @@ void Menu::subMenuForSortingInActors() {
 
         switch (choice) {
             case 'a':
-                sortByActorsFields(ActorsActresses::YEAR);
+                sortByActorsFields(ActorsActresses::YEAR);  // Sort actors db by year field.
                 mainMenu();
                 good = false;
                 break;
             case 'b':
-                sortByActorsFields(ActorsActresses::AWARD);
+                sortByActorsFields(ActorsActresses::AWARD); // Sort actors db by award field.
                 mainMenu();
                 good = false;
                 break;
             case 'c':
-                sortByActorsFields(ActorsActresses::WINNER);
+                sortByActorsFields(ActorsActresses::WINNER); // Sort actors db by winner field.
                 mainMenu();
                 good = false;
                 break;
             case 'd':
-                sortByActorsFields(ActorsActresses::NAME);
+                sortByActorsFields(ActorsActresses::NAME); // Sort actors db by name field.
                 mainMenu();
                 good = false;
                 break;
             case 'e':
-                sortByActorsFields(ActorsActresses::FILM);
+                sortByActorsFields(ActorsActresses::FILM); // Sort actors db by film field.
                 mainMenu();
                 good = false;
                 break;
@@ -337,7 +344,7 @@ void Menu::subMenuForSortingInActors() {
                 mainMenu();
                 good = false;
                 break;
-            case 'g':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -346,7 +353,9 @@ void Menu::subMenuForSortingInActors() {
     }
 }
 
-
+/**
+ * Display menu options for exporting results to a csv from either db.
+ */
 void Menu::subMenuForE() {
 
     bool good = true;
@@ -356,7 +365,7 @@ void Menu::subMenuForE() {
         cout << "a. Actors Actresses Database" << endl;
         cout << "b. Pictures Database" << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -364,12 +373,12 @@ void Menu::subMenuForE() {
 
         switch (choice) {
             case 'a':
-                exportToCSVActors(actorsRoot);
+                exportToCSVActors(actorsRoot); // Export results from actors db to csv.
                 mainMenu();
                 good = false;
                 break;
             case 'b':
-                exportToCSVPictures(picturesRoot);
+                exportToCSVPictures(picturesRoot); // Export results from pictures db to csv.
                 mainMenu();
                 good = false;
                 break;
@@ -377,18 +386,17 @@ void Menu::subMenuForE() {
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
         }
         cout << "Invalid choice, select from the displayed options." << endl;
     }
-
 }
 
 /**
- * Create the submenu for partial / exact searches on a record.
+ * Create the submenu for partial / exact searches on a record in actors db.
  */
 void Menu::subMenuSearchRecordInActors() {
 
@@ -399,60 +407,25 @@ void Menu::subMenuSearchRecordInActors() {
         cout << "a. Partial search on a field." << endl;
         cout << "b. Exact search on a field." << endl;
         cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
 
         switch (choice) {
             case 'a':
-                partialSearchActors(); // Display submenu which lets user select which fields they'd like to partially search for.
+                partialSearchActors(); // Display submenu which lets user select which fields they'd like to partially search for in ActorsActresses.
                 good = false;
                 break;
             case 'b':
-                exactSearchActors();
+                exactSearchActors(); // Display submenu which lets user select which fields they'd like to exactly search for in ActorsActresses.
                 good = false;
                 break;
             case 'c':
                 mainMenu();
                 good = false;
                 break;
-            case 'd':
-                exit(1);
-            default:
-                break;
-        }
-        cout << "Invalid choice, select from the displayed options." << endl;
-    }
-}
-
-void Menu::subMenuSearchRecordInPictures() {
-    bool good = true;
-
-    while (good) {
-        cout << "Choose a search option." << endl;
-        cout << "a. Partial search on a field." << endl;
-        cout << "b. Exact search on a field." << endl;
-        cout << "c. Go back to main menu" << endl;
-        cout << "d. Quit" << endl;
-
-        char choice;
-        cin >> choice;
-
-        switch (choice) {
-            case 'a':
-                partialSearchPictures(); // Display submenu which lets user select which fields they'd like to partially search for.
-                good = false;
-                break;
-            case 'b':
-                exactSearchPictures();
-                good = false;
-                break;
-            case 'c':
-                mainMenu();
-                good = false;
-                break;
-            case 'd':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -462,7 +435,45 @@ void Menu::subMenuSearchRecordInPictures() {
 }
 
 /**
- * Create the menu which allows a user to choose a field in a db they'd like to search for.
+ * Display sub menu options for searching for records in Pictures database.
+ */
+void Menu::subMenuSearchRecordInPictures() {
+    bool good = true;
+
+    while (good) {
+        cout << "Choose a search option." << endl;
+        cout << "a. Partial search on a field." << endl;
+        cout << "b. Exact search on a field." << endl;
+        cout << "c. Go back to main menu" << endl;
+        cout << "q. Quit" << endl;
+
+        char choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 'a':
+                partialSearchPictures(); // Display submenu which lets user select which fields they'd like to partially search for in Pictures db.
+                good = false;
+                break;
+            case 'b':
+                exactSearchPictures();  // Sub menu options in Pictures db for exact searching.
+                good = false;
+                break;
+            case 'c':
+                mainMenu();
+                good = false;
+                break;
+            case 'q':
+                exit(1);
+            default:
+                break;
+        }
+        cout << "Invalid choice, select from the displayed options." << endl;
+    }
+}
+
+/**
+ * Create the menu which allows a user to choose a field in a db they'd like to search for in Actors db.
  */
 void Menu::partialSearchActors() {
 
@@ -475,7 +486,7 @@ void Menu::partialSearchActors() {
         cout << "b. Name" << endl;
         cout << "c. Film" << endl;
         cout << "d. Go back to main menu" << endl;
-        cout << "e. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -511,7 +522,7 @@ void Menu::partialSearchActors() {
                 mainMenu();
                 good = false;
                 break;
-            case 'e':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -522,7 +533,7 @@ void Menu::partialSearchActors() {
 
 
 /**
- * Create the sub menu which allows a user to perform an exact search on a field.
+ * Create the sub menu which allows a user to perform an exact search on a field in Actors db.
  */
 void Menu::exactSearchActors() {
 
@@ -536,7 +547,7 @@ void Menu::exactSearchActors() {
         cout << "d. Name" << endl;
         cout << "e. Film" << endl;
         cout << "f. Go back to main menu" << endl;
-        cout << "g. Quit" << endl;
+        cout << "q. Quit" << endl;
 
         char choice;
         cin >> choice;
@@ -544,8 +555,9 @@ void Menu::exactSearchActors() {
 
         switch (choice) {
             case 'a':
+                // Exact search on Year field. actorsRoot contains all the exact search queries.
                 actorsRoot = exactSearchActorsField(ActorsActresses::YEAR);
-                afterSearchActors();
+                afterSearchActors(); // Display sub menu options for searching within the search or start a new search.
                 good = false;
                 break;
             case 'b':
@@ -572,7 +584,7 @@ void Menu::exactSearchActors() {
                 mainMenu();
                 good = false;
                 break;
-            case 'g':
+            case 'q':
                 exit(1);
             default:
                 break;
@@ -582,7 +594,7 @@ void Menu::exactSearchActors() {
 }
 
 /**
- * Perform a partial search on any given field.
+ * Perform a partial search on any given field in Actors db.
  * @param field The specific field (Award, Name, or Film).
  * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
  */
@@ -598,6 +610,11 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::strin
     return tempRoot; // Contains all the results from our partial search.
 }
 
+/**
+ * Perform an exact search on any given field in Actors db.
+ * @param field The specific field (Year, Award, Name, Winner, Film).
+ * @return The updated root with all results from the exact search. Overwrite the original root which contained all records from CSV.
+ */
 BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string &field) {
     cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
@@ -611,7 +628,7 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string 
 }
 
 /**
- * Create the menu to prompt user to perform a secondary search, or start over.
+ * Create the menu to prompt user to perform a secondary search, or start over for the Actors db.
  */
 void Menu::afterSearchActors() {
 
@@ -623,7 +640,7 @@ void Menu::afterSearchActors() {
         cout << "d. Save your search results to a file." << endl;
         cout << "e. Go back to main menu" << endl;
 
-        // TODO: THIS IS CAUSING THE SEG FAULT!!
+        // NOTE: THIS WAS CAUSING THE SEG FAULT!!
         // If the search returns only one record, allow the user to modify the record.
         if (actorsRoot != nullptr) {
             if (actorsRoot->left == nullptr && actorsRoot->right == nullptr) {
@@ -643,7 +660,7 @@ void Menu::afterSearchActors() {
                 good = false;
                 break;
             case 'b':
-                // Reset the root to the BST with original data.
+                // Reset the root to the BST with original data to do a new search.
                 actorsRoot = actorsActresses->readInFile();
                 subMenuSearchRecordInActors();
                 good = false;
@@ -652,7 +669,7 @@ void Menu::afterSearchActors() {
                 modifyARecordInActors();
                 good = false;
                 break;
-            case 'd':
+            case 'd': // Save the actors database to the csv file, after modifying a record or searching a record.
                 exportToCSVActors(actorsRoot);
                 subMenuSearchRecordInActors();
                 good = false;
@@ -671,7 +688,7 @@ void Menu::afterSearchActors() {
 }
 
 /**
- * Allow the user to modify a single record with a menu driven prompt.
+ * Allow the user to modify a single record with a menu driven prompt in the Actors db.
  */
 void Menu::modifyARecordInActors() {
 
@@ -701,13 +718,12 @@ void Menu::modifyARecordInActors() {
     cout << actorsRoot->data << endl;
 
     // Prompt user to search for their modified record to show that it is in fact modified.
-//    subMenuSearchRecordInActors();
     afterSearchActors();
 
 }
 
 /**
- * Sort the data base by a specific field.
+ * Sort the data base by a specific field in the actors db.
  * @param field The field - e.g Name, Film, Year, etc.
  */
 void Menu::sortByActorsFields(std::string &field) {
@@ -732,19 +748,18 @@ void Menu::sortByActorsFields(std::string &field) {
 }
 
 /**
- * Export the data to a csv file (after modifying or adding a record).
+ * Export the data to a csv file (after modifying or adding a record) from the actors db.
  * @param root The root of the BST.
  */
 void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
     vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
     vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
-    // Create a vector of nodes by traversing through the BST.
+    // Create a vector of nodes by traversing through the BST to hold all records to be exported.
     vectorOfNodes = actorsActresses->traverseBST(root, vec);
 
     ofstream myfile;
-    string filename = "output.csv";
-    myfile.open(filename);
+    myfile.open(Menu::actorsFilename);
 
     if (!myfile) {
         cerr << "Could not open file for writing." << endl;
@@ -760,12 +775,15 @@ void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
                    << vectorOfNodes[i]->data.getFilm() << "\n";
         }
 
-        cout << "File successfully written to " << filename << endl;
+        cout << "File successfully written to " << Menu::actorsFilename << endl;
         myfile.close();
     }
 
 }
 
+/**
+ * Display sub menu options from the Pictures db.
+ */
 void Menu::partialSearchPictures() {
     bool good = true;
 
@@ -790,7 +808,7 @@ void Menu::partialSearchPictures() {
             // Partial search on Award field.
             case 'a':
 
-                // The new root will be the BST which contains all the results returned from the partial search.
+                // The new root will be the BST which contains all the results returned from the partial search by name.
                 picturesRoot = partialSearchPicturesField(Pictures::NAME);
 
                 // Display the menu which prompts a user to search again within the existing search results, or perform a new search.
@@ -798,30 +816,33 @@ void Menu::partialSearchPictures() {
                 good = false;
                 break;
 
-                // Partial search on Name field.
             case 'b':
+                // Partial search on Nominations field.
                 picturesRoot = partialSearchPicturesField(Pictures::NOMINATIONS);
                 afterSearchPictures();
                 good = false;
                 break;
 
-                // Partial search on Name field.
             case 'c':
+                // Partial search on Genre1 field.
                 picturesRoot = partialSearchPicturesField(Pictures::GENRE1);
                 afterSearchPictures();
                 good = false;
                 break;
             case 'd':
+                // Partial search on Genre2 field.
                 picturesRoot = partialSearchPicturesField(Pictures::GENRE2);
                 afterSearchPictures();
                 good = false;
                 break;
             case 'e':
+                // Partial search on Release field.
                 picturesRoot = partialSearchPicturesField(Pictures::RELEASE);
                 afterSearchPictures();
                 good = false;
                 break;
             case 'f':
+                // Partial search on Synopsis field.
                 picturesRoot = partialSearchPicturesField(Pictures::SYNOPSIS);
                 afterSearchPictures();
                 good = false;
@@ -839,6 +860,11 @@ void Menu::partialSearchPictures() {
     }
 }
 
+/**
+ * Perform a partial search on any given field in Pictures db.
+ * @param field The specific field (Name, Nominations, Genre1, Genre2, Release, Synopsis).
+ * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
+ */
 BinaryTree<Pictures>::TreeNode* Menu::partialSearchPicturesField(std::string &field) {
     cout << "Enter a keyword to partially search for in " << field << " field: ";
 
@@ -851,6 +877,11 @@ BinaryTree<Pictures>::TreeNode* Menu::partialSearchPicturesField(std::string &fi
     return tempRoot; // Contains all the results from our partial search.
 }
 
+/**
+ * Perform a exact search on any given field in Pictures db.
+ * @param field The specific field (Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis).
+ * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
+ */
 BinaryTree<Pictures>::TreeNode* Menu::exactSearchPicturesField(std::string &field) {
     cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
@@ -863,6 +894,9 @@ BinaryTree<Pictures>::TreeNode* Menu::exactSearchPicturesField(std::string &fiel
     return tempRoot;
 }
 
+/**
+ * Display sub menus after a search has been completed from the Pictures db.
+ */
 void Menu::afterSearchPictures() {
     bool good = true;
 
@@ -872,7 +906,7 @@ void Menu::afterSearchPictures() {
         cout << "d. Save your search results to a file." << endl;
         cout << "e. Go back to main menu" << endl;
 
-        // TODO: THIS IS CAUSING THE SEG FAULT!!
+        // NOTE: THIS WAS CAUSING THE SEG FAULT!!
         // If the search returns only one record, allow the user to modify the record.
         if (picturesRoot != nullptr) {
             if (picturesRoot->left == nullptr && picturesRoot->right == nullptr) {
@@ -919,6 +953,9 @@ void Menu::afterSearchPictures() {
     }
 }
 
+/**
+ * Display sub menus for sorting a field in the Pictures db.
+ */
 void Menu::subMenuForSortingInPictures() {
     bool good = true;
 
@@ -944,6 +981,7 @@ void Menu::subMenuForSortingInPictures() {
 
         switch (choice) {
             case 'a':
+                // Sort by the Name field in Pictures.
                 sortByPicturesFields(Pictures::NAME);
                 mainMenu();
                 good = false;
@@ -1006,6 +1044,9 @@ void Menu::subMenuForSortingInPictures() {
     }
 }
 
+/**
+ * Display sub menus for exactly searching a field from the Pictures db.
+ */
 void Menu::exactSearchPictures() {
     bool good = true;
 
@@ -1030,6 +1071,7 @@ void Menu::exactSearchPictures() {
 
         switch (choice) {
             case 'a':
+                // picturesRoot contains all the exact search results.
                 picturesRoot = exactSearchPicturesField(Pictures::NAME);
                 afterSearchPictures();
                 good = false;
@@ -1092,6 +1134,9 @@ void Menu::exactSearchPictures() {
     }
 }
 
+/**
+ * Allow user to modify a record in the Pictures field. Allow only one record to be modified.
+ */
 void Menu::modifyARecordInPictures() {
     string name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis;
 
@@ -1133,13 +1178,12 @@ void Menu::modifyARecordInPictures() {
     cout << picturesRoot->data << endl;
 
     // Prompt user to search for their modified record to show that it is in fact modified.
-//    subMenuSearchRecordInActors();
     afterSearchPictures();
 }
 
 /**
- * Sort the data base by a specific field.
- * @param field The field - e.g Name, Film, Year, etc.
+ * Sort the data base by a specific field in the pictures field.
+ * @param field The field (Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis).
  */
 void Menu::sortByPicturesFields(std::string &field) {
     cout << "Sorting by " << field << endl;
@@ -1173,8 +1217,8 @@ void Menu::exportToCSVPictures(BinaryTree<Pictures>::TreeNode *root) {
     vectorOfNodes = pictures->traverseBST(root, vec);
 
     ofstream myfile;
-    string filename = "output.csv";
-    myfile.open(filename);
+
+    myfile.open(Menu::picturesFilename);
 
     if (!myfile) {
         cerr << "Could not open file for writing." << endl;
@@ -1192,7 +1236,7 @@ void Menu::exportToCSVPictures(BinaryTree<Pictures>::TreeNode *root) {
                    << "," << vectorOfNodes[i]->data.getMetacritic() << "," << vectorOfNodes[i]->data.getSynopsis() << "\n";
         }
 
-        cout << "File successfully written to " << filename << endl;
+        cout << "File successfully written to " << Menu::picturesFilename << endl;
         myfile.close();
     }
 

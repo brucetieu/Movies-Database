@@ -1,5 +1,6 @@
 //
 // Created by Bruce Tieu on 11/10/20.
+// Function implementations for ActorsActresses.cpp.
 //
 #include <iostream>
 #include <fstream>
@@ -19,7 +20,6 @@ string ActorsActresses::AWARD = "award";
 string ActorsActresses::WINNER = "winner";
 string ActorsActresses::NAME = "name";
 string ActorsActresses::FILM = "film";
-
 
 
 /**
@@ -65,9 +65,6 @@ string ActorsActresses::getFilm() const {return film;}
 
 int ActorsActresses::getRecords() const {return records;}
 
-std::vector<BinaryTree<ActorsActresses>::TreeNode *> ActorsActresses::getVecOfTreeNodesForSorting() {
-    return vecOfTreeNodesForSorting;
-}
 /**
  * Overload the '<' operator to compare objects by the Name field.
  * @param right The ActorsActresses object.
@@ -152,15 +149,9 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::readInFile() {
         }
     }
 
-    // Print out the contents in order by Name field.
-//    actorsTree->inorderPrint();
-
-    // TODO: Return a root when the file is read. Then, pass in that root as needed.
-    // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
-//    root = actorsTree->getRoot();
-
     cout << "Success!" << endl;
 
+    // Return pointer to TreeNode which is the root of the BST. We traverse through BST starting from root.
     return root;
 }
 
@@ -386,21 +377,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
     }
 
     return vec;
-
 }
-
-///**
-// * Convert the string to be lower case.
-// * @param input The string to be converted to lowercase.
-// * @return The lower cased string.
-// */
-//string ActorsActresses::_convertToLowerCase(const std::string &input) {
-//
-//    string tempStr = input;
-//    transform(tempStr.begin(), tempStr.end(), tempStr.begin(), ::tolower);
-//
-//    return tempStr;
-//}
 
 
 
