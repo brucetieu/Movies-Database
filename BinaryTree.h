@@ -8,7 +8,10 @@
 #include <iostream>
 #include "Utility.h"
 
-
+/**
+ * Construct a binary tree.
+ * @tparam T BST can be of any type.
+ */
 template<class T>
 class BinaryTree {
 
@@ -21,10 +24,7 @@ public:
     };
 
     BinaryTree();
-//    void insert(T data);
     void inorderPrint(BinaryTree<T>::TreeNode* root);
-//    std::vector<TreeNode*> search(T data);
-//    bool search(T data);
     TreeNode* getRoot();
 
     int getSize(TreeNode* root);
@@ -39,84 +39,32 @@ private:
     TreeNode *root;
     int size;
 
-//    void _insert(T data, TreeNode* leaf);
-//    void _inorderPrint(TreeNode* leaf);
-//    bool _search(T data, TreeNode* leaf);
-//    std::vector<TreeNode*> _search(T data, TreeNode* leaf);
-
 };
 
+/**
+ * Initialize root to null and size of BST to 0.
+ * @tparam T The class type.
+ */
 template <class T>
 BinaryTree<T>::BinaryTree() {
     root = nullptr;
     size = 0;
 }
 
+/**
+ * Get the root of the BST.
+ * @tparam T The class type.
+ * @return The root of the BST
+ */
 template <class T>
 typename BinaryTree<T>::TreeNode* BinaryTree<T>::getRoot() {
     return root;
 }
 
 /**
- * Helper function which Recursively inserts new nodes by comparing the data of each node.
- * @tparam T Type T.
- * @param data The data / value.
- * @param leaf The leaf node.
- */
-//template <class T>
-//void BinaryTree<T>::_insert(T data, TreeNode *leaf) {
-//
-//    if (data < leaf->data){
-//
-//        // Traversing the BST until we can insert a leaf node in the proper location.
-//        if (leaf->left != nullptr){
-//            _insert(data, leaf->left);
-//        }
-//
-//            // Inserting a leaf node. The base case.
-//        else {
-//            leaf->left = new TreeNode;
-//            leaf->left->data = data;
-//            leaf->left->left = NULL;
-//            leaf->left->right = NULL;
-//        }
-//    } else if (data >= leaf->data) {
-//        if (leaf->right != nullptr) {
-//            _insert(data, leaf->right);
-//        } else{
-//            leaf->right = new TreeNode;
-//            leaf->right->data = data;
-//            leaf->right->right = NULL;
-//            leaf->right->left = NULL;
-//        }
-//    }
-//}
-
-/**
- * Building the BST - we are keeping track of the root node and insert nodes from there.
- * @tparam T
- * @param data
- */
-//template <class T>
-//void BinaryTree<T>::insert(T data) {
-//
-//    // Insert successful nodes after the first node (the root node) is inserted.
-//    if (root != nullptr) {
-//        _insert(data, root);
-//    }
-//
-//        // If root is null, create a new tree node. This inserts the first node.
-//    else {
-//        root = new TreeNode;
-//        root->data = data;
-//        root->left = nullptr;
-//        root->right = nullptr;
-//    }
-//}
-
-/**
- * Inorder traversal: left -> visit -> right
- * @param root The root
+ * Print out the BST in sorted order.
+ * @tparam T The class type.
+ * @return The root of the BST
  */
 template <class T>
 void BinaryTree<T>::inorderPrint(BinaryTree<T>::TreeNode *root) {
@@ -130,30 +78,11 @@ void BinaryTree<T>::inorderPrint(BinaryTree<T>::TreeNode *root) {
 }
 
 /**
- * Print the BS tree in-order: left - visit - right.
- * @tparam T The Type.
+ * Create a new node.
+ * @tparam T The class type
+ * @param data A data of type T.
+ * @return The new node.
  */
-//template <class T>
-//void BinaryTree<T>::inorderPrint() {
-//    _inorderPrint(root);
-//    std::cout << "\n";
-//}
-
-/**
- * Helper method which recursively traverses through the BST to insert nodes in-order.
- * @tparam T The type.
- * @param leaf The leaf node.
- */
-//template <class T>
-//void BinaryTree<T>::_inorderPrint(TreeNode* leaf) {
-//
-//    if (leaf != nullptr) {
-//        _inorderPrint(leaf->left);
-//        std::cout << leaf->data << std::endl;
-//        _inorderPrint(leaf->right);
-//    }
-//}
-
 template <class T>
 typename BinaryTree<T>::TreeNode* BinaryTree<T>::getNewNode(T data) {
     BinaryTree<T>::TreeNode* newNode = new BinaryTree<T>::TreeNode();
@@ -162,6 +91,13 @@ typename BinaryTree<T>::TreeNode* BinaryTree<T>::getNewNode(T data) {
     return newNode;
 }
 
+/**
+ * Insert a node into the BST.
+ * @tparam T The class type.
+ * @param data The data.
+ * @param root The root of the BST.
+ * @return The updated root after inserting.
+ */
 template <class T>
 typename BinaryTree<T>::TreeNode* BinaryTree<T>::insert(T data, BinaryTree<T>::TreeNode *root) {
     if(root == NULL) { // empty tree
@@ -181,6 +117,11 @@ typename BinaryTree<T>::TreeNode* BinaryTree<T>::insert(T data, BinaryTree<T>::T
     return root;
 }
 
+/**
+ * Clear all nodes in the BST.
+ * @tparam T The class type.
+ * @param root The root of the BST.
+ */
 template <class T>
 void BinaryTree<T>::clearTree(TreeNode *&root) {
     if (root == nullptr){
@@ -193,6 +134,12 @@ void BinaryTree<T>::clearTree(TreeNode *&root) {
     root = nullptr;
 }
 
+/**
+ * Get the size of the BST.
+ * @tparam T The class type.
+ * @param root The root of the BST.
+ * @return The size.
+ */
 template <class T>
 int BinaryTree<T>::getSize(TreeNode* root) {
     if (root == nullptr) return 0;

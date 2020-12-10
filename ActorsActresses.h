@@ -10,6 +10,9 @@
 #include <fstream>
 #include <vector>
 
+/**
+ * Define all members and methods for Actors Actresses database.
+ */
 class ActorsActresses {
 
 private:
@@ -24,17 +27,14 @@ private:
     BinaryTree<ActorsActresses> *actorsTree;
     BinaryTree<ActorsActresses>::TreeNode* root;
 
+    // Private helper methods for traversals.
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodes;
 
-//    std::string _convertToLowerCase(const std::string &input);
-
 
 public:
-
-    static std::vector<BinaryTree<ActorsActresses>::TreeNode*> vecOfTreeNodesForSorting;
 
     static std::string YEAR;
     static std::string AWARD;
@@ -87,21 +87,19 @@ public:
 
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();
-//    void readInFile();
     void addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
 
     // Partial search on a field.
     BinaryTree<ActorsActresses>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
+
+    // Exact search on a field.
     BinaryTree<ActorsActresses>::TreeNode* exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);
 
+    // Secondary search.
     BinaryTree<ActorsActresses>::TreeNode* searchWithinASearch(std::vector<BinaryTree<ActorsActresses>::TreeNode*> tempVec);
 
-//    void sortByField(std::string &field, BinaryTree<ActorsActresses>::TreeNode* root);
-
+    // Inorder BST traversal.
     std::vector<BinaryTree<ActorsActresses>::TreeNode*> traverseBST(BinaryTree<ActorsActresses>::TreeNode*& root, std::vector<BinaryTree<ActorsActresses>::TreeNode*> &vec);
-
-//    bool operator()(ActorsActresses left, ActorsActresses right);
-    static bool compareByFilm(ActorsActresses left, ActorsActresses right);
 
     // Overloaded operators.
     bool operator < (const ActorsActresses &right);

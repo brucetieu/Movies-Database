@@ -171,7 +171,7 @@ void ActorsActresses::addARecord(string &year, string &award, string &winner, st
 //    actorsTree->inorderPrint();
 }
 
-// TODO: Pass in a root here. Here, the root is still the root which was read into from the file.
+// NOTE: Pass in a root here. Here, the root is still the root which was read into from the file.
 /**
  * Find a record by a partially searched fields.
  * @param field The specific field.
@@ -230,6 +230,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
 
             string lowercaseAward = Utility::convertToLowerCase(root->data.getAward());  // Convert the current award field to be lowercase.
 
+            // Traverse through BST and push any nodes which contain the keyword into the vector.
             _inOrderTraversalPS(field, fieldKeyword, root->right);
             if (lowercaseAward.find(lowercaseFieldKey) != string::npos) vecOfTreeNodes.push_back(root);
             _inOrderTraversalPS(field, fieldKeyword, root->left);
@@ -255,11 +256,19 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
     return vecOfTreeNodes;
 }
 
+/**
+ * Find a record by a exactly searching for any given field.
+ * @param field The specific field.
+ * @param fieldKeyword The keyword a user uses.
+ * @param root Here, The root is the BST which contains all the results returned from the exact search.
+ * @return A new root pointing to the node which contains all the results from the exact search.
+ */
 BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root) {
     vecOfTreeNodes.clear();
 
     vector<BinaryTree<ActorsActresses>::TreeNode*> tempRootVec;
 
+    // For each field, we are storing their exact search results into a vector (tempRootVec).
     if (field == ActorsActresses::YEAR) {
         tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     } else if (field == ActorsActresses::AWARD) {
@@ -283,9 +292,17 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::exactFindByField(std::st
         }
     }
 
+    // Use this vector to narrow down the search results when user wants to search again.
     return searchWithinASearch(tempRootVec);
 }
 
+/**
+ * Traverse through the BST in order and add any nodes which match a keyword exactly.
+ * @param field The specific field.
+ * @param fieldKeyword The keyword specified by the user.
+ * @param root The root of the BST.
+ * @return The vector of all exact search nodes from Actors Actressess.
+ */
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversalES(std::string field, std::string fieldKeyword,
                                                                                     BinaryTree<ActorsActresses>::TreeNode *root) {
 
@@ -294,6 +311,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         return vecOfTreeNodes; // Contains all the nodes from the partial search.
     }
 
+    // Recursive case: root is not null.
     else if (root != nullptr) {
         string lowercaseFieldKey = Utility::convertToLowerCase(fieldKeyword);
         if (field == ActorsActresses::YEAR) {
@@ -301,7 +319,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
             string lowercaseYear = Utility::convertToLowerCase(root->data.getYear());
 
             _inOrderTraversalES(field, fieldKeyword, root->right);
-            if (lowercaseYear == lowercaseFieldKey) vecOfTreeNodes.push_back(root);
+            if (lowercaseYear == lowercaseFieldKey) vecOfTreeNodes.push_back(root); // Push any exact searches into the vector.
             _inOrderTraversalES(field, fieldKeyword, root->left);
         }
         else if (field == ActorsActresses::AWARD) {
@@ -338,7 +356,7 @@ vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::_inOrderTraversa
         }
     }
 
-    return vecOfTreeNodes;
+    return vecOfTreeNodes; // Holds all the nodes which were exactly searched.
 }
 
 /**
@@ -364,8 +382,8 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::searchWithinASearch(vect
 
 /**
  * Traverse BST and add nodes to a vector.
- * @param root
- * @return
+ * @param root The root of the BST.
+ * @return All nodes of the BST but in a vector.
  */
 vector<BinaryTree<ActorsActresses>::TreeNode*> ActorsActresses::traverseBST(
         BinaryTree<ActorsActresses>::TreeNode*& root, vector<BinaryTree<ActorsActresses>::TreeNode*> &vec) {

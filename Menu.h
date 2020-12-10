@@ -13,14 +13,22 @@
  * Create menu driven system to navigate through the database.
  */
 class Menu {
-private:
 
-public:
+private:
+    ActorsActresses *actorsActresses;  // Declare pointer to ActorsActresses object.
+    Pictures *pictures;  // Declare pointer to Pictures object.
+
+    BinaryTree<ActorsActresses>::TreeNode* actorsRoot; // Create the root for Actors the BST.
+    BinaryTree<Pictures>::TreeNode* picturesRoot; // Create the root for Pictures BST.
 
     static std::string actorsFilename;
     static std::string picturesFilename;
 
+public:
+
     Menu();
+
+    // Sub menu options in Actors db.
     void mainMenu();
     void subMenuForA();
     void subMenuForB();
@@ -45,6 +53,7 @@ public:
 
 /***********************************************************/
 
+    // Sub menu options in the Pictures db.
     void subMenuAddRecordInPictures();
     void subMenuSearchRecordInPictures();
     void subMenuForSortingInPictures();
@@ -59,15 +68,6 @@ public:
     void modifyARecordInPictures();
     void sortByPicturesFields(std::string &field);
     void exportToCSVPictures(BinaryTree<Pictures>::TreeNode* root);
-
-
-
-private:
-    ActorsActresses *actorsActresses;  // Declare pointer to ActorsActresses object.
-    Pictures *pictures;
-
-    BinaryTree<ActorsActresses>::TreeNode* actorsRoot; // Create the root for the BST.
-    BinaryTree<Pictures>::TreeNode* picturesRoot;
 
 };
 

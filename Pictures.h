@@ -24,14 +24,22 @@ private:
     std::string metacritic;
     std::string synopsis;
 
+    // Keep track of number of records.
     int records;
 
+    // Create a pictures Binary Tree.
     BinaryTree<Pictures> *picturesTree;
+
+    // Root of BST.
     BinaryTree<Pictures>::TreeNode* root;
 
+    // Traverse BST in order, to store partial matches.
     std::vector<BinaryTree<Pictures>::TreeNode*> _inOrderTraversalPS(std::string field, std::string fieldKeyword, BinaryTree<Pictures>::TreeNode* root);
+
+    // Traverse BST in order, to store exact searches.
     std::vector<BinaryTree<Pictures>::TreeNode*> _inOrderTraversalES(std::string field, std::string fieldKeyword, BinaryTree<Pictures>::TreeNode* root);
 
+    // Vector of TreeNode pointer objects.
     std::vector<BinaryTree<Pictures>::TreeNode*> vecOfTreeNodes;
 
 public:
@@ -49,6 +57,7 @@ public:
 
     /**
      * Functor object for sorting the Pictures database by Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis.
+     * @param field The specific field to be sorted.
      */
     struct SortByFieldComparator {
         SortByFieldComparator(std::string &field) {this->field = field;}
@@ -77,7 +86,10 @@ public:
         std::string field;
     };
 
+    // Default constructor.
     Pictures();
+
+    // Parameterized constructor to initialize all fields in Pictures.csv.
     Pictures(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
              std::string &genre2, std::string &release, std::string &metacritic, std::string &synopsis);
 
@@ -108,20 +120,24 @@ public:
 
     int getRecords() const;
 
-    // Methods for the database.
+    // Read in data from file.
     BinaryTree<Pictures>::TreeNode* readInFile();
+
+    // Add a record to the database.
     void addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
                     std::string &genre2, std::string &release, std::string &metacritic, std::string &synopsis);
 
     // Partial search on a field.
     BinaryTree<Pictures>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<Pictures>::TreeNode* root);
+
+    // Exact search on a field.
     BinaryTree<Pictures>::TreeNode* exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<Pictures>::TreeNode* root);
 
+    // Search within a search (secondary search).
     BinaryTree<Pictures>::TreeNode* searchWithinASearch(std::vector<BinaryTree<Pictures>::TreeNode*> tempVec);
 
-
+    // Traverse through BST and add nodes.
     std::vector<BinaryTree<Pictures>::TreeNode*> traverseBST(BinaryTree<Pictures>::TreeNode*& root, std::vector<BinaryTree<Pictures>::TreeNode*> &vec);
-
 
     // Overloaded operators.
     bool operator < (const Pictures &right);
