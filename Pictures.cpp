@@ -211,12 +211,19 @@ void Pictures::addARecord(std::string &name, std::string &year, std::string &nom
                           std::string &duration, std::string &genre1, std::string &genre2, std::string &release,
                           std::string &metacritic, std::string &synopsis) {
 
-    // Update the new root when record is inserted.
-    root = picturesTree->insert(Pictures(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis), root);
-    cout << "Record successfully inserted!" << endl;
+    if (root == nullptr) {
+        cout << "Must read in data first before adding a record" << endl;
+    }
+    else {
+        // Update the new root when record is inserted.
+        root = picturesTree->insert(
+                Pictures(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis),
+                root);
+        cout << "Record successfully inserted!" << endl;
 
-    // Verify that we have an additional row in the db.
-    cout << "Number of records in Pictures db: " << picturesTree->getSize(root) << endl;
+        // Verify that we have an additional row in the db.
+        cout << "Number of records in Pictures db: " << picturesTree->getSize(root) << endl;
+    }
 }
 
 /**
@@ -228,6 +235,12 @@ void Pictures::addARecord(std::string &name, std::string &year, std::string &nom
  */
 BinaryTree<Pictures>::TreeNode* Pictures::partialFindByField(std::string &field, std::string &fieldKeyword,
                                   BinaryTree<Pictures>::TreeNode *root) {
+
+    if (root == nullptr) {
+        cout << "Must read in data first before searching a record" << endl;
+        return root;
+    }
+
     // We have the clear this vector because we are recursively adding new TreeNodes of partial matches to it.
     vecOfTreeNodes.clear();
 
@@ -256,15 +269,15 @@ BinaryTree<Pictures>::TreeNode* Pictures::partialFindByField(std::string &field,
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
     }
 
-    cout << "Number of partial searches returned: " << tempRootVec.size() << endl;
-
     if (tempRootVec.size() == 0) {
         cout << "No records found with that search keyword. Try again." << endl;
     }
 
-
-    for (int i = 0; i < vecOfTreeNodes.size(); i++) {
-        cout << vecOfTreeNodes[i]->data << endl;
+    else {
+        cout << "Number of partial searches returned: " << tempRootVec.size() << endl;
+        for (int i = 0; i < vecOfTreeNodes.size(); i++) {
+            cout << vecOfTreeNodes[i]->data << endl;
+        }
     }
 
     return searchWithinASearch(tempRootVec); // Should contain all nodes from the secondary search. The new root from the new BST.
@@ -375,6 +388,13 @@ vector<BinaryTree<Pictures>::TreeNode*> Pictures::_inOrderTraversalPS(std::strin
  * @return A new root pointing to the node which contains all the results from the exact search.
  */
 BinaryTree<Pictures>::TreeNode* Pictures::exactFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<Pictures>::TreeNode* root) {
+
+    // If BST hasn't been created yet, just return the null;
+    if (root == nullptr) {
+        cout << "Must read in data first before searching a record" << endl;
+        return root;
+    }
+
     vecOfTreeNodes.clear();
 
     // Contains all the nodes with exact searches.
@@ -403,12 +423,11 @@ BinaryTree<Pictures>::TreeNode* Pictures::exactFindByField(std::string &field, s
         tempRootVec = _inOrderTraversalES(field, fieldKeyword, root);
     }
 
-    cout << "Number of exact searches returned: " << tempRootVec.size() << endl;
-
     if (tempRootVec.size() == 0) {
         cout << "No records found with that search keyword. Try again." << endl;
     }
     else {
+        cout << "Number of exact searches returned: " << tempRootVec.size() << endl;
         for (int i = 0; i < vecOfTreeNodes.size(); i++) {
             cout << vecOfTreeNodes[i]->data << endl;
         }

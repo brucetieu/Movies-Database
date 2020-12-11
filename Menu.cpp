@@ -24,6 +24,8 @@ Menu::Menu() {
     // Dynamically create a new ActorsActresses object.
     actorsActresses = new ActorsActresses();
     pictures = new Pictures();
+    actorsRoot = nullptr;
+    picturesRoot = nullptr;
 }
 
 /**
@@ -727,8 +729,12 @@ void Menu::modifyARecordInActors() {
  * @param field The field - e.g Name, Film, Year, etc.
  */
 void Menu::sortByActorsFields(std::string field) {
-    cout << "Sorting by " << field << endl;
 
+    // If there is no BST, prompt user with a message.
+    if (actorsRoot == nullptr) {
+        cout << "Nothing to sort by. Did you read in the data first?" << endl;
+        return;
+    }
     // This vector holds the sorted results from the BST.
     vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
@@ -737,14 +743,16 @@ void Menu::sortByActorsFields(std::string field) {
 
     vectorOfNodes = actorsActresses->traverseBST(actorsRoot, vec);
 
+    cout << "Sorting by " << field << endl;
+
     // Sort the specific field using the STL sort function.
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), ActorsActresses::SortByFieldComparator(field));
-
 
     // Print out the results.
     for (int i = 0; i < vectorOfNodes.size(); i++) {
         cout << vectorOfNodes[i]->data << endl;
     }
+
 }
 
 /**
@@ -752,31 +760,39 @@ void Menu::sortByActorsFields(std::string field) {
  * @param root The root of the BST.
  */
 void Menu::exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode *root) {
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vec;
-    vector<BinaryTree<ActorsActresses>::TreeNode*> vectorOfNodes;
 
-    // Create a vector of nodes by traversing through the BST to hold all records to be exported.
-    vectorOfNodes = actorsActresses->traverseBST(root, vec);
-
-    ofstream myfile;
-    myfile.open(Menu::actorsFilename);
-
-    if (!myfile) {
-        cerr << "Could not open file for writing." << endl;
+    // If there is no BST yet, prompt user with message.
+    if (root == nullptr) {
+        cout << "Must read in the data first before exporting." << endl;
     }
+
     else {
 
-        myfile << "Year,Award,Winner,Name,Film\n";
+        vector < BinaryTree<ActorsActresses>::TreeNode * > vec;
+        vector < BinaryTree<ActorsActresses>::TreeNode * > vectorOfNodes;
 
-        // Loop through the vectorOfNodes and add each record to the csv.
-        for (int i = 0; i < vectorOfNodes.size(); i++) {
-            myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
-                   << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","
-                   << vectorOfNodes[i]->data.getFilm() << "\n";
+        // Create a vector of nodes by traversing through the BST to hold all records to be exported.
+        vectorOfNodes = actorsActresses->traverseBST(root, vec);
+
+        ofstream myfile;
+        myfile.open(Menu::actorsFilename);
+
+        if (!myfile) {
+            cerr << "Could not open file for writing." << endl;
+        } else {
+
+            myfile << "Year,Award,Winner,Name,Film\n";
+
+            // Loop through the vectorOfNodes and add each record to the csv.
+            for (int i = 0; i < vectorOfNodes.size(); i++) {
+                myfile << vectorOfNodes[i]->data.getYear() << "," << vectorOfNodes[i]->data.getAward() << ","
+                       << vectorOfNodes[i]->data.getWinner() << "," << vectorOfNodes[i]->data.getName() << ","
+                       << vectorOfNodes[i]->data.getFilm() << "\n";
+            }
+
+            cout << "File successfully written to " << Menu::actorsFilename << endl;
+            myfile.close();
         }
-
-        cout << "File successfully written to " << Menu::actorsFilename << endl;
-        myfile.close();
     }
 
 }
@@ -1186,8 +1202,11 @@ void Menu::modifyARecordInPictures() {
  * @param field The field (Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis).
  */
 void Menu::sortByPicturesFields(std::string field) {
-    cout << "Sorting by " << field << endl;
 
+    if (picturesRoot == nullptr) {
+        cout << "Nothing to sort by. Did you read in the data first?" << endl;
+        return;
+    }
     // This vector holds the sorted results from the BST.
     vector<BinaryTree<Pictures>::TreeNode*> vectorOfNodes;
 
@@ -1196,6 +1215,7 @@ void Menu::sortByPicturesFields(std::string field) {
 
     vectorOfNodes = pictures->traverseBST(picturesRoot, vec);
 
+    cout << "Sorting by " << field << endl;
     // Sort the specific field using the STL sort function.
     sort(vectorOfNodes.begin(), vectorOfNodes.end(), Pictures::SortByFieldComparator(field));
 
@@ -1210,34 +1230,40 @@ void Menu::sortByPicturesFields(std::string field) {
  * @param root The root of the BST.
  */
 void Menu::exportToCSVPictures(BinaryTree<Pictures>::TreeNode *root) {
-    vector<BinaryTree<Pictures>::TreeNode*> vec;
-    vector<BinaryTree<Pictures>::TreeNode*> vectorOfNodes;
 
-    // Create a vector of nodes by traversing through the BST.
-    vectorOfNodes = pictures->traverseBST(root, vec);
-
-    ofstream myfile;
-
-    myfile.open(Menu::picturesFilename);
-
-    if (!myfile) {
-        cerr << "Could not open file for writing." << endl;
+    if (root == nullptr) {
+        cout << "Must read in data first before exporting" << endl;
     }
     else {
 
-        myfile << "Name,Year,Nominations,Rating,Duration,Genre1,Genre2,Release,Metacritic,Synopsis\n";
+        vector < BinaryTree<Pictures>::TreeNode * > vec;
+        vector < BinaryTree<Pictures>::TreeNode * > vectorOfNodes;
 
-        // Loop through the vectorOfNodes and add each record to the csv.
-        for (int i = 0; i < vectorOfNodes.size(); i++) {
-            myfile << vectorOfNodes[i]->data.getName() << "," << vectorOfNodes[i]->data.getYear() << ","
-                   << vectorOfNodes[i]->data.getNominations() << "," << vectorOfNodes[i]->data.getRating() << ","
-                   << vectorOfNodes[i]->data.getDuration() << "," << vectorOfNodes[i]->data.getGenre1() << ","
-                   << vectorOfNodes[i]->data.getGenre2() << "," << vectorOfNodes[i]->data.getRelease() << ","
-                   << vectorOfNodes[i]->data.getMetacritic() << "," << vectorOfNodes[i]->data.getSynopsis() << "\n";
+        // Create a vector of nodes by traversing through the BST.
+        vectorOfNodes = pictures->traverseBST(root, vec);
+
+        ofstream myfile;
+
+        myfile.open(Menu::picturesFilename);
+
+        if (!myfile) {
+            cerr << "Could not open file for writing." << endl;
+        } else {
+
+            myfile << "Name,Year,Nominations,Rating,Duration,Genre1,Genre2,Release,Metacritic,Synopsis\n";
+
+            // Loop through the vectorOfNodes and add each record to the csv.
+            for (int i = 0; i < vectorOfNodes.size(); i++) {
+                myfile << vectorOfNodes[i]->data.getName() << "," << vectorOfNodes[i]->data.getYear() << ","
+                       << vectorOfNodes[i]->data.getNominations() << "," << vectorOfNodes[i]->data.getRating() << ","
+                       << vectorOfNodes[i]->data.getDuration() << "," << vectorOfNodes[i]->data.getGenre1() << ","
+                       << vectorOfNodes[i]->data.getGenre2() << "," << vectorOfNodes[i]->data.getRelease() << ","
+                       << vectorOfNodes[i]->data.getMetacritic() << "," << vectorOfNodes[i]->data.getSynopsis() << "\n";
+            }
+
+            cout << "File successfully written to " << Menu::picturesFilename << endl;
+            myfile.close();
         }
-
-        cout << "File successfully written to " << Menu::picturesFilename << endl;
-        myfile.close();
     }
 
 }
