@@ -36,11 +36,11 @@ private:
 
 public:
 
-    static std::string YEAR;
-    static std::string AWARD;
-    static std::string WINNER;
-    static std::string NAME;
-    static std::string FILM;
+    static const std::string YEAR;
+    static const std::string AWARD;
+    static const std::string WINNER;
+    static const std::string NAME;
+    static const std::string FILM;
 
     /**
      * Functor object for sorting the ActorsActresses database by Year, Award, Winner, Name, and Film.
@@ -80,10 +80,6 @@ public:
     std::string getName() const;
     std::string getFilm() const;
     int getRecords() const;
-
-    std::vector<BinaryTree<ActorsActresses>::TreeNode*> getVecOfTreeNodesForSorting();
-
-
 
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();

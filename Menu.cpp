@@ -14,8 +14,8 @@
 
 using namespace std;
 
-string Menu::actorsFilename = "actorsOutput.csv";
-string Menu::picturesFilename = "picturesOutput.csv";
+const string Menu::actorsFilename = "actorsOutput.csv";
+const string Menu::picturesFilename = "picturesOutput.csv";
 
 /**
  * Initialize ActorsActresses object within the default constructor.
@@ -598,7 +598,7 @@ void Menu::exactSearchActors() {
  * @param field The specific field (Award, Name, or Film).
  * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
  */
-BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::string &field) {
+BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::string field) {
     cout << "Enter a keyword to partially search for in " << field << " field: ";
 
     string fieldKeyword;
@@ -615,7 +615,7 @@ BinaryTree<ActorsActresses>::TreeNode* Menu::partialSearchActorsField(std::strin
  * @param field The specific field (Year, Award, Name, Winner, Film).
  * @return The updated root with all results from the exact search. Overwrite the original root which contained all records from CSV.
  */
-BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string &field) {
+BinaryTree<ActorsActresses>::TreeNode* Menu::exactSearchActorsField(std::string field) {
     cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
     string fieldKeyword;
@@ -726,7 +726,7 @@ void Menu::modifyARecordInActors() {
  * Sort the data base by a specific field in the actors db.
  * @param field The field - e.g Name, Film, Year, etc.
  */
-void Menu::sortByActorsFields(std::string &field) {
+void Menu::sortByActorsFields(std::string field) {
     cout << "Sorting by " << field << endl;
 
     // This vector holds the sorted results from the BST.
@@ -865,7 +865,7 @@ void Menu::partialSearchPictures() {
  * @param field The specific field (Name, Nominations, Genre1, Genre2, Release, Synopsis).
  * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
  */
-BinaryTree<Pictures>::TreeNode* Menu::partialSearchPicturesField(std::string &field) {
+BinaryTree<Pictures>::TreeNode* Menu::partialSearchPicturesField(std::string field) {
     cout << "Enter a keyword to partially search for in " << field << " field: ";
 
     string fieldKeyword;
@@ -882,7 +882,7 @@ BinaryTree<Pictures>::TreeNode* Menu::partialSearchPicturesField(std::string &fi
  * @param field The specific field (Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis).
  * @return The updated root with all results from the partial search. Overwrite the original root which contained all records from CSV.
  */
-BinaryTree<Pictures>::TreeNode* Menu::exactSearchPicturesField(std::string &field) {
+BinaryTree<Pictures>::TreeNode* Menu::exactSearchPicturesField(std::string field) {
     cout << "Enter a keyword to exactly search for in " << field << " field: ";
 
     string fieldKeyword;
@@ -1185,7 +1185,7 @@ void Menu::modifyARecordInPictures() {
  * Sort the data base by a specific field in the pictures field.
  * @param field The field (Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis).
  */
-void Menu::sortByPicturesFields(std::string &field) {
+void Menu::sortByPicturesFields(std::string field) {
     cout << "Sorting by " << field << endl;
 
     // This vector holds the sorted results from the BST.
@@ -1233,7 +1233,7 @@ void Menu::exportToCSVPictures(BinaryTree<Pictures>::TreeNode *root) {
                    << vectorOfNodes[i]->data.getNominations() << "," << vectorOfNodes[i]->data.getRating() << ","
                    << vectorOfNodes[i]->data.getDuration() << "," << vectorOfNodes[i]->data.getGenre1() << ","
                    << vectorOfNodes[i]->data.getGenre2() << "," << vectorOfNodes[i]->data.getRelease() << ","
-                   << "," << vectorOfNodes[i]->data.getMetacritic() << "," << vectorOfNodes[i]->data.getSynopsis() << "\n";
+                   << vectorOfNodes[i]->data.getMetacritic() << "," << vectorOfNodes[i]->data.getSynopsis() << "\n";
         }
 
         cout << "File successfully written to " << Menu::picturesFilename << endl;

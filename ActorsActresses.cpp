@@ -15,11 +15,11 @@
 using namespace std;
 
 // TODO: Probably should use an enum type.
-string ActorsActresses::YEAR = "year";
-string ActorsActresses::AWARD = "award";
-string ActorsActresses::WINNER = "winner";
-string ActorsActresses::NAME = "name";
-string ActorsActresses::FILM = "film";
+const string ActorsActresses::YEAR = "year";
+const string ActorsActresses::AWARD = "award";
+const string ActorsActresses::WINNER = "winner";
+const string ActorsActresses::NAME = "name";
+const string ActorsActresses::FILM = "film";
 
 
 /**
@@ -187,11 +187,11 @@ BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::partialFindByField(std::
     // Temporary vector of nodes to hold all the partial search records.
     vector<BinaryTree<ActorsActresses>::TreeNode*> tempRootVec;
 
-    if (field == ActorsActresses::AWARD) {
+    if (field == AWARD) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
-    } else if (field == ActorsActresses::NAME) {
+    } else if (field == NAME) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
-    } else if (field == ActorsActresses::FILM) {
+    } else if (field == FILM) {
         tempRootVec = _inOrderTraversalPS(field, fieldKeyword, root);
     }
 

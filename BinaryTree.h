@@ -17,6 +17,9 @@ class BinaryTree {
 
 public:
 
+    /**
+     * This represents a node in the BST.
+     */
     struct TreeNode {
         T data;
         TreeNode *left;
@@ -34,11 +37,9 @@ public:
 
     void clearTree(TreeNode*& root);
 
-
 private:
     TreeNode *root;
     int size;
-
 };
 
 /**

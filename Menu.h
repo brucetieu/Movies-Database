@@ -21,8 +21,8 @@ private:
     BinaryTree<ActorsActresses>::TreeNode* actorsRoot; // Create the root for Actors the BST.
     BinaryTree<Pictures>::TreeNode* picturesRoot; // Create the root for Pictures BST.
 
-    static std::string actorsFilename;
-    static std::string picturesFilename;
+    static const std::string actorsFilename;
+    static const std::string picturesFilename;
 
 public:
 
@@ -42,13 +42,13 @@ public:
     void partialSearchActors();
     void exactSearchActors();
 
-    BinaryTree<ActorsActresses>::TreeNode* partialSearchActorsField(std::string &field);
-    BinaryTree<ActorsActresses>::TreeNode* exactSearchActorsField(std::string &field);
+    BinaryTree<ActorsActresses>::TreeNode* partialSearchActorsField(std::string field);
+    BinaryTree<ActorsActresses>::TreeNode* exactSearchActorsField(std::string field);
 
     void afterSearchActors();
 
     void modifyARecordInActors();
-    void sortByActorsFields(std::string &field);
+    void sortByActorsFields(std::string field);
     void exportToCSVActors(BinaryTree<ActorsActresses>::TreeNode* root);
 
 /***********************************************************/
@@ -60,13 +60,13 @@ public:
     void partialSearchPictures();
     void exactSearchPictures();
 
-    BinaryTree<Pictures>::TreeNode* partialSearchPicturesField(std::string &field);
-    BinaryTree<Pictures>::TreeNode* exactSearchPicturesField(std::string &field);
+    BinaryTree<Pictures>::TreeNode* partialSearchPicturesField(std::string field);
+    BinaryTree<Pictures>::TreeNode* exactSearchPicturesField(std::string field);
 
     void afterSearchPictures();
 
     void modifyARecordInPictures();
-    void sortByPicturesFields(std::string &field);
+    void sortByPicturesFields(std::string field);
     void exportToCSVPictures(BinaryTree<Pictures>::TreeNode* root);
 
 };

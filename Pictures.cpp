@@ -16,16 +16,16 @@
 using namespace std;
 
 // Magic strings.
-string Pictures::NAME = "name";
-string Pictures::YEAR = "year";
-string Pictures::NOMINATIONS = "nominations";
-string Pictures::RATING = "rating";
-string Pictures::DURATION = "duration";
-string Pictures::GENRE1 = "genre1";
-string Pictures::GENRE2 = "genre2";
-string Pictures::RELEASE = "release";
-string Pictures::METACRITIC = "metacritic";
-string Pictures::SYNOPSIS = "synopsis";
+const string Pictures::NAME = "name";
+const string Pictures::YEAR = "year";
+const string Pictures::NOMINATIONS = "nominations";
+const string Pictures::RATING = "rating";
+const string Pictures::DURATION = "duration";
+const string Pictures::GENRE1 = "genre1";
+const string Pictures::GENRE2 = "genre2";
+const string Pictures::RELEASE = "release";
+const string Pictures::METACRITIC = "metacritic";
+const string Pictures::SYNOPSIS = "synopsis";
 
 /**
  * Default constructor which initializes an Binary Tree of type ActorsActresses.

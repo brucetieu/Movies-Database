@@ -44,16 +44,16 @@ private:
 
 public:
 
-    static std::string NAME;
-    static std::string YEAR;
-    static std::string NOMINATIONS;
-    static std::string RATING;
-    static std::string DURATION;
-    static std::string GENRE1;
-    static std::string GENRE2;
-    static std::string RELEASE;
-    static std::string METACRITIC;
-    static std::string SYNOPSIS;
+    const static std::string NAME;
+    const static std::string YEAR;
+    const static std::string NOMINATIONS;
+    const static std::string RATING;
+    const static std::string DURATION;
+    const static std::string GENRE1;
+    const static std::string GENRE2;
+    const static std::string RELEASE;
+    const static std::string METACRITIC;
+    const static std::string SYNOPSIS;
 
     /**
      * Functor object for sorting the Pictures database by Name, Year, Nominations, Rating, Duration, Genre1, Genre2, Release, Metacritic, Synopsis.
