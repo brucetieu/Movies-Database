@@ -180,7 +180,7 @@ void Menu::subMenuAddRecordInActors() {
     getline(cin, film);
 
     // Add this record to the BST.
-    actorsActresses->addARecord(year, award, winner, name, film);
+    actorsRoot = actorsActresses->addARecord(year, award, winner, name, film);
 }
 
 /**
@@ -211,7 +211,7 @@ void Menu::subMenuAddRecordInPictures() {
     getline(cin, synopsis);
 
     // Add this record to the Pictures BST.
-    pictures->addARecord(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis);
+    picturesRoot = pictures->addARecord(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis);
 }
 
 /**

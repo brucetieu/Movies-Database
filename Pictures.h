@@ -124,7 +124,7 @@ public:
     BinaryTree<Pictures>::TreeNode* readInFile();
 
     // Add a record to the database.
-    void addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
+    BinaryTree<Pictures>::TreeNode* addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating, std::string &duration, std::string &genre1,
                     std::string &genre2, std::string &release, std::string &metacritic, std::string &synopsis);
 
     // Partial search on a field.

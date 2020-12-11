@@ -207,14 +207,15 @@ BinaryTree<Pictures>::TreeNode* Pictures::readInFile() {
  * @param metacritic The metacritic score for the movie.
  * @param synopsis Quick premise of the movie.
  */
-void Pictures::addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating,
+BinaryTree<Pictures>::TreeNode* Pictures::addARecord(std::string &name, std::string &year, std::string &nominations, std::string &rating,
                           std::string &duration, std::string &genre1, std::string &genre2, std::string &release,
                           std::string &metacritic, std::string &synopsis) {
 
     if (root == nullptr) {
         cout << "Must read in data first before adding a record" << endl;
+        return root;
     }
-    else {
+//    else {
         // Update the new root when record is inserted.
         root = picturesTree->insert(
                 Pictures(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis),
@@ -223,7 +224,8 @@ void Pictures::addARecord(std::string &name, std::string &year, std::string &nom
 
         // Verify that we have an additional row in the db.
         cout << "Number of records in Pictures db: " << picturesTree->getSize(root) << endl;
-    }
+        return root;
+//    }
 }
 
 /**

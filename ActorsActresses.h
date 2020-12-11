@@ -83,7 +83,7 @@ public:
 
     // Methods for the database.
     BinaryTree<ActorsActresses>::TreeNode* readInFile();
-    void addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
+    BinaryTree<ActorsActresses>::TreeNode* addARecord(std::string &year, std::string &award, std::string &winner, std::string &name, std::string &film);
 
     // Partial search on a field.
     BinaryTree<ActorsActresses>::TreeNode* partialFindByField(std::string &field, std::string &fieldKeyword, BinaryTree<ActorsActresses>::TreeNode* root);

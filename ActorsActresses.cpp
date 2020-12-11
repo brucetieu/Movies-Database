@@ -169,15 +169,17 @@ BinaryTree<ActorsActresses>::TreeNode *ActorsActresses::readInFile() {
  * @param name The name of the actor / actress.
  * @param film The name of the film.
  */
-void ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film) {
+BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film) {
 
     if (root == nullptr) {
         cout << "Must read in data first before adding a record" << endl;
-    } else {
-        root = actorsTree->insert(ActorsActresses(year, award, winner, name, film), root);
-        cout << "Record successfully inserted!" << endl;
-        cout << actorsTree->getSize(root) << endl;
+        return root;
     }
+    root = actorsTree->insert(ActorsActresses(year, award, winner, name, film), root);
+    cout << "Record successfully inserted!" << endl;
+    cout << actorsTree->getSize(root) << endl;
+
+    return root;
 }
 
 // NOTE: Pass in a root here. Here, the root is still the root which was read into from the file.
