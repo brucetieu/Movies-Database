@@ -1,2 +1,2 @@
 # Movies-Database
-Data structures and algorithms final project - building a database.
+Data structures final project - building a database.

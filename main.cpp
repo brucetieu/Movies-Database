@@ -3,32 +3,19 @@
 //
 
 #include <iostream>
-#include <fstream>
 #include <string>
+#include "Menu.h"
 
 using namespace std;
+
+/**
+ * Main driver class. Display the menu.
+ * @return 0 for a successful program.
+ */
 int main()
 {
-    ifstream infile("actor-actress.csv");
-    string header,year,award, winner, name, film;
-    int records = 0;
-
-    getline(infile, header);
-    cout << "Header\n" << header << endl << endl;
-    while (infile.good())
-    {
-        getline(infile, year, ',');
-        getline(infile,award, ',');
-        getline(infile, winner, ',');
-        getline(infile, name, ',');
-        getline(infile,film);
-        cout << year << endl << award << endl << winner <<endl << name <<endl<<film<<endl;
-        records++;
-        cout << "RECORDS: " << records<<endl << endl;
-    }
-
-    cout << "Records: "<<records <<endl;
-
+    Menu menu;
+    menu.mainMenu();
 
     return 0;
 }
