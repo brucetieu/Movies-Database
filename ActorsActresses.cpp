@@ -172,12 +172,12 @@ BinaryTree<ActorsActresses>::TreeNode *ActorsActresses::readInFile() {
 BinaryTree<ActorsActresses>::TreeNode* ActorsActresses::addARecord(string &year, string &award, string &winner, string &name, string &film) {
 
     if (root == nullptr) {
-        cout << "Must read in data first before adding a record" << endl;
+        cout << "Must read in data first before adding a record in Actors Actresses database." << endl;
         return root;
     }
     root = actorsTree->insert(ActorsActresses(year, award, winner, name, film), root);
     cout << "Record successfully inserted!" << endl;
-    cout << actorsTree->getSize(root) << endl;
+    cout << "number of records: " << actorsTree->getSize(root) << endl;
 
     return root;
 }
@@ -195,7 +195,7 @@ ActorsActresses::partialFindByField(std::string &field, std::string &fieldKeywor
                                     BinaryTree<ActorsActresses>::TreeNode *root) {
 
     if (root == nullptr) {
-        cout << "Must read in data first before searching a record." << endl;
+        cout << "Must read in data first before searching a record in Actors Actresses database." << endl;
         return root;
     }
 
@@ -288,7 +288,7 @@ BinaryTree<ActorsActresses>::TreeNode *ActorsActresses::exactFindByField(std::st
                                                                          BinaryTree<ActorsActresses>::TreeNode *root) {
 
     if (root == nullptr) {
-        cout << "Must read in data first before searching a record" << endl;
+        cout << "Must read in data first before searching a record in Actors Actresses database." << endl;
         return root;
     }
 

@@ -212,20 +212,19 @@ BinaryTree<Pictures>::TreeNode* Pictures::addARecord(std::string &name, std::str
                           std::string &metacritic, std::string &synopsis) {
 
     if (root == nullptr) {
-        cout << "Must read in data first before adding a record" << endl;
+        cout << "Must read in data first before adding a record to Pictures database." << endl;
         return root;
     }
-//    else {
-        // Update the new root when record is inserted.
-        root = picturesTree->insert(
-                Pictures(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis),
-                root);
-        cout << "Record successfully inserted!" << endl;
 
-        // Verify that we have an additional row in the db.
-        cout << "Number of records in Pictures db: " << picturesTree->getSize(root) << endl;
-        return root;
-//    }
+    root = picturesTree->insert(
+            Pictures(name, year, nominations, rating, duration, genre1, genre2, release, metacritic, synopsis),
+            root);
+    cout << "Record successfully inserted!" << endl;
+
+    // Verify that we have an additional row in the db.
+    cout << "Number of records in Pictures db: " << picturesTree->getSize(root) << endl;
+    return root;
+
 }
 
 /**
@@ -239,7 +238,7 @@ BinaryTree<Pictures>::TreeNode* Pictures::partialFindByField(std::string &field,
                                   BinaryTree<Pictures>::TreeNode *root) {
 
     if (root == nullptr) {
-        cout << "Must read in data first before searching a record" << endl;
+        cout << "Must read in data first before searching a record to Pictures database." << endl;
         return root;
     }
 
@@ -393,7 +392,7 @@ BinaryTree<Pictures>::TreeNode* Pictures::exactFindByField(std::string &field, s
 
     // If BST hasn't been created yet, just return the null;
     if (root == nullptr) {
-        cout << "Must read in data first before searching a record" << endl;
+        cout << "Must read in data first before searching a record to Pictures database." << endl;
         return root;
     }
 
